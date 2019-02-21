@@ -24,12 +24,24 @@
     <ClInclude Include="SpecialisationTest.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="..\Gestion_Graphe\include\FsAps.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gestion_Graphe\include\MatriceAdjacence.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Test.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Gestion_Graphe\src\FsAps.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Gestion_Graphe\src\MatriceAdjacence.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

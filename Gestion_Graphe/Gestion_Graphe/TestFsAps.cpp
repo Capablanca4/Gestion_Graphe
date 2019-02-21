@@ -1,8 +1,7 @@
-#include "doctest.h"
-#include "FsAps.h"
+#include "../Gestion_Graphe/include/FsAps.h"
 #include "iostream"
 
-TEST_CASE("Les methodes de FsAps sont correctes"){
+/*TEST_CASE("Les methodes de FsAps sont correctes"){
     int nbNoeud=7;
     int NbArc=18;
     std::vector<int> fs{2,3,5,0,3,0,3,4,0,5,6,0,3,0,0,4,6,0};
@@ -34,4 +33,4 @@ TEST_CASE("Les methodes de FsAps sont correctes"){
 
     }
 
-}
+}*/

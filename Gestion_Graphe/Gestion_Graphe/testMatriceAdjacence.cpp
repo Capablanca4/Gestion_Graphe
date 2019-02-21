@@ -1,4 +1,4 @@
-#include "doctest.h"
+/*#include "doctest.h"
 #include "MatriceAdjacence.h"
 #include <iostream>
 
@@ -85,4 +85,4 @@ TEST_CASE("Test des methodes de MatriceAdjacence"){
             REQUIRE_EQ(inv_M[i-1],Mat.Noeud(i));
         }
     }
-}
+}*/

@@ -1,4 +1,5 @@
-#include "MatriceAdjacence.h"
+
+#include "../include/MatriceAdjacence.h"
 
 namespace Graphe{
 

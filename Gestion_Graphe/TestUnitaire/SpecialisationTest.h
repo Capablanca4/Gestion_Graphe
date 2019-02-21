@@ -9,10 +9,12 @@ namespace Microsoft
 	{
 		namespace CppUnitTestFramework
 		{
-			template<> static std::wstring ToString<FsAps>(const class FsAps& t) { RETURN_WIDE_STRING(t); };
-			template<> static std::wstring ToString<MatriceAdjacence>(const class MatriceAdjacence& t) { RETURN_WIDE_STRING(t); };
-			template<> static std::wstring ToString<FsAps>(const class FsAps* t) { RETURN_WIDE_STRING(*t); }
-			template<> static std::wstring ToString<MatriceAdjacence>(const class MatriceAdjacence* t) { RETURN_WIDE_STRING(*t) };
+			template<> static std::wstring ToString<Graphe::FsAps>(const class Graphe::FsAps& t) { return L"referenceFsAps"; };
+			template<> static std::wstring ToString<Graphe::MatriceAdjacence>(const class Graphe::MatriceAdjacence& t) { return L"pointeurFsAps"; };
+			template<> static std::wstring ToString<Graphe::FsAps>(const class Graphe::FsAps* t) { return L"referenceMatriceAdjacence"; }
+			template<> static std::wstring ToString<Graphe::MatriceAdjacence>(const class Graphe::MatriceAdjacence* t) { return L"pointeurMatriceAdjacence"; };
+			template<> static std::wstring ToString<std::vector<int>>(const class std::vector<int>* t) { return L"pointeurVector"; }
+			template<> static std::wstring ToString<std::vector<int>>(const class std::vector<int>& t) { return L"referenceVector"; };
 		}
 	}
 }

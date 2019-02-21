@@ -6,7 +6,9 @@
 #pragma once
 
 #include "targetver.h"
-
+#include "../Gestion_Graphe/include/MatriceAdjacence.h"
+#include "../Gestion_Graphe/include/FsAps.h"
+#include "SpecialisationTest.h"
 // En-têtes pour CppUnitTest
 #include "CppUnitTest.h"
 

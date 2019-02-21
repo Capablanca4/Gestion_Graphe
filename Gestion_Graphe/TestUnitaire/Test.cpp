@@ -1,7 +1,4 @@
 #include "stdafx.h"
-#include "CppUnitTest.h"
-#include "../Gestion_Graphe/include/MatriceAdjacence.h"
-#include "../Gestion_Graphe/include/FsAps.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

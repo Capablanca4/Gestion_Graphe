@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\FsAps.cpp" />
     <ClCompile Include="src\MatriceAdjacence.cpp" />
     <ClCompile Include="TestFsAps.cpp" />
-    <ClCompile Include="testMain.cpp" />
     <ClCompile Include="testMatriceAdjacence.cpp" />
   </ItemGroup>
   <ItemGroup>
