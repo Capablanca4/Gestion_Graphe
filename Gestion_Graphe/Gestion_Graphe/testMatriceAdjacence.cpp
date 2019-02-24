@@ -85,4 +85,5 @@ TEST_CASE("Test des methodes de MatriceAdjacence"){
             REQUIRE_EQ(inv_M[i-1],Mat.Noeud(i));
         }
     }
-}*/
+}
+*/

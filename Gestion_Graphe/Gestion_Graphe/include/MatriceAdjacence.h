@@ -4,6 +4,8 @@
 
 namespace Graphe{
 
+class FsAps;
+
 class MatriceAdjacence
 {
     public:
@@ -11,12 +13,13 @@ class MatriceAdjacence
         MatriceAdjacence();
         MatriceAdjacence(std::vector<std::vector<int>> matrice,int nbNoeud,int nbArc);
         MatriceAdjacence(int nbNoeud);
+		MatriceAdjacence(FsAps graph);
         ~MatriceAdjacence();
 
         /// Getteur
-        int nbNoeud();
-        int nbArc();
-        std::vector<int> Noeud(int noeud);
+        const int nbNoeud() const;
+        const int nbArc() const;
+        const std::vector<int> Noeud(int noeud) const;
 
         /// Setteur
         void AjouteArc(int noeudDep,int noeudArr);
@@ -24,6 +27,7 @@ class MatriceAdjacence
 
         /// Methode
         void inverseAdj();
+		void affiche();
 
     private:
         std::vector<std::vector<int>> d_matrice;

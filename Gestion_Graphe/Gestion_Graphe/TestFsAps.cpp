@@ -1,4 +1,5 @@
 #include "../Gestion_Graphe/include/FsAps.h"
+#include "../Gestion_Graphe/include/MatriceAdjacence.h"
 #include "iostream"
 
 /*TEST_CASE("Les methodes de FsAps sont correctes"){

@@ -1,14 +1,7 @@
-﻿  Test.cpp
-c:\program files (x86)\microsoft visual studio\2017\community\vc\auxiliary\vs\unittest\include\cppunittestassert.h(66): error C2338: Test writer must define specialization of ToString<const Q& q> for your class class std::basic_string<wchar_t,struct std::char_traits<wchar_t>,class std::allocator<wchar_t> > __cdecl Microsoft::VisualStudio::CppUnitTestFramework::ToString<class std::vector<int,class std::allocator<int> >>(const class std::vector<int,class std::allocator<int> > &).
-  c:\program files (x86)\microsoft visual studio\2017\community\vc\auxiliary\vs\unittest\include\cppunittestassert.h(134): note: voir la référence à l'instanciation de la fonction modèle 'std::wstring Microsoft::VisualStudio::CppUnitTestFramework::ToString<T>(const Q &)' en cours de compilation
-          with
-          [
-              T=std::vector<int,std::allocator<int>>,
-              Q=std::vector<int,std::allocator<int>>
-          ]
-  c:\users\pierre vix\source\repos\gestion_graphe\testunitaire\test.cpp(44): note: voir la référence à l'instanciation de la fonction modèle 'void Microsoft::VisualStudio::CppUnitTestFramework::Assert::AreEqual<std::vector<int,std::allocator<_Ty>>>(const T &,const T &,const wchar_t *,const Microsoft::VisualStudio::CppUnitTestFramework::__LineInfo *)' en cours de compilation
-          with
-          [
-              _Ty=int,
-              T=std::vector<int,std::allocator<int>>
-          ]
+﻿  stdafx.cpp
+  FsAps.cpp
+  MatriceAdjacence.cpp
+  Test.cpp
+  Génération de code en cours...
+     Création de la bibliothèque C:\Users\Pierre VIX\source\repos\Gestion_Graphe\Debug\TestUnitaire.lib et de l'objet C:\Users\Pierre VIX\source\repos\Gestion_Graphe\Debug\TestUnitaire.exp
+  TestUnitaire.vcxproj -> C:\Users\Pierre VIX\source\repos\Gestion_Graphe\Debug\TestUnitaire.dll

@@ -1,6 +1,6 @@
-
 #include "../include/MatriceAdjacence.h"
-
+#include "../include/FsAps.h"
+#include <iostream>
 namespace Graphe{
 
 MatriceAdjacence::MatriceAdjacence(std::vector<std::vector<int>> matrice,int nbNoeud,int nbArc):
@@ -25,6 +25,22 @@ MatriceAdjacence::MatriceAdjacence(int nbNoeud):
     }
 }
 
+MatriceAdjacence::MatriceAdjacence(FsAps graph):
+	d_nbNoeud{graph.NbNoeud()},
+	d_nbArc{graph.NbArc()},
+	d_matrice{}
+{
+	for (int i = 0; i < d_nbNoeud; i++) {
+		std::vector<int> B;
+		for (int j = 0; j < d_nbNoeud; j++)  B.push_back(0);
+		int j = graph.Aps(i);
+		while (graph.Fs(j) != 0) {
+			B[graph.Fs(j++)-1] = 1;
+		}
+		d_matrice.push_back(B);
+	}
+}
+
 MatriceAdjacence::~MatriceAdjacence(){
     for(unsigned int i=0;i<d_matrice.size();i++){
         while(d_matrice[i].size()!=0){
@@ -33,15 +49,15 @@ MatriceAdjacence::~MatriceAdjacence(){
     }
 }
 
-int MatriceAdjacence::nbNoeud(){
+const int MatriceAdjacence::nbNoeud() const {
     return d_nbNoeud;
 }
 
-int MatriceAdjacence::nbArc(){
+const int MatriceAdjacence::nbArc() const {
     return d_nbArc;
 }
 
-std::vector<int> MatriceAdjacence::Noeud(int noeud){
+const std::vector<int> MatriceAdjacence::Noeud(int noeud) const{
     return d_matrice[noeud];
 }
 
@@ -69,6 +85,15 @@ void MatriceAdjacence::inverseAdj(){
         }
     }
     d_matrice=M;
+}
+
+void MatriceAdjacence::affiche(){
+	for (int i = 0; i < d_nbNoeud; i++) {
+		for (int j = 0; j < d_nbNoeud; j++) {
+			std::cout<<d_matrice[i][j]<<" ";
+		}
+		std::cout << std::endl;
+	}
 }
 
 }
