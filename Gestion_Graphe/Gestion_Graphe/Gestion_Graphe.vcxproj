@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="include\Distance.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MatriceAdjacenceValuee.cpp" />
     <ClCompile Include="src\FsAps.cpp" />
     <ClCompile Include="src\MatriceAdjacence.cpp" />
     <ClCompile Include="TestFsAps.cpp" />
@@ -31,6 +32,7 @@
     <ClInclude Include="include\Distance.h" />
     <ClInclude Include="include\FsAps.h" />
     <ClInclude Include="include\MatriceAdjacence.h" />
+    <ClInclude Include="include\MatriceAdjacenceValuee.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -55,7 +57,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
