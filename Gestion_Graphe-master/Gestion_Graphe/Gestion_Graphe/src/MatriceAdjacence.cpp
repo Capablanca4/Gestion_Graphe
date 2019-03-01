@@ -23,11 +23,10 @@ MatriceAdjacence::MatriceAdjacence(int nbSommets):
     d_nbSommets{nbSommets},
     d_nbArc{0}
 {
-    for(int i=0;i<nbSommets;i++){
-        std::vector<int>* ptr = new std::vector<int>{};
-        for(int j=0;j<nbSommets;j++)  ptr->push_back(0);
-        d_matrice.push_back(*ptr);
-    }
+	d_matrice.resize(nbSommets);
+	for (int i = 0; i < nbSommets; i++) {
+		d_matrice[i].resize(nbSommets,0);
+	}
 }
 
 MatriceAdjacence::MatriceAdjacence(FsAps graph):
@@ -62,13 +61,13 @@ const int MatriceAdjacence::nbArc() const {
     return d_nbArc;
 }
 
-const std::vector<int> MatriceAdjacence::Noeud(int noeud) const{
-    return d_matrice[noeud];
+const std::vector<int> MatriceAdjacence::Sommet(int Sommet) const{
+    return d_matrice[Sommet];
 }
 
-void MatriceAdjacence::AjouteArc(int noeudDep,int noeudArr){
-    if(!d_matrice[noeudDep][noeudArr]){
-        d_matrice[noeudDep][noeudArr]=1;
+void MatriceAdjacence::AjouteArc(int SommetDep,int SommetArr){
+    if(!d_matrice[SommetDep][SommetArr]){
+        d_matrice[SommetDep][SommetArr]=1;
         d_nbArc++;
     }
 }
@@ -103,43 +102,119 @@ void MatriceAdjacence::affiche(){
 
 void MatriceAdjacence::aleatoire()
 {
-	MatriceAdjacence M(rand() % (11 - 3) + 3);
+	/*MatriceAdjacence M(rand() % (11 - 3) + 3);
 	for (int i = 1; i <= M.nbSommets; i++) {
 		for (int j = 1; j <= M.nbSommets; j++) {
 			if ((rand() % (101))<10) {
 				M.d_matrice[i][j] = 1;
 			}
 		}
-	}
+	}*/
+}
+
+MatriceAdjacence MatriceAdjacence::operator=(const MatriceAdjacence& M)
+{
+
+	return MatriceAdjacence(M.d_matrice,M.d_nbSommets,M.d_nbArc);
 }
 
 MatriceAdjacence operator+(const MatriceAdjacence & M, const MatriceAdjacence & M2)
-{
-	int tailleMin = static_cast<int>(fmin(M.nbSommets(), M2.nbSommets()));
-	std::vector<std::vector<int>> matrice;
-	matrice.resize(tailleMin);
+{	std::vector<std::vector<int>> matrice;
 	int nbArc = 0;
-	for (int i = 0; i < tailleMin; i++) {
-		matrice[i].resize(tailleMin);
-	}
-	for (int i = 0; i < tailleMin; i++) {
-		for (int j = 0; j < tailleMin; j++) {
-			if (M[i][j] == 1 && M2[i][j] == 1) {
-				matrice[i][j] = 1;
-				nbArc++;
-			}
-			else {
-				if (M[i][j] == 1 && M2[i][j] == 1) {
+	int nbSommets;
+	std::cout<< M.nbSommets() << std::endl;
+	std::cout << M2.nbSommets() << std::endl;
+	if (M.nbSommets() < M2.nbSommets()) {
+		matrice.resize(M2.nbSommets());
+		nbSommets = M2.nbSommets();
+		for (int i = 0; i < M2.nbSommets(); i++) {
+			matrice[i].resize(M2.nbSommets());
+		}
+		
+		for (int i = 0; i < M.nbSommets(); i++) {
+			for (int j = 0; j < M.nbSommets(); j++) {
+			
+				if (M.d_matrice[i][j] == 1 && M2.d_matrice[i][j] == 1) {
+					matrice[i][j] = 1;
 					nbArc++;
-
+					
 				}
-				matrice[i][j] = M[i][j] + M2[i][j];
+				else if (M.d_matrice[i][j] == 1 || M2.d_matrice[i][j] == 1) {
+						nbArc++;
+						matrice[i][j] = M.d_matrice[i][j] + M2.d_matrice[i][j];
+				}
+				else {
+					matrice[i][j] = 0;
+				}
+				
+				
+				
+			}
+			for (int j2 = M.nbSommets(); j2 < M2.nbSommets(); j2++) {
+
+				
+				if (M2.d_matrice[i][j2] == 1) {
+					nbArc++;
+				}
+				
+				matrice[i][j2] = M2.d_matrice[i][j2];
+			}
+		}
+		
+		for (int i = M.nbSommets(); i < M2.nbSommets(); i++) {
+			for (int j = 0; j < M2.nbSommets(); j++) {
+				if (M2.d_matrice[i][j] == 1) {
+					nbArc++;
+				}
+				
+				matrice[i][j] = M2.d_matrice[i][j];
+			}
+		}		
+	}
+	else
+	{
+		matrice.resize(M.nbSommets());
+		nbSommets = M.nbSommets();
+		for (int i = 0; i < M.nbSommets(); i++) {
+			matrice[i].resize(M.nbSommets());
+		}
+		for (int i = 0; i < M2.nbSommets(); i++) {
+			for (int j = 0; j < M2.nbSommets(); j++) {
+				if (M.d_matrice[i][j] == 1 && M2.d_matrice[i][j] == 1) {
+					matrice[i][j] = 1;
+					nbArc++;
+				}
+				else if (M.d_matrice[i][j] == 1 || M2.d_matrice[i][j] == 1) {
+					nbArc++;
+					matrice[i][j] = M.d_matrice[i][j] + M2.d_matrice[i][j];
+				}
+				else {
+					matrice[i][j] = 0;
+				}
+				
+			}
+			for (int j2 = M2.nbSommets(); j2 < M.nbSommets(); j2++) {
+				if (M.d_matrice[i][j2] == 1) {
+					nbArc++;
+				}
+				matrice[i][j2] = M.d_matrice[i][j2];
+			}
+		}
+		for (int i = M2.nbSommets(); i < M.nbSommets(); i++) {
+			for (int j = 0; j < M.nbSommets(); j++) {
+				if (M.d_matrice[i][j] == 1) {
+					nbArc++;
+				}
+				matrice[i][j] = M.d_matrice[i][j];
 			}
 		}
 	}
-	return MatriceAdjacence(matrice, tailleMin, nbArc);
-}
+	
 
+	
+	return MatriceAdjacence(matrice, nbSommets, nbArc);
+}
+/*
 MatriceAdjacence operator-(const MatriceAdjacence & M, const MatriceAdjacence & M2)
 {
 	int tailleMin = static_cast<int>(fmin(M.nbSommets(), M2.nbSommets()));
@@ -150,12 +225,12 @@ MatriceAdjacence operator-(const MatriceAdjacence & M, const MatriceAdjacence & 
 	}
 	for (int i = 0; i < tailleMin; i++) {
 		for (int j = 0; j < tailleMin; j++) {
-			if (M[i][j] == 0) {
+			if (M.d_matrice[i][j] == 0) {
 				matrice[i][j] = 0;
 
 			}
 			else {
-				if (M2[i][j] == 1) {
+				if (M2.d_matrice[i][j] == 1) {
 					matrice[i][j] = 0;
 				}
 				else {
@@ -166,6 +241,6 @@ MatriceAdjacence operator-(const MatriceAdjacence & M, const MatriceAdjacence & 
 		}
 	}
 	return MatriceAdjacence(matrice, tailleMin, nbArc);
-}
+}*/
 
 }

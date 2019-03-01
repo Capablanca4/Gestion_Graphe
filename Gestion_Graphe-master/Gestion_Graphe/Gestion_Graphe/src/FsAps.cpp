@@ -42,7 +42,7 @@ FsAps::FsAps(MatriceAdjacence adj) :
 	for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
 		d_AdressePremierSuccesseur.push_back(k);
 		for (int j = 0; j < d_tailleAdressePremierSuccesseur; j++) {
-			if (adj.Noeud(i)[j] != 0) {
+			if (adj.Sommet(i)[j] != 0) {
 				d_FileSuivant.push_back(j+1);
 				k++;
 			}
