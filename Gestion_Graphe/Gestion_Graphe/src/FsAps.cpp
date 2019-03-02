@@ -1,155 +1,161 @@
 #include "../../Gestion_Graphe/include/FsAps.h"
 #include"../../Gestion_Graphe/include/MatriceAdjacence.h"
 #include <iostream>
+#include <fstream>
+#include <ctime>
+#include <cstdlib>
+#include <algorithm>
+#include <utility>
 namespace Graphe{
 
-FsAps::FsAps(int nbNoeud):
-    d_tailleAps{nbNoeud},
-    d_tailleFs{nbNoeud},
-    d_fs{},
-    d_aps{}
-{
-    for(int i=0;i<nbNoeud;i++){
-        d_fs.push_back(0);
-        d_aps.push_back(i);
-    }
-}
+	FsAps::FsAps(int nbSommets) :
+		d_tailleAdressePremierSuccesseur{ nbSommets },
+		d_tailleFileSuivant{ nbSommets },
+		d_FileSuivant{},
+		d_AdressePremierSuccesseur{}
+	{
+		for (int i = 0; i < nbSommets; i++) {
+			d_FileSuivant.push_back(0);
+			d_AdressePremierSuccesseur.push_back(i);
+		}
+	}
 
-FsAps::FsAps(int nbNoeud,const std::vector<int>& fs):
-    d_tailleAps{nbNoeud},
-    d_tailleFs{0},
-    d_fs{fs},
-    d_aps{}
-{
-    determiner_aps();
-}
 
-FsAps::FsAps(int nbNoeud, const std::vector<int>& fs, int nbArc, const std::vector<int>& aps):
-	d_tailleAps{ nbNoeud },
-	d_tailleFs{ nbArc },
-	d_fs{ fs },
-	d_aps{ aps } {}
+	FsAps::FsAps(int nbSommets, const std::vector<int>& FileSuivant) :
+		d_tailleAdressePremierSuccesseur{ nbSommets },
+		d_tailleFileSuivant{ 0 },
+		d_FileSuivant{ FileSuivant },
+		d_AdressePremierSuccesseur{}
+	{
+		determiner_AdressePremierSuccesseur();
+	}
+
+FsAps::FsAps(int nbSommets, const std::vector<int>& FileSuivant, int nbArc, const std::vector<int>& AdressePremierSuccesseur) :
+		d_tailleAdressePremierSuccesseur{ nbSommets },
+		d_tailleFileSuivant{ nbArc },
+		d_FileSuivant{ FileSuivant },
+		d_AdressePremierSuccesseur{ AdressePremierSuccesseur } {}
 
 FsAps::FsAps(MatriceAdjacence adj) :
-	d_tailleFs{ adj.nbArc() },
-	d_tailleAps{ adj.nbNoeud() },
-	d_fs{},
-	d_aps{}
+	d_tailleFileSuivant{ adj.nbArc() },
+	d_tailleAdressePremierSuccesseur{ adj.nbSommets() },
+	d_FileSuivant{},
+	d_AdressePremierSuccesseur{}
 {
 	int k = 0;
-	for (int i = 0; i < d_tailleAps; i++) {
-		d_aps.push_back(k);
-		for (int j = 0; j < d_tailleAps; j++) {
-			if (adj.Noeud(i)[j] != 0) {
-				d_fs.push_back(j+1);
+	for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
+		d_AdressePremierSuccesseur.push_back(k);
+		for (int j = 0; j < d_tailleAdressePremierSuccesseur; j++) {
+			if (adj.Sommet(i)[j] != 0) {
+				d_FileSuivant.push_back(j + 1);
 				k++;
 			}
 		}
-		d_fs.push_back(0);
+		d_FileSuivant.push_back(0);
 		k++;
 	}
 }
 
-FsAps::~FsAps(){
-while(d_fs.size()!=0) d_fs.pop_back();
-while(d_aps.size()!=0) d_aps.pop_back();
+FsAps::~FsAps() {
+	while (d_FileSuivant.size() != 0) d_FileSuivant.pop_back();
+	while (d_AdressePremierSuccesseur.size() != 0) d_AdressePremierSuccesseur.pop_back();
 }
 
-void FsAps::determiner_aps(){
-   d_aps.push_back(0);
-   d_tailleFs=d_fs.size();
-   for(unsigned int i=1;i<d_fs.size()-1;i++){
-       if(d_fs[i]==0) {
-           d_aps.push_back(i+1);
-       }
-    }
+void FsAps::determiner_AdressePremierSuccesseur() {
+	d_AdressePremierSuccesseur.push_back(0);
+	d_tailleFileSuivant = d_FileSuivant.size();
+	for (unsigned int i = 1; i < d_FileSuivant.size() - 1; i++) {
+		if (d_FileSuivant[i] == 0) {
+			d_AdressePremierSuccesseur.push_back(i + 1);
+		}
+	}
 }
 
-const int FsAps::NbNoeud() const {
-    return d_tailleAps;
+const int FsAps::nbSommets() const {
+	return d_tailleAdressePremierSuccesseur;
 }
 
 const int FsAps::NbArc() const {
-    return d_tailleFs;
+	return d_tailleFileSuivant;
 }
 
-const int FsAps::Fs(int i) const{
-    return d_fs[i];
+const int FsAps::FileSuivant(int i) const {
+	return d_FileSuivant[i];
 }
 
-const int FsAps::Aps(int i)const{
-    return d_aps[i];
+const int FsAps::AdressePremierSuccesseur(int i)const {
+	return d_AdressePremierSuccesseur[i];
 }
 
 void FsAps::AjouteArc(int noeudDep, int noeudArr) {
-	if(noeudArr-1<d_tailleFs){
-		int emplacementElt = d_aps[noeudDep-1];
-		while (d_fs[emplacementElt] < noeudArr&&d_fs[emplacementElt] != 0) {
+	if (noeudArr - 1 < d_tailleFileSuivant) {
+		int emplacementElt = d_AdressePremierSuccesseur[noeudDep - 1];
+		while (d_FileSuivant[emplacementElt] < noeudArr&&d_FileSuivant[emplacementElt] != 0) {
 			emplacementElt++;
 		}
-		if (d_fs[emplacementElt] != noeudArr) {
-			d_fs.push_back(noeudArr);
-			for (int i = d_tailleAps; i > emplacementElt;i--) {
-				d_fs[i] = d_fs[i - 1];
+		if (d_FileSuivant[emplacementElt] != noeudArr) {
+			d_FileSuivant.push_back(noeudArr);
+			for (int i = d_tailleAdressePremierSuccesseur; i > emplacementElt; i--) {
+				d_FileSuivant[i] = d_FileSuivant[i - 1];
 			}
-			d_fs[emplacementElt] = noeudArr;
-			d_tailleFs++;
+			d_FileSuivant[emplacementElt] = noeudArr;
+			d_tailleFileSuivant++;
 		}
 	}
 	else {
-		printf("Vous donnez un noeud d'arrivee trop grand !");
+		printf("Vous donnez un sommet d'arrivee trop grand !");
 	}
 }
 
-void FsAps::AjouteNoeud() {
-	d_fs.push_back(0);
-	d_aps.push_back(d_tailleFs);
-	d_tailleFs++;
-	d_tailleAps++;
+void FsAps::AjouteSommet() {
+	d_FileSuivant.push_back(0);
+	d_AdressePremierSuccesseur.push_back(d_tailleFileSuivant);
+	d_tailleFileSuivant++;
+	d_tailleAdressePremierSuccesseur++;
 }
 
 void FsAps::inverse()
 {
 	std::vector<std::vector<int>> mat{ };
-	for (int i = 0; i < d_tailleAps; i++) {
+	for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
 		mat.push_back(std::vector<int>{});
 	}
 	int indicemat = 1, indice = 0;
-	while (indice < d_tailleFs) { 
-		if (d_fs[indice] == 0)  indicemat++;
-		else  mat[d_fs[indice]-1].push_back(indicemat);
+	while (indice < d_tailleFileSuivant) {
+		if (d_FileSuivant[indice] == 0)  indicemat++;
+		else  mat[d_FileSuivant[indice] - 1].push_back(indicemat);
 		indice++;
 	}
 	indice = 0;
-	for (int i = 0; i < d_tailleAps; i++) {
+	for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
 		mat[i].push_back(0);
-		d_aps[i] = indice;
+		d_AdressePremierSuccesseur[i] = indice;
 		for (int j = 0; j < mat[i].size(); j++) {
-			d_fs[indice++] = mat[i][j];
+			d_FileSuivant[indice++] = mat[i][j];
 		}
 	}
 }
 
-void FsAps::afficheFs(){
-	std::cout << "Fs : ";
-	for (int i =0; i < d_tailleFs; i++) {
-		std::cout << d_fs[i] << " ";
+void FsAps::afficheFileSuivant() {
+	std::cout << "FileSuivant : ";
+	for (int i = 0; i < d_tailleFileSuivant; i++) {
+		std::cout << d_FileSuivant[i] << " ";
 	}
 }
 
-void FsAps::afficheAps()
+void FsAps::afficheAdressePremierSuccesseur()
 {
-	std::cout << "Aps : ";
-	for (int i = 0; i < d_tailleAps; i++) {
-		std::cout << d_aps[i] << " ";
+	std::cout << "AdressePremierSuccesseur : ";
+	for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
+		std::cout << d_AdressePremierSuccesseur[i] << " ";
 	}
 }
 
 void FsAps::affiche()
 {
-	afficheFs();
+	afficheFileSuivant();
 	std::cout << std::endl;
-	afficheAps();
+	afficheAdressePremierSuccesseur();
 }
 
 }

@@ -9,39 +9,39 @@ class MatriceAdjacence;
 class FsAps
 {
     public:
-        /// Constructeur
-        FsAps(int nbNoeud);
-        FsAps(int nbNoeud,const std::vector<int>& fs);
-		FsAps(int nbNoeud, const std::vector<int>& fs, int nbArc, const std::vector<int>& aps);
+		/// Constructeur
+		FsAps(int nbSommets);
+		FsAps(int nbSommets, const std::vector<int>& FileSuivant);
+		FsAps(int nbSommets, const std::vector<int>& FileSuivant, int nbArc, const std::vector<int>& AdressePremierSuccesseur);
 		FsAps(MatriceAdjacence adj);
-        ~FsAps();
+		~FsAps();
 
-        ///Accesseur
-        const int NbNoeud() const;
-        const int NbArc() const;
-        const int Fs(int i) const;
-        const int Aps(int i) const;
+		///Accesseur
+		const int nbSommets() const;
+		const int NbArc() const;
+		const int FileSuivant(int i) const;
+		const int AdressePremierSuccesseur(int i) const;
 
 		/// Setteur
 		void AjouteArc(int noeudDep, int noeudArr);
-		void AjouteNoeud();
+		void AjouteSommet();
 
 		/// inverse le graphe
 		void inverse();
 
 		/// Methode d'affichage
-		void afficheFs();
-		void afficheAps();
+		void afficheFileSuivant();
+		void afficheAdressePremierSuccesseur();
 		void affiche();
 
     private:
-        int d_tailleFs;
-        int d_tailleAps;
-        std::vector<int> d_fs;
-        std::vector<int> d_aps;
+		int d_tailleFileSuivant;
+		int d_tailleAdressePremierSuccesseur;
+		std::vector<int> d_FileSuivant;
+		std::vector<int> d_AdressePremierSuccesseur;
 
-        /// Methode privee
-        void determiner_aps();
+		/// Methode privee
+		void determiner_AdressePremierSuccesseur();
 };
 
 }

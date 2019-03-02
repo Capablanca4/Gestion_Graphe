@@ -1,14 +1,15 @@
 #include "Distance.h"
 #include "FsAps.h"
 #include "MatriceAdjacence.h"
+#include <iostream>
 
 namespace Graphe {
 
 Distance::Distance(const MatriceAdjacence& graphe):
 	d_matrice{}
 {
-	d_matrice.push_back(std::vector<int>{graphe.nbNoeud(), graphe.nbArc() } );
-	for (int i = 0; i < graphe.nbNoeud(); i++) {
+	d_matrice.push_back(std::vector<int>{graphe.nbSommets(), graphe.nbArc() } );
+	for (int i = 0; i < graphe.nbSommets(); i++) {
 		std::vector<int> Ligne=distMat(graphe,i+1);
 		d_matrice.push_back(Ligne);
 	}
@@ -17,30 +18,30 @@ Distance::Distance(const MatriceAdjacence& graphe):
 Distance::Distance(const FsAps& graphe) :
 	d_matrice{}
 {
-	std::vector<int> avector = { graphe.NbNoeud(), graphe.NbArc() };
+	std::vector<int> avector = { graphe.nbSommets(), graphe.NbArc() };
 	//d_matrice.push_back(std::vector<int>{graphe.NbNoeud(), graphe.NbArc() });
 	d_matrice.push_back(avector);
-	for (int i = 0; i < graphe.NbNoeud(); i++) {
+	for (int i = 0; i < graphe.nbSommets(); i++) {
 		std::vector<int> Ligne = distFsAps(graphe, i );
 		d_matrice.push_back(Ligne);
 	}
 }
 
 std::vector<int> Distance::distFsAps(const FsAps& graphe, int Sommet) {
-	int t = 0, q = 1, p = 1, d = 0, nbSommet = graphe.NbNoeud();
+	int t = 0, q = 1, p = 1, d = 0, nbSommet = graphe.nbSommets();
 	std::vector<int> tdist{ nbSommet };
 	int *fa = new int[nbSommet + 1];
 	fa[0] = Sommet;
 	for (int i = 1; i <= nbSommet; i++)  tdist.push_back(-1);
-	tdist[Sommet] = 0;
+	tdist[Sommet+1] = 0;
 	while (t < q) {
 		d++;
 		for (int i = t ; i < q ; i++) {
-			int suiv = graphe.Aps(fa[i]);
-			while (graphe.Fs(suiv) != 0) {
-				if (tdist[graphe.Fs(suiv)] == -1) {
-					tdist[graphe.Fs(suiv)] = d;
-					fa[p++] = graphe.Fs(suiv);
+			int suiv = graphe.AdressePremierSuccesseur(fa[i]);
+			while (graphe.FileSuivant(suiv) != 0) {
+				if (tdist[graphe.FileSuivant(suiv)] == -1) {
+					tdist[graphe.FileSuivant(suiv)] = d;
+					fa[p++] = graphe.FileSuivant(suiv)-1;
 				}
 				suiv++;
 			}
@@ -53,7 +54,7 @@ std::vector<int> Distance::distFsAps(const FsAps& graphe, int Sommet) {
 }
 
 std::vector<int> Distance::distMat(const MatriceAdjacence& graphe, int Sommet) {
-	int t = 0, q = 1, p = 1, d = 0, nbSommet = graphe.nbNoeud();
+	int t = 0, q = 1, p = 1, d = 0, nbSommet = graphe.nbSommets();
 	std::vector<int> tdist{ nbSommet };
 	int *fa = new int[nbSommet + 1];
 	fa[0] = Sommet;
@@ -62,7 +63,7 @@ std::vector<int> Distance::distMat(const MatriceAdjacence& graphe, int Sommet) {
 	while (t < q) {
 		d++;
 		for (int i = t + 1; i < q + 1; i++) {
-			std::vector<int> suiv{graphe.Noeud(fa[i])};
+			std::vector<int> suiv{graphe.Sommet(fa[i])};
 			for (int j = 0; j < nbSommet; j++) {
 				if (suiv[j] != 0) {
 					if (tdist[suiv[j]] == -1) {
@@ -86,6 +87,12 @@ const std::vector<int> Distance::Sommet(int i) const
 
 void Distance::affiche()
 {
+	for (int i = 0; i < d_matrice.size(); i++) {
+		for (int j = 0; j < d_matrice[i].size(); j++) {
+			std::cout << d_matrice[i][j] << ",";
+		}
+		std::cout << std::endl;
+	}
 }
 
 }
