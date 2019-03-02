@@ -1,2 +1,22 @@
-﻿  Distance.cpp
+﻿  Test.cpp
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(69): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(130): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(135): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(146): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(151): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(163): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(168): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(196): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(201): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(223): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
   TestUnitaire.vcxproj -> C:\Users\Pierre VIX\source\repos\Capablanca4\Gestion_Graphe\Gestion_Graphe\x64\Debug\TestUnitaire.dll

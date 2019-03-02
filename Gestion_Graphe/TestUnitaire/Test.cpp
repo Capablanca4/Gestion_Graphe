@@ -50,7 +50,7 @@ namespace Graphe
 			delete ptr;
 		}
 
-		TEST_METHOD(TestMatriceAdjacenceAvecDeuXArgument){
+		TEST_METHOD(TestMatriceAdjacenceAvecTroisArgument){
 			Graphe::MatriceAdjacence Mat{ M,NbNoeud,NbArc };
 			Assert::AreEqual(NbNoeud,Mat.nbSommets());
 			Assert::AreEqual(NbArc,Mat.nbArc() );
@@ -223,6 +223,16 @@ namespace Graphe
 				swprintf(message, L"la matrice est fausse à l'iter: %d ", i);
 				Assert::AreEqual(rep[i], testDist.Sommet(i),message);
 			}
+
+		}
+		TEST_METHOD(TestDistanceAvecMatriceAdjacence) {
+			Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
+			/*Graphe::Distance testDist{ testMat };
+			for (int i = 0; i < NbNoeud; i++) {
+				wchar_t message[512];
+				swprintf(message, L"la matrice est fausse à l'iter: %d ", i);
+				Assert::AreEqual(rep[i], testDist.Sommet(i), message);
+			}*/
 
 		}
 	};
