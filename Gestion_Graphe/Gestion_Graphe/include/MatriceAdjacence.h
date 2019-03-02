@@ -11,19 +11,19 @@ class MatriceAdjacence
     public:
         /// Construteur et destructeur
         MatriceAdjacence();
-        MatriceAdjacence(std::vector<std::vector<int>> matrice,int nbNoeud,int nbArc);
-        MatriceAdjacence(int nbNoeud);
+        MatriceAdjacence(std::vector<std::vector<int>> matrice,int nbSommets,int nbArc);
+        MatriceAdjacence(int nbSommets);
 		MatriceAdjacence(FsAps graph);
         ~MatriceAdjacence();
 
         /// Getteur
-        const int nbNoeud() const;
+        const int nbSommets() const;
         const int nbArc() const;
-        const std::vector<int> Noeud(int noeud) const;
+        const std::vector<int> Sommet(int noeud) const;
 
         /// Setteur
         void AjouteArc(int noeudDep,int noeudArr);
-        void AjouteNoeud();
+        void AjouteSommet();
 
         /// Methode
         void inverseAdj();
@@ -31,7 +31,7 @@ class MatriceAdjacence
 
     private:
         std::vector<std::vector<int>> d_matrice;
-        int d_nbNoeud;
+		int d_nbSommets;
         int d_nbArc;
 };
 

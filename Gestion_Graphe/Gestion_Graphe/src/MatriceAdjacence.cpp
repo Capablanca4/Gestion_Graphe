@@ -1,43 +1,47 @@
 #include "../include/MatriceAdjacence.h"
 #include "../include/FsAps.h"
 #include <iostream>
+#include <fstream>
+#include <ctime>
+#include <cstdlib>
+#include <algorithm>
+#include <utility>
 namespace Graphe{
 
-MatriceAdjacence::MatriceAdjacence(std::vector<std::vector<int>> matrice,int nbNoeud,int nbArc):
+MatriceAdjacence::MatriceAdjacence(std::vector<std::vector<int>> matrice,int nbSommets,int nbArc):
     d_matrice{matrice},
-    d_nbNoeud{nbNoeud},
+	d_nbSommets{ nbSommets },
     d_nbArc{nbArc} {}
 
 MatriceAdjacence::MatriceAdjacence():
     d_matrice{},
-    d_nbNoeud{0},
+	d_nbSommets{0},
     d_nbArc{0} {}
 
-MatriceAdjacence::MatriceAdjacence(int nbNoeud):
+MatriceAdjacence::MatriceAdjacence(int nbSommets):
     d_matrice{},
-    d_nbNoeud{nbNoeud},
+	d_nbSommets{ nbSommets },
     d_nbArc{0}
 {
-    for(int i=0;i<nbNoeud;i++){
-        std::vector<int>* ptr = new std::vector<int>{};
-        for(int j=0;j<nbNoeud;j++)  ptr->push_back(0);
-        d_matrice.push_back(*ptr);
-    }
+	d_matrice.resize(nbSommets);
+	for (int i = 0; i < nbSommets; i++) {
+		d_matrice[i].resize(nbSommets, 0);
+	}
 }
 
 MatriceAdjacence::MatriceAdjacence(FsAps graph):
-	d_nbNoeud{graph.NbNoeud()},
+	d_nbSommets{graph.nbSommets()},
 	d_nbArc{graph.NbArc()},
 	d_matrice{}
 {
-	for (int i = 0; i < d_nbNoeud; i++) {
-		std::vector<int> B;
-		for (int j = 0; j < d_nbNoeud; j++)  B.push_back(0);
-		int j = graph.Aps(i);
-		while (graph.Fs(j) != 0) {
-			B[graph.Fs(j++)-1] = 1;
+	d_matrice.resize(d_nbSommets);
+	for (int i = 0; i < d_nbSommets; i++) {
+		d_matrice[i].resize(d_nbSommets,0);
+		int j = graph.AdressePremierSuccesseur(i);
+		while (graph.FileSuivant(j) != 0) {
+			d_matrice[i][graph.FileSuivant(j++)-1] = 1;
 		}
-		d_matrice.push_back(B);
+		
 	}
 }
 
@@ -49,15 +53,15 @@ MatriceAdjacence::~MatriceAdjacence(){
     }
 }
 
-const int MatriceAdjacence::nbNoeud() const {
-    return d_nbNoeud;
+const int MatriceAdjacence::nbSommets() const {
+    return d_nbSommets;
 }
 
 const int MatriceAdjacence::nbArc() const {
     return d_nbArc;
 }
 
-const std::vector<int> MatriceAdjacence::Noeud(int noeud) const{
+const std::vector<int> MatriceAdjacence::Sommet(int noeud) const{
     return d_matrice[noeud];
 }
 
@@ -68,19 +72,19 @@ void MatriceAdjacence::AjouteArc(int noeudDep,int noeudArr){
     }
 }
 
-void MatriceAdjacence::AjouteNoeud(){
+void MatriceAdjacence::AjouteSommet(){
     for(unsigned int i=0;i<d_matrice.size();i++)  d_matrice[i].push_back(0);
-    d_nbNoeud++;
+	d_nbSommets++;
     std::vector<int>* ptr = new std::vector<int>{};
-    for(int i=0;i<d_nbNoeud;i++)  ptr->push_back(0);
+    for(int i=0;i< d_nbSommets;i++)  ptr->push_back(0);
     d_matrice.push_back(*ptr);
 }
 
 void MatriceAdjacence::inverseAdj(){
     std::vector<std::vector<int>> M{};
-    for(int i=0;i<d_nbNoeud;i++){
+    for(int i=0;i< d_nbSommets;i++){
         M.push_back(std::vector<int>{});
-        for(int j=0;j<d_nbNoeud;j++){
+		for (int j = 0; j < d_nbSommets; j++) {
             M[i].push_back(d_matrice[j][i]);
         }
     }
@@ -88,8 +92,8 @@ void MatriceAdjacence::inverseAdj(){
 }
 
 void MatriceAdjacence::affiche(){
-	for (int i = 0; i < d_nbNoeud; i++) {
-		for (int j = 0; j < d_nbNoeud; j++) {
+	for (int i = 0; i < d_nbSommets; i++) {
+		for (int j = 0; j < d_nbSommets; j++) {
 			std::cout<<d_matrice[i][j]<<" ";
 		}
 		std::cout << std::endl;
