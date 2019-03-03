@@ -227,12 +227,12 @@ namespace Graphe
 		}
 		TEST_METHOD(TestDistanceAvecMatriceAdjacence) {
 			Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
-			/*Graphe::Distance testDist{ testMat };
+			Graphe::Distance testDist{ testMat };
 			for (int i = 0; i < NbNoeud; i++) {
 				wchar_t message[512];
 				swprintf(message, L"la matrice est fausse à l'iter: %d ", i);
 				Assert::AreEqual(rep[i], testDist.Sommet(i), message);
-			}*/
+			}
 
 		}
 	};

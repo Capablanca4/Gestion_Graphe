@@ -4,10 +4,15 @@
 
 int main() {
 	int NbNoeud = 7,NbArc = 18;
-	std::vector<int> fs{ 2,3,5,0,3,0,3,4,0,5,6,0,3,0,0,4,6,0 };
-	std::vector<int> aps{ 0,4,6,9,12,14,15 };
-	Graphe::FsAps testFsAps{ NbNoeud, fs, NbArc, aps };
-	Graphe::Distance Mat{ testFsAps };
+	std::vector<std::vector<int>> M{ {0,1,1,0,1,0,0},
+									 {0,0,1,0,0,0,0},
+									 {0,0,1,1,0,0,0},
+									 {0,0,0,0,1,1,0},
+									 {0,0,1,0,0,0,0},
+									 {0,0,0,0,0,0,0},
+									 {0,0,0,1,0,1,0} };
+	Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
+	Graphe::Distance Mat{ testMat };
 	Mat.affiche();
 	getchar();
 	return 0;
