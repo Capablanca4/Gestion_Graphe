@@ -1,6 +1,6 @@
-#include "Distance.h"
-#include "FsAps.h"
-#include "MatriceAdjacence.h"
+#include "../include/Distance.h"
+#include "../include/FsAps.h"
+#include "../include/MatriceAdjacence.h"
 
 namespace Graphe {
 
@@ -62,7 +62,7 @@ std::vector<int> Distance::distMat(const MatriceAdjacence& graphe, int Sommet) {
 	while (t < q) {
 		d++;
 		for (int i = t + 1; i < q + 1; i++) {
-			std::vector<int> suiv{graphe.Noeud(fa[i])};
+			std::vector<int> suiv{graphe.Sommet(fa[i])};
 			for (int j = 0; j < nbSommet; j++) {
 				if (suiv[j] != 0) {
 					if (tdist[suiv[j]] == -1) {

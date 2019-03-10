@@ -33,10 +33,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="include\Distance.cpp">
+    <ClCompile Include="src\Distance.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="MatriceAdjacenceValuee.cpp">
+    <ClCompile Include="src\MatriceAdjacenceValuee.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,10 +47,10 @@
     <ClInclude Include="include\MatriceAdjacence.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="include\Distance.h">
+    <ClInclude Include="include\MatriceAdjacenceValuee.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="include\MatriceAdjacenceValuee.h">
+    <ClInclude Include="include\Distance.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

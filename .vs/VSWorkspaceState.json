@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Gestion_Graphe"
+    "\\Gestion_Graphe",
+    "\\Gestion_Graphe\\Gestion_Graphe",
+    "\\Gestion_Graphe\\Gestion_Graphe\\include"
   ],
-  "SelectedNode": "\\Gestion_Graphe\\Gestion_Graphe",
+  "SelectedNode": "\\Gestion_Graphe\\Gestion_Graphe\\MatriceAdjacenceValuee.cpp",
   "PreviewInSolutionExplorer": false
 }

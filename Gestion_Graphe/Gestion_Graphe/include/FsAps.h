@@ -13,6 +13,7 @@ class FsAps
         FsAps(int nbSommets);
         FsAps(int nbSommets,const std::vector<int>& FileSuivant);
 		FsAps(int nbSommets, const std::vector<int>& FileSuivant, int nbArc, const std::vector<int>& AdressePremierSuccesseur);
+		FsAps(std::string fichier);
 		FsAps(MatriceAdjacence adj);
         ~FsAps();
 
@@ -34,9 +35,16 @@ class FsAps
 		void afficheAdressePremierSuccesseur();
 		void affiche();
 
+		std::vector<int> TableauDesDistances(int sommet);
+		std::vector<std::vector<int>> MatriceDesDistances();
+
+		void enregistrerFsAps(const std::string & fichier);
+
+		void recupererFsAps(const std::string & fichier);
+
     private:
-        int d_tailleFileSuivant;
-        int d_tailleAdressePremierSuccesseur;
+        int d_tailleFileSuivant;//nbArc+nbSommets
+        int d_tailleAdressePremierSuccesseur;//nbSommets
         std::vector<int> d_FileSuivant;
         std::vector<int> d_AdressePremierSuccesseur;
 

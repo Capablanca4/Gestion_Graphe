@@ -1,6 +1,6 @@
 #include "../../Gestion_Graphe/include/FsAps.h"
 #include"../../Gestion_Graphe/include/MatriceAdjacence.h"
-
+#include <fstream>
 
 #include <iostream>
 namespace Graphe{
@@ -32,8 +32,13 @@ FsAps::FsAps(int nbSommets, const std::vector<int>& FileSuivant, int nbArc, cons
 	d_FileSuivant{ FileSuivant },
 	d_AdressePremierSuccesseur{ AdressePremierSuccesseur } {}
 
+FsAps::FsAps(std::string fichier)
+{
+	recupererFsAps(fichier);
+}
+
 FsAps::FsAps(MatriceAdjacence adj) :
-	d_tailleFileSuivant{ adj.nbArc() },
+	d_tailleFileSuivant{ adj.nbArc()+adj.nbSommets() },
 	d_tailleAdressePremierSuccesseur{ adj.nbSommets() },
 	d_FileSuivant{},
 	d_AdressePremierSuccesseur{}
@@ -42,7 +47,7 @@ FsAps::FsAps(MatriceAdjacence adj) :
 	for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
 		d_AdressePremierSuccesseur.push_back(k);
 		for (int j = 0; j < d_tailleAdressePremierSuccesseur; j++) {
-			if (adj.Noeud(i)[j] != 0) {
+			if (adj.ValeurMatrice(i,j) ==1) {
 				d_FileSuivant.push_back(j+1);
 				k++;
 			}
@@ -50,6 +55,7 @@ FsAps::FsAps(MatriceAdjacence adj) :
 		d_FileSuivant.push_back(0);
 		k++;
 	}
+	
 }
 
 FsAps::~FsAps(){
@@ -72,7 +78,8 @@ const int FsAps::nbSommets() const {
 }
 
 const int FsAps::NbArc() const {
-    return d_tailleFileSuivant;
+    //return d_tailleFileSuivant;taille fs=nbArc+nbSommets=> taille fs = nbArc +tailleAps
+	return d_tailleFileSuivant - d_tailleAdressePremierSuccesseur;
 }
 
 const int FsAps::FileSuivant(int i) const{
@@ -154,4 +161,81 @@ void FsAps::affiche()
 	afficheAdressePremierSuccesseur();
 }
 
+std::vector<int> FsAps::TableauDesDistances(int sommet)
+{
+	std::vector<int> TableauDesDistances1(nbSommets(),-1);
+	std::vector<int> FileAttente(nbSommets());
+	
+	FileAttente[0] = sommet;
+	TableauDesDistances1[sommet] = 0;
+
+	int tete = 0;
+	int queue = 1;
+	int premier = queue;
+	int distance = 0;
+	int x, y;
+	while (tete < queue) {
+		distance++;
+		for (int i = tete+1; i <= queue; i++) {
+			x = FileAttente[i];
+			for (int j = d_AdressePremierSuccesseur[x]; (y = d_FileSuivant[j]) != 0; j++) {
+				if (TableauDesDistances1[y] == -1) {
+					TableauDesDistances1[y] = distance;
+					FileAttente[++premier] = d_FileSuivant[y];
+				}
+			}
+		}
+		tete = queue;
+		queue = premier;
+	}
+	return TableauDesDistances1;
+}
+
+std::vector<std::vector<int>> FsAps::MatriceDesDistances()
+{
+	std::vector<std::vector<int>> MatriceDesDistances1(nbSommets());
+	std::vector<int> TableauDist;
+	for (int i = 0; i < nbSommets(); i++) {
+		TableauDist = TableauDesDistances(i);
+		MatriceDesDistances1.push_back(TableauDist);
+	}
+	return MatriceDesDistances1;
+}
+
+
+void FsAps::enregistrerFsAps(const std::string& fichier)
+{
+	std::ofstream os(fichier + ".txt");
+
+	os <<d_tailleFileSuivant ;
+	os << std::endl;
+	os <<d_tailleAdressePremierSuccesseur;
+	os << std::endl;
+	for (int i = 0; i < d_tailleFileSuivant; i++) {
+			os << d_FileSuivant[i] << " ";	
+	}
+	os << std::endl;
+	for (int i = 0; i <d_tailleAdressePremierSuccesseur ; i++) {
+		os << d_AdressePremierSuccesseur[i] << " ";
+	}
+	
+}
+
+void FsAps::recupererFsAps(const std::string & fichier)
+{
+	std::ifstream is(fichier + ".txt");
+
+	is >> d_tailleFileSuivant;
+	is>> d_tailleAdressePremierSuccesseur;
+	
+	d_FileSuivant.resize(d_tailleFileSuivant);
+	for (int i = 0; i < d_tailleFileSuivant; i++) {
+		is>> d_FileSuivant[i] ;
+	}
+	
+	d_AdressePremierSuccesseur.resize(d_tailleAdressePremierSuccesseur);
+	for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
+		is>> d_AdressePremierSuccesseur[i];
+	}
+}
 }

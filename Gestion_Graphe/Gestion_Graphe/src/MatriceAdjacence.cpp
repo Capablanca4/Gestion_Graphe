@@ -6,7 +6,10 @@
 #include <cstdlib>
 #include <algorithm>
 #include <utility>
+#include <fstream>
 namespace Graphe{
+
+
 
 MatriceAdjacence::MatriceAdjacence(std::vector<std::vector<int>> matrice,int nbSommets,int nbArc):
     d_matrice{matrice},
@@ -23,10 +26,12 @@ MatriceAdjacence::MatriceAdjacence(int nbSommets):
     d_nbSommets{nbSommets},
     d_nbArc{0}
 {
-	d_matrice.resize(nbSommets);
-	for (int i = 0; i < nbSommets; i++) {
-		d_matrice[i].resize(nbSommets,0);
-	}
+	dimensionnerA0();
+}
+
+MatriceAdjacence::MatriceAdjacence(std::string Fichier)
+{
+	recupererMatriceAdjacence(Fichier);
 }
 
 MatriceAdjacence::MatriceAdjacence(FsAps graph):
@@ -53,18 +58,27 @@ MatriceAdjacence::~MatriceAdjacence(){
     }
 }
 
-const int MatriceAdjacence::nbSommets() const {
+ int MatriceAdjacence::nbSommets() const {
     return d_nbSommets;
 }
 
-const int MatriceAdjacence::nbArc() const {
+ int MatriceAdjacence::nbArc() const {
     return d_nbArc;
 }
 
-const std::vector<int> MatriceAdjacence::Sommet(int Sommet) const{
+ std::vector<int> MatriceAdjacence::Sommet(int Sommet) const{
     return d_matrice[Sommet];
 }
 
+ int MatriceAdjacence::ValeurMatrice(int i, int j)const
+{
+	return d_matrice[i][j];
+}
+
+ void MatriceAdjacence::setValeurMatrice(int i, int j,int valeur)
+ {
+	  d_matrice[i][j]=valeur;
+ }
 void MatriceAdjacence::AjouteArc(int SommetDep,int SommetArr){
     if(!d_matrice[SommetDep][SommetArr]){
         d_matrice[SommetDep][SommetArr]=1;
@@ -78,6 +92,14 @@ void MatriceAdjacence::AjouteSommet(){
     std::vector<int>* ptr = new std::vector<int>{};
     for(int i=0;i<d_nbSommets;i++)  ptr->push_back(0);
     d_matrice.push_back(*ptr);
+}
+
+void MatriceAdjacence::dimensionnerA0()
+{
+	d_matrice.resize(d_nbSommets);
+	for (int i = 0; i < d_nbSommets; i++) {
+		d_matrice[i].resize(d_nbSommets, 0);
+	}
 }
 
 void MatriceAdjacence::inverseAdj(){
@@ -110,6 +132,36 @@ void MatriceAdjacence::aleatoire()
 			}
 		}
 	}*/
+}
+
+void MatriceAdjacence::enregistrerMatriceAdjacence(const std::string& fichier) 
+{
+	std::ofstream os(fichier + ".txt");
+	
+	os <<d_nbSommets;
+	os << std::endl;
+	os << d_nbArc;
+	os << std::endl;
+	for (int i = 0; i < d_nbSommets; i++) {
+		for (int j = 0; j < d_nbSommets; j++) {
+			os << d_matrice[i][j] << " ";
+		}
+		os << std::endl;
+	}
+}
+
+void MatriceAdjacence::recupererMatriceAdjacence(const std::string & fichier)
+{
+	std::ifstream is(fichier + ".txt");
+
+	is>> d_nbSommets;
+	is>> d_nbArc;
+	dimensionnerA0();
+	for (int i = 0; i < d_nbSommets; i++) {
+		for (int j = 0; j < d_nbSommets; j++) {
+			is >> d_matrice[i][j];
+		}
+	}
 }
 
 MatriceAdjacence MatriceAdjacence::operator=(const MatriceAdjacence& M)
@@ -209,15 +261,25 @@ MatriceAdjacence operator+(const MatriceAdjacence & M, const MatriceAdjacence & 
 			}
 		}
 	}
-	
-
-	
 	return MatriceAdjacence(matrice, nbSommets, nbArc);
 }
 
+void MatriceAdjacence::setMatrice(std::vector<std::vector<int>>matrice) {
+	d_matrice = matrice;
+}
+void MatriceAdjacence::setNbSommets(int nbSommets)
+{
+	d_nbSommets = nbSommets;
+}
+void MatriceAdjacence::setNbArcs(int nbArcs)
+{
+	d_nbArc = nbArcs;
+}
+
+/*
 MatriceAdjacence operator-(const MatriceAdjacence & M, const MatriceAdjacence & M2)
 {
-	/*int tailleMin = static_cast<int>(fmin(M.nbSommets(), M2.nbSommets()));
+	int tailleMin = static_cast<int>(fmin(M.nbSommets(), M2.nbSommets()));
 	std::vector<std::vector<int>> matrice(tailleMin);
 	int nbArc = 0;
 	for (int i = 0; i < tailleMin; i++) {
