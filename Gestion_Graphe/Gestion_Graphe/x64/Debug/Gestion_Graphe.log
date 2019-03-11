@@ -1,9 +1,2 @@
-﻿  TestFsAps.cpp
-  main.cpp
-  Distance.cpp
-  FsAps.cpp
-c:\users\severine\documents\gestion_graphe-master\gestion_graphe\gestion_graphe\src\fsaps.cpp(63): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
-  MatriceAdjacence.cpp
-  MatriceAdjacenceValuee.cpp
-  Génération de code en cours...
-  Gestion_Graphe.vcxproj -> C:\Users\severine\Documents\Gestion_Graphe-master\Gestion_Graphe\x64\Debug\Gestion_Graphe.exe
+﻿  alea.cpp
+  Gestion_Graphe.vcxproj -> C:\Users\severine\source\repos\Capablanca4\Gestion_Graphe\Gestion_Graphe\x64\Debug\Gestion_Graphe.exe

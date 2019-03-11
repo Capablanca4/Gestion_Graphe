@@ -2,6 +2,7 @@
 #include "include/MatriceAdjacence.h"
 #include "include/MatriceAdjacenceValuee.h"
 #include "include/Distance.h"
+#include "include/alea.h"
 #include <iostream>
 
 int main() {
@@ -43,6 +44,8 @@ int main() {
 		std::cout << std::endl;
 	}
 	*/
+
+	/*
 	Graphe::MatriceAdjacenceValuee M1(5);
 	//M1.affiche();
 	M1.AjouteArc(2, 2,-5 );
@@ -52,6 +55,14 @@ int main() {
 	M1.enregistrerMatriceAdjacence("mamatrice");
 	Graphe::MatriceAdjacence M("mamatrice");
 	M.affiche();
+	system("pause");
+	*/
+	alea A(100);
+	for (int i = 0; i <= 100; i++) {
+		A = alea(100);
+		std::cout << A.val_alea() << " " << i << " "<< A.tirageAleatoire(i);
+		std::cout << std::endl;
+	}
 	system("pause");
 	return 0;
 }
