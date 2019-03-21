@@ -1,6 +1,7 @@
 #include "../include/MatriceAdjacence.h"
 #include "../include/FsAps.h"
 #include "../include/MatriceAdjacenceValuee.h"
+#include"../include/alea.h"
 #include <iostream>
 #include <vector>
 #include<string>
@@ -55,6 +56,26 @@ namespace Graphe {
 			}
 		}
 		this->setNbArcs(nbArcs);
+	}
+
+	MatriceAdjacenceValuee::MatriceAdjacenceValuee(bool valeurAleatoirePositives) : MatriceAdjacence(true)
+	{
+		int borneInf, borneSuperieur = 11;
+		if (valeurAleatoirePositives == true) {
+			borneInf = 0;
+		}
+		else {
+			borneInf = -11;
+		}
+		dimensionnerAInfini();
+		for (int i = 0; i < this->nbSommets(); i++) {
+			for (int j = 0; j < this->nbSommets(); j++) {
+				if (ValeurMatrice(i, j) == 1) {
+					d_MatriceAvecValeur[i][j] = alea(borneInf, borneSuperieur).val_alea();
+					//d_vasetValeurMatrice(i, j, );
+				}
+			}
+		}
 	}
 
 	 

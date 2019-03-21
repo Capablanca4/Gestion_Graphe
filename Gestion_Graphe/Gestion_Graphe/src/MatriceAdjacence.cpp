@@ -1,5 +1,6 @@
 #include "../include/MatriceAdjacence.h"
 #include "../include/FsAps.h"
+#include"../include/alea.h"
 #include <iostream>
 #include <fstream>
 #include <ctime>
@@ -20,6 +21,21 @@ MatriceAdjacence::MatriceAdjacence():
     d_matrice{},
     d_nbSommets{0},
     d_nbArc{0} {}
+
+MatriceAdjacence::MatriceAdjacence(bool aleatoire): d_nbSommets { alea(1, 10).val_alea() },d_nbArc{alea(1,d_nbSommets*d_nbSommets).val_alea()}
+{	
+	int val1, val2;
+	dimensionnerA0();
+	int i = this->nbArc();
+	while (i != 0) {
+		 val1 = alea(0, this->nbSommets()).val_alea();
+		 val2 = alea(0, this->nbSommets()).val_alea();
+		 if (d_matrice[val1][val2] == 0) {
+			 d_matrice[val1][val2] = 1;
+			 i--;
+		 }
+	}
+}
 
 MatriceAdjacence::MatriceAdjacence(int nbSommets):
     d_matrice{},

@@ -11,6 +11,7 @@ class MatriceAdjacence
     public:
         /// Construteur et destructeur
         MatriceAdjacence();
+		MatriceAdjacence(bool aleatoire );
         MatriceAdjacence(std::vector<std::vector<int>> matrice,int nbSommets,int nbArc);
         MatriceAdjacence(int nbSommets);
 		MatriceAdjacence(std::string Fichier);

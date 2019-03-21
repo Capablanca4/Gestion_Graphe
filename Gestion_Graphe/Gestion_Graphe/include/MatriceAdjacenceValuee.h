@@ -10,6 +10,7 @@ namespace Graphe {
 		MatriceAdjacenceValuee(const std::string & fichier);
 		MatriceAdjacenceValuee(int nbSommets, int nbArcs, std::vector<std::vector<int>> Matrice);
 		MatriceAdjacenceValuee(int nbSommets, int nbArcs, std::vector<std::vector<int>> Matrice,bool valuer=1);
+		MatriceAdjacenceValuee(bool valeurAleatoirePositives);
 		bool SansValeurNegative()const;
 	   virtual void AjouteArc(int sommetDep, int sommetArriver, int valeur);
 		void ModifierArc(int sommetDep, int sommetArriver, int valeur);

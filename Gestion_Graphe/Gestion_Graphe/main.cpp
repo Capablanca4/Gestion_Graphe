@@ -57,12 +57,16 @@ int main() {
 	M.affiche();
 	system("pause");
 	*/
-	alea A(100);
+	/*alea A(100);
 	for (int i = 0; i <= 100; i++) {
 		A = alea(100);
 		std::cout << A.val_alea() << " " << i << " "<< A.tirageAleatoire(i);
 		std::cout << std::endl;
-	}
+	}*/
+	/*Graphe::MatriceAdjacence M(true);
+	M.affiche();*/
+	Graphe::MatriceAdjacenceValuee MV(false);
+	MV.affiche();
 	system("pause");
 	return 0;
 }
