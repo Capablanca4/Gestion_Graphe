@@ -1,6 +1,7 @@
 #include "include/FsAps.h"
 #include "include/MatriceAdjacence.h"
 #include "include/Distance.h"
+#include "include/Rang.h"
 
 int main() {
 	int NbNoeud = 7,NbArc = 18;
@@ -12,8 +13,8 @@ int main() {
 									 {0,0,0,0,0,0,0},
 									 {0,0,0,1,0,1,0} };
 	Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
-	Graphe::Distance Mat{ testMat };
-	Mat.affiche();
+	Graphe::Rang TestRang{ testMat };
+	TestRang.affiche();
 	getchar();
 	return 0;
 }

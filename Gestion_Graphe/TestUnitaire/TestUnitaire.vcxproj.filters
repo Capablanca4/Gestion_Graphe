@@ -44,7 +44,10 @@
     <ClCompile Include="..\Gestion_Graphe\src\MatriceAdjacence.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\Gestion_Graphe\include\Distance.cpp">
+    <ClCompile Include="..\Gestion_Graphe\src\Distance.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Gestion_Graphe\src\Rang.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

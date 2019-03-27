@@ -1,6 +1,6 @@
-#include "Distance.h"
-#include "FsAps.h"
-#include "MatriceAdjacence.h"
+#include "../../Gestion_Graphe/include/MatriceAdjacence.h"
+#include "../../Gestion_Graphe/include/FsAps.h"
+#include "../../Gestion_Graphe/include/Distance.h"
 #include <iostream>
 
 namespace Graphe {

@@ -4,6 +4,7 @@
 #include "../Gestion_Graphe/include/MatriceAdjacence.h"
 #include "../Gestion_Graphe/include/FsAps.h"
 #include "../Gestion_Graphe/include/Distance.h"
+#include "../Gestion_Graphe/include/Rang.h"
 #include <iostream>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -59,7 +60,7 @@ namespace Graphe
 			}
 		}
 
-		TEST_METHOD(TestMatriceAdjacenceAvecFsApsEnArgument) { /// Ce test ne passe pas il y a eu une erreur lors de la recopie
+		TEST_METHOD(TestMatriceAdjacenceAvecFsApsEnArgument) { 
 			Graphe::FsAps testFsAps{ NbNoeud, fs, NbArc, aps };
 			Graphe::MatriceAdjacence Mat{ testFsAps };
 			Assert::AreEqual(NbNoeud,Mat.nbSommets());
@@ -234,6 +235,30 @@ namespace Graphe
 				Assert::AreEqual(rep[i], testDist.Sommet(i), message);
 			}
 
+		}
+	};
+
+	TEST_CLASS(TestRang) {
+	private:
+		std::vector<int> rep{0,0,1,-1,-1,-1,-1,0};
+	public:
+		TEST_METHOD(TestRangAvecFsAps) {
+			Graphe::FsAps testFsAps{ NbNoeud, fs,NbArc,aps };
+			Graphe::Rang TestRang{ testFsAps };
+			for (int i = 0; i < NbNoeud; i++) {
+				wchar_t message[512];
+				swprintf(message, L"le rang est faux à l'iter: %d ", i);
+				Assert::AreEqual(rep[i], TestRang.Sommet(i), message);
+			}
+		}
+		TEST_METHOD(TestRangAvecMatriceAdjacence) {
+			Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
+			Graphe::Rang TestRang{ testMat };
+			for (int i = 0; i < NbNoeud; i++) {
+				wchar_t message[512];
+				swprintf(message, L"le rang est faux à l'iter: %d ", i);
+				Assert::AreEqual(rep[i], TestRang.Sommet(i), message);
+			}
 		}
 	};
 }
