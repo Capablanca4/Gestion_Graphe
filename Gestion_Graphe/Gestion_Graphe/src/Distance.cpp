@@ -1,6 +1,6 @@
-#include "Distance.h"
-#include "FsAps.h"
-#include "MatriceAdjacence.h"
+#include "../../Gestion_Graphe/include/MatriceAdjacence.h"
+#include "../../Gestion_Graphe/include/FsAps.h"
+#include "../../Gestion_Graphe/include/Distance.h"
 #include <iostream>
 
 namespace Graphe {
@@ -10,7 +10,7 @@ Distance::Distance(const MatriceAdjacence& graphe):
 {
 	d_matrice.push_back(std::vector<int>{graphe.nbSommets(), graphe.nbArc() } );
 	for (int i = 0; i < graphe.nbSommets(); i++) {
-		std::vector<int> Ligne=distMat(graphe,i+1);
+		std::vector<int> Ligne=distMat(graphe,i);
 		d_matrice.push_back(Ligne);
 	}
 }
@@ -59,16 +59,16 @@ std::vector<int> Distance::distMat(const MatriceAdjacence& graphe, int Sommet) {
 	int *fa = new int[nbSommet + 1];
 	fa[0] = Sommet;
 	for (int i = 1; i <= nbSommet; i++)  tdist.push_back(-1);
-	tdist[Sommet] = 0;
+	tdist[Sommet+1] = 0;
 	while (t < q) {
 		d++;
-		for (int i = t + 1; i < q + 1; i++) {
-			std::vector<int> suiv{graphe.Sommet(fa[i])};
+		for (int i = t ; i < q ; i++) {
+			std::vector<int> suiv= graphe.Sommet(fa[i]);
 			for (int j = 0; j < nbSommet; j++) {
-				if (suiv[j] != 0) {
-					if (tdist[suiv[j]] == -1) {
-						tdist[suiv[j]] = d;
-						fa[++p] = suiv[j];
+				if (suiv[j] != 0) { 
+					if (tdist[j+1] == -1) { 
+						tdist[j+1] = d;
+						fa[p++] = j;
 					}
 				}
 			}

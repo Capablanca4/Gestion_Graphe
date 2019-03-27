@@ -19,18 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\Distance.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\Distance.cpp" />
     <ClCompile Include="src\FsAps.cpp" />
     <ClCompile Include="src\MatriceAdjacence.cpp" />
-    <ClCompile Include="TestFsAps.cpp" />
-    <ClCompile Include="testMain.cpp" />
-    <ClCompile Include="testMatriceAdjacence.cpp" />
+    <ClCompile Include="src\Rang.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Distance.h" />
     <ClInclude Include="include\FsAps.h" />
     <ClInclude Include="include\MatriceAdjacence.h" />
+    <ClInclude Include="include\Rang.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
