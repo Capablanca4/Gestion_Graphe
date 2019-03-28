@@ -3,13 +3,13 @@
 class alea
 {
 public:
-    alea();
-    alea(int a,int b);
-    alea(int a);
-    int val_alea()const;
+	alea();
+	alea(int a);
+	alea(int a, int b);
+	int val_alea()const;
 
-    bool tirageAleatoire(int p);
+	bool tirageAleatoire(int p);
 private:
-    int d_val;
+	int d_val;
 };
 #endif

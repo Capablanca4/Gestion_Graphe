@@ -2,54 +2,55 @@
 #define MATRICEADJACENCE_H
 #include <vector>
 #include <string>
-namespace Graphe{
+#include "alea.h"
+namespace Graphe {
 
-class FsAps;
+	class FsAps;
 
-class MatriceAdjacence
-{
-    public:
-        /// Construteur et destructeur
-        MatriceAdjacence();
-		MatriceAdjacence(bool aleatoire );
-        MatriceAdjacence(std::vector<std::vector<int>> matrice,int nbSommets,int nbArc);
-        MatriceAdjacence(int nbSommets);
-		MatriceAdjacence(std::string Fichier);
+	class MatriceAdjacence
+	{
+	public:
+		/// Construteur et destructeur
+		MatriceAdjacence();
+		MatriceAdjacence(alea aleatoire);
+		MatriceAdjacence(int nbSommets);
+		MatriceAdjacence(std::vector<std::vector<int>> matrice, int nbSommets, int nbArc);
 		MatriceAdjacence(FsAps graph);
-        ~MatriceAdjacence();
+		MatriceAdjacence(std::string Fichier);
+		~MatriceAdjacence();
 
-        /// Getteur
-         int nbSommets() const;
-         int nbArc() const;
-         std::vector<int> Sommet(int Sommet) const;
-		 int ValeurMatrice(int i, int j)const;
+		/// Getteur
+		const int nbSommets() const;
+		const int nbArc() const;
+		const std::vector<int> Sommet(int Sommet) const;
+		const int ValeurMatrice(int i, int j)const;
 
-        /// Setteur
-        virtual void AjouteArc(int sommetDep,int sommetArr);
-        void AjouteSommet();
+		/// Setteur
+		virtual void AjouteArc(int sommetDep, int sommetArr);
+		void AjouteSommet();
 		void setMatrice(std::vector<std::vector<int>>matrice);
-		void setNbSommets(int nbSommets);
-		void setNbArcs(int nbArcs);
 		void setValeurMatrice(int i, int j, int valeur);
 
-        /// Methode
-		void dimensionnerA0();
-        void inverseAdj();
+		/// Methode
+		void inverseAdj();
 		void affiche();
 		void aleatoire();
 
-		
-		
-		void enregistrerMatriceAdjacence(const std::string& fichier);
-		void recupererMatriceAdjacence(const std::string& fichier);
+		void enregistrerMatriceAdjacence(std::ofstream& os);
+		void recupererMatriceAdjacence(std::ifstream& is);
+
 		friend MatriceAdjacence operator+(const MatriceAdjacence & M, const MatriceAdjacence & M2);
 		MatriceAdjacence operator=(const MatriceAdjacence& M);
 		//friend MatriceAdjacence operator-(const MatriceAdjacence & M, const MatriceAdjacence & M2);
-    private:
-        std::vector<std::vector<int>> d_matrice;
-        int d_nbSommets;
-        int d_nbArc;
-};
+	private:
+		std::vector<std::vector<int>> d_matrice;
+		int d_nbSommets;
+		int d_nbArc;
+
+		//Methode privée ?
+	protected:
+		void dimensionnerA0();
+	};
 
 }
 #endif // MATRICEADJACENCE_H

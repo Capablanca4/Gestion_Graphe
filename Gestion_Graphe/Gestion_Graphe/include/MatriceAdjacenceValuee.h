@@ -9,20 +9,17 @@ namespace Graphe {
 		MatriceAdjacenceValuee(int nbSommets);
 		MatriceAdjacenceValuee(const std::string & fichier);
 		MatriceAdjacenceValuee(int nbSommets, int nbArcs, std::vector<std::vector<int>> Matrice);
-		MatriceAdjacenceValuee(int nbSommets, int nbArcs, std::vector<std::vector<int>> Matrice,bool valuer=1);
-		MatriceAdjacenceValuee(bool valeurAleatoirePositives);
+		MatriceAdjacenceValuee(alea aleatoire, int bornesup, int borneinf);
 		bool SansValeurNegative()const;
-	   virtual void AjouteArc(int sommetDep, int sommetArriver, int valeur);
-		void ModifierArc(int sommetDep, int sommetArriver, int valeur);
-		bool EstUnArc(int sommmetDep, int sommetArriver);
+		virtual void SetArc(int sommetDep, int sommetArriver, int valeur);
 
-		virtual void affiche()const ;
-		void enregistrerMatriceAdjacenceValuee(const std::string & fichier);
-		void recupererMatriceAdjacenceValuee(const std::string & fichier);
+		virtual void affiche()const;
+		void enregistrerMatriceAdjacenceValuee(std::ofstream& os);
+		void recupererMatriceAdjacenceValuee(std::ifstream& is);
 		void dimensionnerAInfini();
 	private:
 		std::vector<std::vector<int>> d_MatriceAvecValeur;
+		bool EstUnArc(int sommmetDep, int sommetArriver);
 	};
 }
 #endif // !MATRICEADJACENCEVALUEE_H
-
