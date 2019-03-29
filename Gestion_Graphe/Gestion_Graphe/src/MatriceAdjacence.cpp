@@ -25,6 +25,7 @@ namespace Graphe {
 			for (int j = 0; j < d_nbSommets; j++) {
 				if (rand() % 2) {
 					d_matrice[i][j] = 1;
+					d_nbArc++;
 				}
 			}
 		}
@@ -89,22 +90,15 @@ namespace Graphe {
 		return d_matrice[i][j];
 	}
 
-	void MatriceAdjacence::setValeurMatrice(int i, int j, int valeur) {
-		if (valeur != d_matrice[i][j]) {
+	void MatriceAdjacence::setArc(int sommetDep, int sommetArr, int valeur) {
+		if (valeur != d_matrice[sommetDep][sommetArr]) {
 			if (valeur == 0) d_nbArc--;
 			else d_nbArc++;
-		}
-		d_matrice[i][j] = valeur;
-
-	}
-	void MatriceAdjacence::AjouteArc(int SommetDep, int SommetArr) {
-		if (!d_matrice[SommetDep][SommetArr]) {
-			d_matrice[SommetDep][SommetArr] = 1;
-			d_nbArc++;
+			d_matrice[sommetDep][sommetArr] = valeur;
 		}
 	}
 
-	void MatriceAdjacence::AjouteSommet() {
+	void MatriceAdjacence::ajouteSommet() {
 		for (int i = 0; i < d_nbSommets; i++)  d_matrice[i].push_back(0);
 		d_nbSommets++;
 		std::vector<int> nouvelleligne = std::vector<int>{};
@@ -137,18 +131,6 @@ namespace Graphe {
 			}
 			std::cout << std::endl;
 		}
-	}
-
-	void MatriceAdjacence::aleatoire()
-	{
-		/*MatriceAdjacence M(rand() % (11 - 3) + 3);
-		for (int i = 1; i <= M.nbSommets; i++) {
-			for (int j = 1; j <= M.nbSommets; j++) {
-				if ((rand() % (101))<10) {
-					M.d_matrice[i][j] = 1;
-				}
-			}
-		}*/
 	}
 
 	void MatriceAdjacence::enregistrerMatriceAdjacence(std::ofstream& os)

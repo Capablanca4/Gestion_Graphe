@@ -18,7 +18,6 @@ namespace Graphe {
 	}
 
 	FsAps::FsAps(alea aleatoire) :
-		d_tailleFileSuivant{ aleatoire.val_alea() },
 		d_tailleAdressePremierSuccesseur{ aleatoire.val_alea() }
 	{
 		int nbelement = 0;
@@ -33,6 +32,7 @@ namespace Graphe {
 			d_FileSuivant.push_back(0);
 			nbelement++;
 		}
+		d_tailleFileSuivant = nbelement;
 	}
 
 	FsAps::FsAps(int nbSommets, const std::vector<int>& FileSuivant) :
@@ -46,7 +46,7 @@ namespace Graphe {
 
 	FsAps::FsAps(int nbSommets, const std::vector<int>& FileSuivant, int nbArc, const std::vector<int>& AdressePremierSuccesseur) :
 		d_tailleAdressePremierSuccesseur{ nbSommets },
-		d_tailleFileSuivant{ nbArc },
+		d_tailleFileSuivant{ nbArc+nbSommets },
 		d_FileSuivant{ FileSuivant },
 		d_AdressePremierSuccesseur{ AdressePremierSuccesseur } {}
 
@@ -96,8 +96,7 @@ namespace Graphe {
 	}
 
 	const int FsAps::NbArc() const {
-		//return d_tailleFileSuivant;taille fs=nbArc+nbSommets=> taille fs = nbArc +tailleAps
-		return d_tailleFileSuivant - d_tailleAdressePremierSuccesseur;
+		return d_tailleFileSuivant-d_tailleAdressePremierSuccesseur;
 	}
 
 	const int FsAps::FileSuivant(int i) const {

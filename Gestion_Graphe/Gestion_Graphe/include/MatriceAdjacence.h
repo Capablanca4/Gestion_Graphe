@@ -26,15 +26,13 @@ namespace Graphe {
 		const int ValeurMatrice(int i, int j)const;
 
 		/// Setteur
-		virtual void AjouteArc(int sommetDep, int sommetArr);
-		void AjouteSommet();
+		void ajouteSommet();
 		void setMatrice(std::vector<std::vector<int>>matrice);
-		void setValeurMatrice(int i, int j, int valeur);
+		virtual void setArc(int sommetDep, int sommetArr, int valeur);
 
 		/// Methode
 		void inverseAdj();
 		void affiche();
-		void aleatoire();
 
 		void enregistrerMatriceAdjacence(std::ofstream& os);
 		void recupererMatriceAdjacence(std::ifstream& is);

@@ -1,1 +1,9 @@
-﻿  Gestion_Graphe.vcxproj -> C:\Users\Pierre VIX\source\repos\Capablanca4\Gestion_Graphe\Gestion_Graphe\x64\Debug\Gestion_Graphe.exe
+﻿  main.cpp
+  Distance.cpp
+  FsAps.cpp
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\gestion_graphe\src\fsaps.cpp(86): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
+  MatriceAdjacence.cpp
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\gestion_graphe\src\matriceadjacence.cpp(257): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
+  MatriceAdjacenceValuee.cpp
+  Génération de code en cours...
+  Gestion_Graphe.vcxproj -> C:\Users\Pierre VIX\source\repos\Capablanca4\Gestion_Graphe\Gestion_Graphe\x64\Debug\Gestion_Graphe.exe

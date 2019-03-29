@@ -154,6 +154,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Gestion_Graphe\include\alea.h" />
+    <ClInclude Include="..\Gestion_Graphe\include\Distance.h" />
     <ClInclude Include="..\Gestion_Graphe\include\FsAps.h" />
     <ClInclude Include="..\Gestion_Graphe\include\MatriceAdjacence.h" />
     <ClInclude Include="SpecialisationTest.h" />
@@ -161,7 +163,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Gestion_Graphe\include\Distance.cpp" />
+    <ClCompile Include="..\Gestion_Graphe\src\alea.cpp" />
+    <ClCompile Include="..\Gestion_Graphe\src\Distance.cpp" />
     <ClCompile Include="..\Gestion_Graphe\src\FsAps.cpp" />
     <ClCompile Include="..\Gestion_Graphe\src\MatriceAdjacence.cpp" />
     <ClCompile Include="stdafx.cpp">

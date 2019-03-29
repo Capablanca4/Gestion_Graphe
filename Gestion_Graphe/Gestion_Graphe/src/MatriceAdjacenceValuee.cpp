@@ -25,7 +25,7 @@ namespace Graphe {
 		for (int i = 0; i < nbSommets(); i++) {
 			for (int j = 0; j < nbSommets(); j++) {
 				if (d_MatriceAvecValeur[i][j] != INFINI) {
-					setValeurMatrice(i, j, 1);
+					setArc(i, j, 1);
 				}
 			}
 		}
@@ -37,7 +37,7 @@ namespace Graphe {
 		for (int i = 0; i < nbSommets; i++) {
 			for (int j = 0; j < nbSommets; j++) {
 				if (d_MatriceAvecValeur[i][j] != INFINI) {
-					setValeurMatrice(i, j, 1);
+					setArc(i, j, 1);
 				}
 			}
 		}
@@ -51,7 +51,7 @@ namespace Graphe {
 			for (int j = 0; j < this->nbSommets(); j++) {
 				if (rand() % 2) {
 					d_MatriceAvecValeur[i][j] = alea(borneinf, bornesup).val_alea();
-					setValeurMatrice(i, j, 1);
+					setArc(i, j, 1);
 				}
 			}
 		}
@@ -74,7 +74,7 @@ namespace Graphe {
 	}
 
 	void MatriceAdjacenceValuee::SetArc(int sommetDep, int sommetArriver, int valeur) {
-		MatriceAdjacence::AjouteArc(sommetDep, sommetArriver);
+		setArc(sommetDep, sommetArriver,1);
 		d_MatriceAvecValeur[sommetDep][sommetArriver] = valeur;
 	}
 
