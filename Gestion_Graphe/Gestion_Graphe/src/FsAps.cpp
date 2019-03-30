@@ -23,7 +23,7 @@ namespace Graphe {
 		int nbelement = 0;
 		for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
 			d_AdressePremierSuccesseur.push_back(nbelement);
-			for (int j = 0; j < d_tailleAdressePremierSuccesseur; j++) {
+			for (int j = 1; j < d_tailleAdressePremierSuccesseur; j++) {
 				if (rand() % 2) {
 					d_FileSuivant.push_back(j);
 					nbelement++;
@@ -65,7 +65,7 @@ namespace Graphe {
 		for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
 			d_AdressePremierSuccesseur.push_back(k);
 			for (int j = 0; j < d_tailleAdressePremierSuccesseur; j++) {
-				if (adj.ValeurMatrice(i, j) == 1) {
+				if (adj.valeurMatrice(i, j) == 1) {
 					d_FileSuivant.push_back(j + 1);
 					k++;
 				}
@@ -95,19 +95,19 @@ namespace Graphe {
 		return d_tailleAdressePremierSuccesseur;
 	}
 
-	const int FsAps::NbArc() const {
+	const int FsAps::nbArc() const {
 		return d_tailleFileSuivant-d_tailleAdressePremierSuccesseur;
 	}
 
-	const int FsAps::FileSuivant(int i) const {
+	const int FsAps::fileSuivant(int i) const {
 		return d_FileSuivant[i];
 	}
 
-	const int FsAps::AdressePremierSuccesseur(int i)const {
+	const int FsAps::adressePremierSuccesseur(int i)const {
 		return d_AdressePremierSuccesseur[i];
 	}
 
-	void FsAps::AjouteArc(int noeudDep, int noeudArr) {
+	void FsAps::ajouteArc(int noeudDep, int noeudArr) {
 		if (noeudArr - 1 < d_tailleFileSuivant) {
 			int emplacementElt = d_AdressePremierSuccesseur[noeudDep - 1];
 			while (d_FileSuivant[emplacementElt] < noeudArr&&d_FileSuivant[emplacementElt] != 0) {
@@ -127,7 +127,7 @@ namespace Graphe {
 		}
 	}
 
-	void FsAps::AjouteNoeud() {
+	void FsAps::ajouteNoeud() {
 		d_FileSuivant.push_back(0);
 		d_AdressePremierSuccesseur.push_back(d_tailleFileSuivant);
 		d_tailleFileSuivant++;

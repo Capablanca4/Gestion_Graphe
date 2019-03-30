@@ -36,59 +36,70 @@ namespace Graphe
 
 		TEST_METHOD(TestMatriceAdjacenceSansaArgument) {
 			Graphe::MatriceAdjacence Mat{};
-			Assert::AreEqual(0, Mat.nbSommets());
-			Assert::AreEqual(0, Mat.nbArc());
+			wchar_t message[512];
+			swprintf(message, L"Le nombre de sommet est faux");
+			Assert::AreEqual(0, Mat.nbSommets(),message);
+			swprintf(message, L"Le nombre d'arc est faux");
+			Assert::AreEqual(0, Mat.nbArc(),message);
 		}
 
-		TEST_METHOD(TestMatriceAdjacenceAvecUnArgumentAlea) {
+		TEST_METHOD(TestMatriceAdjacenceAvecUnAlea) {
 			alea aleatoire(1, 10);
 			Graphe::MatriceAdjacence Mat{ aleatoire };
-			Assert::AreEqual(aleatoire.val_alea(), Mat.nbSommets());
+			wchar_t message[512];
+			swprintf(message, L"Le nombre de sommet est faux");
+			Assert::AreEqual(aleatoire.val_alea(), Mat.nbSommets(),message);
 			int TestNbNoeud = 0;
 			for (int i = 0; i < Mat.nbSommets(); i++) {
 				for (int j = 0; j < Mat.nbSommets(); j++) {
-					wchar_t message[512];
-					swprintf(message, L"M est fausse à cet endroit: ligne %d, colonne %d", i,j);
-					Assert::IsTrue(Mat.ValeurMatrice(i, j) == 0 || Mat.ValeurMatrice(i, j) == 1,message);
-					if (Mat.ValeurMatrice(i,j) == 1) TestNbNoeud++;
+					swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", i,j);
+					Assert::IsTrue(Mat.valeurMatrice(i, j) == 0 || Mat.valeurMatrice(i, j) == 1,message);
+					if (Mat.valeurMatrice(i,j) == 1) TestNbNoeud++;
 				}
 			}
+			swprintf(message, L"Le nombre d'arc est faux");
 			Assert::AreEqual(TestNbNoeud, Mat.nbArc());
 		}
 
-		TEST_METHOD(TestMatriceAdjacenceAvecUnArgumentInt) {
+		TEST_METHOD(TestMatriceAdjacenceAvecUnInt) {
 			Graphe::MatriceAdjacence Mat{ NbNoeud };
-			Assert::AreEqual(NbNoeud, Mat.nbSommets());
-			Assert::AreEqual(0, Mat.nbArc());
+			wchar_t message[512];
+			swprintf(message, L"Le nombre de sommet est faux");
+			Assert::AreEqual(NbNoeud, Mat.nbSommets(),message);
+			swprintf(message, L"Le nombre d'arc est faux");
+			Assert::AreEqual(0, Mat.nbArc(),message);
 			for (int i = 0; i < Mat.nbSommets(); i++) {
 				for (int j = 0; j < Mat.nbSommets(); j++) {
-					wchar_t message[512];
-					swprintf(message, L"M est fausse à cet endroit: ligne %d, colonne %d", i, j);
-					Assert::AreEqual(0, Mat.ValeurMatrice(i, j),message);
+					swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", i, j);
+					Assert::AreEqual(0, Mat.valeurMatrice(i, j),message);
 				}
 			}
 		}
 
 		TEST_METHOD(TestMatriceAdjacenceAvecTroisArgument) {
 			Graphe::MatriceAdjacence Mat{ M,NbNoeud,NbArc };
-			Assert::AreEqual(NbNoeud, Mat.nbSommets());
-			Assert::AreEqual(NbArc, Mat.nbArc());
+			wchar_t message[512];
+			swprintf(message, L"Le nombre de sommet est faux");
+			Assert::AreEqual(NbNoeud, Mat.nbSommets(),message);
+			swprintf(message, L"Le nombre d'arc est faux");
+			Assert::AreEqual(NbArc, Mat.nbArc(),message);
 			for (int i = 0; i < NbNoeud; i++) {
-				wchar_t message[512];
-				swprintf(message, L"M est fausse à cet endroit: ligne %d" ,i);
-				Assert::AreEqual(M[i], Mat.Sommet(i),message);
+				swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d", i);
+				Assert::AreEqual(M[i], Mat.sommet(i),message);
 			}
 		}
 
 		TEST_METHOD(TestMatriceAdjacenceAvecFsApsEnArgument) {
 			Graphe::FsAps testFsAps{ NbNoeud, fs, NbArc, aps };
 			Graphe::MatriceAdjacence Mat{ testFsAps };
-			Assert::AreEqual(NbNoeud, Mat.nbSommets());
-			Assert::AreEqual(NbArc, Mat.nbArc());
+			wchar_t message[512];
+			swprintf(message, L"Le nombre de sommet est faux");
+			Assert::AreEqual(NbNoeud, Mat.nbSommets(),message);
+			swprintf(message, L"Le nombre d'arc est faux");
+			Assert::AreEqual(NbArc, Mat.nbArc(),message);
 			for (int i = 0; i < NbNoeud; i++) {
-				wchar_t message[512];
-				swprintf(message, L"M est fausse à cet endroit: ligne %d", i);
-				Assert::AreEqual(M[i], Mat.Sommet(i), message);
+				swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d", i);
+				Assert::AreEqual(M[i], Mat.sommet(i), message);
 			}
 		}
 
@@ -97,53 +108,94 @@ namespace Graphe
 		TEST_METHOD(TestajouteSommet) {
 			Graphe::MatriceAdjacence Mat{ M,NbNoeud,NbArc };
 			Mat.ajouteSommet();
+			wchar_t message[512];
 			for (int i = 0; i < NbNoeud; i++) {
 				for (int j = 0; j < NbNoeud; j++) {
-					wchar_t message[512];
-					swprintf(message, L"M est fausse à cet endroit: ligne %d, colonne %d", i, j);
-					Assert::AreEqual(M[i][j], Mat.ValeurMatrice(i, j),message);
+					swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", i, j);
+					Assert::AreEqual(M[i][j], Mat.valeurMatrice(i, j),message);
 				}
-				wchar_t message[512];
-				swprintf(message, L"M est fausse à cet endroit: ligne %d, colonne %d", i, NbNoeud);
-				Assert::AreEqual(0, Mat.ValeurMatrice(i, NbNoeud),message);
-				swprintf(message, L"M est fausse à cet endroit: ligne %d, colonne %d", NbNoeud, i);
-				Assert::AreEqual(0, Mat.ValeurMatrice(NbNoeud,i),message);
+				swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", i, NbNoeud);
+				Assert::AreEqual(0, Mat.valeurMatrice(i, NbNoeud),message);
+				swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d",NbNoeud, i);
+				Assert::AreEqual(0, Mat.valeurMatrice(NbNoeud,i),message);
 			}
-			Assert::AreEqual(0, Mat.ValeurMatrice(NbNoeud, NbNoeud));
+			Assert::AreEqual(0, Mat.valeurMatrice(NbNoeud, NbNoeud));
+		}
+
+		TEST_METHOD(TestsupprimeSommet) {
+			Graphe::MatriceAdjacence Mat{ M,NbNoeud,NbArc };
+			Mat.supprimeSommet(0);
+			wchar_t message[512];
+			int TestNbArc = 0;
+			for (int i = 0; i < NbNoeud - 1; i++) {
+				for (int j = 0; j < NbNoeud - 1; j++) {
+					swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", i, j);
+					Assert::AreEqual(M[i + 1][j + 1], Mat.valeurMatrice(i, j), message);
+					if (Mat.valeurMatrice(i, j) == 1) TestNbArc++;
+				}
+			}
+			swprintf(message, L"Le nombre de sommet est faux");
+			Assert::AreEqual(NbNoeud-1, Mat.nbSommets(), message);
+			swprintf(message, L"Le nombre d'arc est faux");
+			Assert::AreEqual(TestNbArc, Mat.nbArc(), message);
+		}
+
+		TEST_METHOD(TestajouterArc) {
+			Graphe::MatriceAdjacence Mat{ M,NbNoeud,NbArc };
+			Mat.ajouterArc(1, 1);
+			wchar_t message[512];
+			swprintf(message, L"L'arc n'a pas ete ajoute");
+			Assert::AreEqual(1, Mat.valeurMatrice(1, 1),message);
+			swprintf(message, L"Le nombre d'arc est faux");
+			Assert::AreEqual(NbArc + 1, Mat.nbArc(),message);
+			Mat.ajouterArc(1, 1);
+			swprintf(message, L"Le nombre d'arc est faux");
+			Assert::AreEqual(NbArc + 1, Mat.nbArc(),message);/// On test pour voir si on n'incrémente pas nbArc
+			swprintf(message, L"L'arc a ete modifie");
+			Assert::AreEqual(1, Mat.valeurMatrice(1, 1),message);
+		}
+
+		TEST_METHOD(TestsupprimerArc) {
+			Graphe::MatriceAdjacence Mat{ M,NbNoeud,NbArc };
+			Mat.ajouterArc(1, 1);/// On cree un arc pour etre sur de son existence puis on le supprime
+			Mat.supprimerArc(1, 1);
+			wchar_t message[512];
+			swprintf(message, L"L'arc n'a pas ete supprimer");
+			Assert::AreEqual(0, Mat.valeurMatrice(1, 1));
+			swprintf(message, L"Le nombre d'arc est faux");
+			Assert::AreEqual(NbArc, Mat.nbArc(),message);/// On test pour voir si tout est à nouveau normal	
+			Mat.supprimerArc(1, 1);
+			swprintf(message, L"L'arc a ete modifie");
+			Assert::AreEqual(0, Mat.valeurMatrice(1, 1));
+			swprintf(message, L"Le nombre d'arc est faux");
+			Assert::AreEqual(NbArc, Mat.nbArc(), message);
 		}
 
 		TEST_METHOD(TestsetMatrice) {
 			Graphe::MatriceAdjacence Mat{ NbNoeud };
 			Mat.setMatrice(M);
-			Assert::AreEqual(NbNoeud, Mat.nbSommets());
-			Assert::AreEqual(NbArc, Mat.nbArc());
+			wchar_t message[512];
+			swprintf(message, L"Le nombre de sommet est faux");
+			Assert::AreEqual(NbNoeud, Mat.nbSommets(),message);
+			swprintf(message, L"Le nombre d'arc est faux");
+			Assert::AreEqual(NbArc, Mat.nbArc(),message);
 			for (int i = 0; i < NbNoeud; i++) {
-				wchar_t message[512];
-				swprintf(message, L"M est fausse à cet endroit: ligne %d", i);
-				Assert::AreEqual(M[i], Mat.Sommet(i), message);
+				swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d", i);
+				Assert::AreEqual(M[i], Mat.sommet(i), message);
 			}
 		}
 
-		TEST_METHOD(TestsetArc) {
+		TEST_METHOD(TestInverse) {
 			Graphe::MatriceAdjacence Mat{ M,NbNoeud,NbArc };
-			Mat.setArc(1, 1, 1);
-			Assert::AreEqual(1, Mat.ValeurMatrice(1,1));///On test si l'élément est bien ajouter
-			Assert::AreEqual(NbArc + 1, Mat.nbArc());
-			Mat.setArc(1, 1, 1);
-			Assert::AreEqual(NbArc + 1, Mat.nbArc());/// On test pour voir si on n'incrémente pas nbArc
-			Assert::AreEqual(1, Mat.ValeurMatrice(1, 1));
-			Mat.setArc(1, 1, 0);
-			Assert::AreEqual(NbArc, Mat.nbArc());/// On test pour voir si tout est à nouveau normal
-			Assert::AreEqual(0, Mat.ValeurMatrice(1, 1));
-		}
-
-		TEST_METHOD(TestInverseAdj) {
-			Graphe::MatriceAdjacence Mat{ M,NbNoeud,NbArc };
-			Mat.inverseAdj();
-			Assert::AreEqual(NbNoeud, Mat.nbSommets());
-			Assert::AreEqual(NbArc, Mat.nbArc());
+			Mat.inverse();
+			wchar_t message[512];
+			swprintf(message, L"Le nombre de sommet est faux");
+			Assert::AreEqual(NbNoeud, Mat.nbSommets(),message);
+			swprintf(message, L"Le nombre d'arc est faux");
+			Assert::AreEqual(NbArc, Mat.nbArc(),message);
 			for (int i = 0; i < NbNoeud; i++) {
-				Assert::AreEqual(inv_M[i], Mat.Sommet(i));
+				swprintf(message, L"La matrice inverse est fausse à la ligne %d", i);
+				Assert::AreEqual(inv_M[i], Mat.sommet(i),message);
 			}
 		}
 	};
@@ -160,13 +212,13 @@ public:
 	TEST_METHOD(TestFsApsAvecUnArgumentInt) {
 		Graphe::FsAps test{ NbNoeud };
 		Assert::AreEqual(NbNoeud, test.nbSommets());
-		Assert::AreEqual(0, test.NbArc());
+		Assert::AreEqual(0, test.nbArc());
 		wchar_t message[512];
 		for (int i = 0; i < NbNoeud; i++) {
 			swprintf(message, L"Aps est faux à cet endroit: %d", i);
-			Assert::AreEqual(i, test.AdressePremierSuccesseur(i),message);
+			Assert::AreEqual(i, test.adressePremierSuccesseur(i),message);
 			swprintf(message, L"Fs est faux à cet endroit: %d", i);
-			Assert::AreEqual(0, test.FileSuivant(i),message);
+			Assert::AreEqual(0, test.fileSuivant(i),message);
 		}
 	}
 
@@ -176,45 +228,46 @@ public:
 		int TestNbArc = 0;
 		int NbSommet = 0;
 		wchar_t message[512];
-		for (int i = 0; i < test.NbArc()+test.nbSommets(); i++) {
+		for (int i = 0; i < test.nbArc()+test.nbSommets(); i++) {
 			swprintf(message, L"la fonctionne génère des noeuds inexistant à cet endroit: %d", i);
-			Assert::IsTrue(test.FileSuivant(i)<=test.nbSommets(),message);
-			if (test.FileSuivant(i) == 0) NbSommet++;
+			Assert::IsTrue(test.fileSuivant(i)<=test.nbSommets(),message);
+			if (test.fileSuivant(i) == 0) NbSommet++;
 			else TestNbArc++;
 		}
-		Assert::AreEqual(TestNbArc, test.NbArc());
-		Assert::AreEqual(NbSommet, test.nbSommets() );
+		Assert::AreEqual(NbSommet, test.nbSommets(),message );
+		Assert::AreEqual(TestNbArc, test.nbArc(), message);
+		
 	}
 
 	TEST_METHOD(TestFsApsAvecDeuxArguments) {
 		Graphe::FsAps test{ NbNoeud, fs };
 		Assert::AreEqual(NbNoeud, test.nbSommets());
-		Assert::AreEqual(NbArc, test.NbArc());
+		Assert::AreEqual(NbArc, test.nbArc());
 		for (int i = 0; i < NbArc; i++) {///Test si Fs est correct
 			wchar_t message2[512];
 			swprintf(message2, L"Fs est faux à l'iter: %d ", i);
-			Assert::AreEqual(fs[i], test.FileSuivant(i), message2);
+			Assert::AreEqual(fs[i], test.fileSuivant(i), message2);
 		}
 		for (int i = 0; i < NbNoeud; i++) {///Test si Aps est correct
 			wchar_t message1[512];
 			swprintf(message1, L"Aps est faux à l'iter: %d ", i);
-			Assert::AreEqual(aps[i], test.AdressePremierSuccesseur(i), message1);
+			Assert::AreEqual(aps[i], test.adressePremierSuccesseur(i), message1);
 		}
 	}
 
 	TEST_METHOD(TestFsApsAvecQuatreArguments) {
 		Graphe::FsAps test{ NbNoeud, fs,NbArc,aps };
 		Assert::AreEqual(NbNoeud, test.nbSommets());
-		Assert::AreEqual(NbArc, test.NbArc());
+		Assert::AreEqual(NbArc, test.nbArc());
 		for (int i = 0; i < NbArc; i++) {///Test si Fs est correct
 			wchar_t message2[512];
 			swprintf(message2, L"Fs est faux à l'iter: %d ", i);
-			Assert::AreEqual(fs[i], test.FileSuivant(i), message2);
+			Assert::AreEqual(fs[i], test.fileSuivant(i), message2);
 		}
 		for (int i = 0; i < NbNoeud; i++) {///Test si Aps est correct
 			wchar_t message1[512];
 			swprintf(message1, L"Aps est faux à l'iter: %d ", i);
-			Assert::AreEqual(aps[i], test.AdressePremierSuccesseur(i), message1);
+			Assert::AreEqual(aps[i], test.adressePremierSuccesseur(i), message1);
 		}
 	}
 
@@ -223,41 +276,41 @@ public:
 	TEST_METHOD(TestFsApsAvecMatriceAdjacenceEnArgument) {
 		Graphe::FsAps testMat{ NbNoeud, fs, NbArc, aps };
 		Graphe::FsAps test{ testMat };
-		Assert::AreEqual(NbArc, test.NbArc());
+		Assert::AreEqual(NbArc, test.nbArc());
 		Assert::AreEqual(NbNoeud, test.nbSommets());
 		for (int i = 0; i < NbArc; i++) {///Test si Fs est correct
 			wchar_t message2[512];
 			swprintf(message2, L"Fs est faux à l'iter: %d ", i);
-			Assert::AreEqual(fs[i], test.FileSuivant(i), message2);
+			Assert::AreEqual(fs[i], test.fileSuivant(i), message2);
 		}
 		for (int i = 0; i < NbNoeud; i++) {///Test si Aps est correct
 			wchar_t message1[512];
 			swprintf(message1, L"Aps est faux à l'iter: %d ", i);
-			Assert::AreEqual(aps[i], test.AdressePremierSuccesseur(i), message1);
+			Assert::AreEqual(aps[i], test.adressePremierSuccesseur(i), message1);
 		}
 	}
 
 	TEST_METHOD(TestAjouteArc) {
 		Graphe::FsAps test{ NbNoeud, fs };
-		test.AjouteArc(1, 4);
-		Assert::AreEqual(4, test.FileSuivant(2));/// La fonction insère au bon endroit l'élément
-		Assert::AreEqual(NbArc + 1, test.NbArc());/// La fonction verifie que le nombre d'element de Fs reste correcte
-		test.AjouteArc(1, 4);
-		Assert::AreEqual(NbArc + 1, test.NbArc());/// La fonction verifie que l'on n'insere bien aucun element si l'element est deja present
+		test.ajouteArc(1, 4);
+		Assert::AreEqual(4, test.fileSuivant(2));/// La fonction insère au bon endroit l'élément
+		Assert::AreEqual(NbArc + 1, test.nbArc());/// La fonction verifie que le nombre d'element de Fs reste correcte
+		test.ajouteArc(1, 4);
+		Assert::AreEqual(NbArc + 1, test.nbArc());/// La fonction verifie que l'on n'insere bien aucun element si l'element est deja present
 	}
 
 	TEST_METHOD(TestAjouterNoeud) {
 		Graphe::FsAps test{ NbNoeud, fs };
-		test.AjouteNoeud();
+		test.ajouteNoeud();
 		wchar_t message[512];
 		swprintf(message, L"NbArc de Aps est faux");
-		Assert::AreEqual(NbArc, test.NbArc(),message);
+		Assert::AreEqual(NbArc, test.nbArc(),message);
 		swprintf(message, L"NbNoeud de Aps est faux");
 		Assert::AreEqual(NbNoeud + 1, test.nbSommets(), message);
 		swprintf(message, L"Le dernier element de FileSuivant est faux");
-		Assert::AreEqual(0, test.FileSuivant(test.NbArc()+test.nbSommets() - 1), message);
+		Assert::AreEqual(0, test.fileSuivant(test.nbArc()+test.nbSommets() - 1), message);
 		swprintf(message, L"Le dernier element de AdressePremierSuccesseur est faux");
-		Assert::AreEqual(NbArc+NbNoeud, test.AdressePremierSuccesseur(test.nbSommets() - 1), message);
+		Assert::AreEqual(NbArc+NbNoeud, test.adressePremierSuccesseur(test.nbSommets() - 1), message);
 	}
 
 	TEST_METHOD(TestInverseFsAps) {
@@ -266,12 +319,12 @@ public:
 		for (int i = 0; i < NbArc; i++) {/// Fp est cree correctement
 			wchar_t message2[512];
 			swprintf(message2, L"Fp est faux à l'iter: %d ", i);
-			Assert::AreEqual(fp[i], test.FileSuivant(i), message2);
+			Assert::AreEqual(fp[i], test.fileSuivant(i), message2);
 		}
 		for (int i = 0; i < NbNoeud; i++) {/// App est cree correctement 
 			wchar_t message1[512];
 			swprintf(message1, L"App est faux à l'iter: %d ", i);
-			Assert::AreEqual(app[i], test.AdressePremierSuccesseur(i), message1);
+			Assert::AreEqual(app[i], test.adressePremierSuccesseur(i), message1);
 		}
 	}
 	};

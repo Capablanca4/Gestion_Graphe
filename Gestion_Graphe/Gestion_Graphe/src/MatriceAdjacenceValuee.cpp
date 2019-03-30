@@ -11,6 +11,10 @@ const int INFINI = INT_MAX;
 
 namespace Graphe {
 
+	MatriceAdjacenceValuee::MatriceAdjacenceValuee():
+		MatriceAdjacence(),
+		d_MatriceAvecValeur{} {}
+
 	MatriceAdjacenceValuee::MatriceAdjacenceValuee(int nbSommets) :
 		MatriceAdjacence(nbSommets),
 		d_MatriceAvecValeur{} {
@@ -20,7 +24,7 @@ namespace Graphe {
 	MatriceAdjacenceValuee::MatriceAdjacenceValuee(const std::string & fichier) :
 		MatriceAdjacence() {
 		std::ifstream is(fichier + ".txt");
-		recupererMatriceAdjacenceValuee(is);
+		MatriceAdjacenceValuee::recupererMatrice(is);
 		dimensionnerA0();
 		for (int i = 0; i < nbSommets(); i++) {
 			for (int j = 0; j < nbSommets(); j++) {
@@ -43,21 +47,21 @@ namespace Graphe {
 		}
 	}
 
-	MatriceAdjacenceValuee::MatriceAdjacenceValuee(alea aleatoire, int bornesup, int borneinf) :
+	MatriceAdjacenceValuee::MatriceAdjacenceValuee(alea aleatoire, int valeurmax, int valeurmin) :
 		MatriceAdjacence(aleatoire) {
 		dimensionnerAInfini();
 		dimensionnerA0();
 		for (int i = 0; i < this->nbSommets(); i++) {
 			for (int j = 0; j < this->nbSommets(); j++) {
 				if (rand() % 2) {
-					d_MatriceAvecValeur[i][j] = alea(borneinf, bornesup).val_alea();
+					d_MatriceAvecValeur[i][j] = alea(valeurmax, valeurmin).val_alea();
 					setArc(i, j, 1);
 				}
 			}
 		}
 	}
 
-	bool MatriceAdjacenceValuee::SansValeurNegative() const {
+	bool MatriceAdjacenceValuee::sansValeurNegative() const {
 		bool test = true;
 		int i = 0, j = 0;
 		while (i < nbSommets() && test == true) {
@@ -73,13 +77,59 @@ namespace Graphe {
 		return test;
 	}
 
-	void MatriceAdjacenceValuee::SetArc(int sommetDep, int sommetArriver, int valeur) {
-		setArc(sommetDep, sommetArriver,1);
-		d_MatriceAvecValeur[sommetDep][sommetArriver] = valeur;
+	void MatriceAdjacenceValuee::ajouteSommet() {
+		std::vector<int> newLigne{ INFINI };
+		for (int i = 0; i < nbSommets(); i++) {
+			d_MatriceAvecValeur[i].push_back(INFINI);
+			newLigne.push_back(INFINI);
+		}
+		d_MatriceAvecValeur.push_back(newLigne);
+		MatriceAdjacence::ajouteSommet();
 	}
 
-	bool MatriceAdjacenceValuee::EstUnArc(int sommetDep, int sommetArriver) {
-		return d_MatriceAvecValeur[sommetDep][sommetArriver] != INFINI;
+	void MatriceAdjacenceValuee::supprimeSommet(int sommet) {
+		if (sommet < nbSommets()) {
+			for (int i = sommet; i < nbSommets() - 1; i++) {
+				d_MatriceAvecValeur[i] = d_MatriceAvecValeur[i + 1];
+				for (int j = sommet; j < nbSommets() - 1; j++) {
+					d_MatriceAvecValeur[i][j] = d_MatriceAvecValeur[i][j + 1];
+					d_MatriceAvecValeur[i].pop_back();
+				}
+			}
+			d_MatriceAvecValeur[nbSommets()].pop_back();
+			MatriceAdjacence::supprimeSommet(sommet);
+		}
+	}
+	
+	void MatriceAdjacenceValuee::ajouterArc(int sommetDep, int sommetArriver,int valeur) {
+		setArc(sommetDep, sommetArriver, valeur);
+	}
+
+	void MatriceAdjacenceValuee::supprimerArc(int sommetDep, int sommetArriver) {
+		setArc(sommetDep, sommetArriver, INFINI);
+	}
+
+	void MatriceAdjacenceValuee::setMatrice(const std::vector<std::vector<int>>& matrice) {
+		std::vector<std::vector<int>> newMatrice{};
+		d_MatriceAvecValeur = matrice;
+		for (int i = 0; i < matrice.size(); i++) {
+			for (int j = 0; j < matrice.size(); j++) {
+				if (matrice[i][j] == INFINI) newMatrice[i].push_back(0);
+				else newMatrice[i].push_back(1);
+			}
+		}
+		MatriceAdjacence::setMatrice(newMatrice);
+	}
+
+	void MatriceAdjacenceValuee::inverse() {
+		std::vector<std::vector<int>> M{};
+		for (int i = 0; i < nbSommets(); i++) {
+			M.push_back(std::vector<int>{});
+			for (int j = 0; j < nbSommets(); j++) {
+				M[i].push_back(d_MatriceAvecValeur[j][i]);
+			}
+		}
+		d_MatriceAvecValeur = M;
 	}
 
 	void MatriceAdjacenceValuee::affiche() const {
@@ -93,8 +143,8 @@ namespace Graphe {
 		}
 	}
 
-	void MatriceAdjacenceValuee::enregistrerMatriceAdjacenceValuee(std::ofstream& os) {
-		enregistrerMatriceAdjacence(os);
+	void MatriceAdjacenceValuee::enregistrerMatrice(std::ofstream& os) const {
+		MatriceAdjacence::enregistrerMatrice(os);
 		for (int i = 0; i < nbSommets(); i++) {
 			for (int j = 0; j < nbSommets(); j++) {
 				os << d_MatriceAvecValeur[i][j] << " ";
@@ -103,8 +153,8 @@ namespace Graphe {
 		}
 	}
 
-	void MatriceAdjacenceValuee::recupererMatriceAdjacenceValuee(std::ifstream& is) {
-		recupererMatriceAdjacence(is);
+	void MatriceAdjacenceValuee::recupererMatrice(std::ifstream& is) {
+		MatriceAdjacence::recupererMatrice(is);
 		dimensionnerAInfini();
 		for (int i = 0; i < nbSommets(); i++) {
 			for (int j = 0; j < nbSommets(); j++) {
@@ -118,5 +168,15 @@ namespace Graphe {
 		for (int i = 0; i < nbSommets(); i++) {
 			d_MatriceAvecValeur[i].resize(nbSommets(), INFINI);
 		}
+	}
+	
+	bool MatriceAdjacenceValuee::estUnArc(int sommetDep, int sommetArriver) const {
+		return d_MatriceAvecValeur[sommetDep][sommetArriver] != INFINI;
+	}
+
+	void MatriceAdjacenceValuee::setArc(int sommetDep, int sommetArriver, int valeur) {
+		if (valeur == INFINI) MatriceAdjacence::supprimerArc(sommetDep, sommetArriver);
+		else MatriceAdjacence::ajouterArc(sommetDep, sommetArriver);
+		d_MatriceAvecValeur[sommetDep][sommetArriver] = valeur;
 	}
 }

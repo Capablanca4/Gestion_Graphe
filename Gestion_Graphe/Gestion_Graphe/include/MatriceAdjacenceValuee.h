@@ -6,20 +6,32 @@
 namespace Graphe {
 	class MatriceAdjacenceValuee : public MatriceAdjacence {
 	public:
+		MatriceAdjacenceValuee();
 		MatriceAdjacenceValuee(int nbSommets);
 		MatriceAdjacenceValuee(const std::string & fichier);
 		MatriceAdjacenceValuee(int nbSommets, int nbArcs, std::vector<std::vector<int>> Matrice);
-		MatriceAdjacenceValuee(alea aleatoire, int bornesup, int borneinf);
-		bool SansValeurNegative()const;
-		virtual void SetArc(int sommetDep, int sommetArriver, int valeur);
+		MatriceAdjacenceValuee(alea aleatoire, int valeurmax, int valeurmin);
 
-		virtual void affiche()const;
-		void enregistrerMatriceAdjacenceValuee(std::ofstream& os);
-		void recupererMatriceAdjacenceValuee(std::ifstream& is);
-		void dimensionnerAInfini();
+		bool sansValeurNegative()const;
+
+		//Fonction provenant de MatriceAjacence
+		virtual void ajouteSommet()override;
+		virtual void supprimeSommet(int sommet)override;
+		void ajouterArc(int sommetDep, int sommetArriver,int valeur);// Ne peut pas etre virtuel car a une signature differente
+		virtual void supprimerArc(int sommetDep, int sommetArriver)override;
+		virtual void setMatrice(const std::vector<std::vector<int>>& matrice)override;
+		virtual void inverse()override;
+		virtual void affiche()const override;
+		virtual void enregistrerMatrice(std::ofstream& os)const override;
+		virtual void recupererMatrice(std::ifstream& is) override;
+
 	private:
 		std::vector<std::vector<int>> d_MatriceAvecValeur;
-		bool EstUnArc(int sommmetDep, int sommetArriver);
+
+		//Methode privée
+		bool estUnArc(int sommmetDep, int sommetArriver)const;
+		void dimensionnerAInfini();
+		virtual void setArc(int sommetDep, int sommetArriver, int valeur) override;	
 	};
 }
 #endif // !MATRICEADJACENCEVALUEE_H

@@ -22,20 +22,22 @@ namespace Graphe {
 		/// Getteur
 		const int nbSommets() const;
 		const int nbArc() const;
-		const std::vector<int> Sommet(int Sommet) const;
-		const int ValeurMatrice(int i, int j)const;
+		const std::vector<int> sommet(int Sommet) const;
+		const int valeurMatrice(int i, int j)const;
 
 		/// Setteur
-		void ajouteSommet();
-		void setMatrice(std::vector<std::vector<int>>matrice);
-		virtual void setArc(int sommetDep, int sommetArr, int valeur);
+		virtual void ajouteSommet();
+		virtual void supprimeSommet(int sommet);
+		void ajouterArc(int sommetDep, int sommetArr);
+		virtual void supprimerArc(int sommetDep, int sommetArr);
+		virtual void setMatrice(const std::vector<std::vector<int>>& matrice);
 
 		/// Methode
-		void inverseAdj();
-		void affiche();
+		virtual void inverse();
+		virtual void affiche() const;
 
-		void enregistrerMatriceAdjacence(std::ofstream& os);
-		void recupererMatriceAdjacence(std::ifstream& is);
+		virtual void enregistrerMatrice(std::ofstream& os)const;
+		virtual void recupererMatrice(std::ifstream& is);
 
 		friend MatriceAdjacence operator+(const MatriceAdjacence & M, const MatriceAdjacence & M2);
 		MatriceAdjacence operator=(const MatriceAdjacence& M);
@@ -45,9 +47,9 @@ namespace Graphe {
 		int d_nbSommets;
 		int d_nbArc;
 
-		//Methode privée ?
 	protected:
 		void dimensionnerA0();
+		virtual void setArc(int sommetDep, int sommetArr, int valeur);
 	};
 
 }

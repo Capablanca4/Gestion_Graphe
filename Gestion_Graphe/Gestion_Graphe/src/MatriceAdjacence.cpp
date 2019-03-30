@@ -46,15 +46,15 @@ namespace Graphe {
 
 	MatriceAdjacence::MatriceAdjacence(FsAps graph) :
 		d_nbSommets{ graph.nbSommets() },
-		d_nbArc{ graph.NbArc() },
+		d_nbArc{ graph.nbArc() },
 		d_matrice{}
 	{
 		for (int i = 0; i < d_nbSommets; i++) {
 			std::vector<int> B;
 			for (int j = 0; j < d_nbSommets; j++)  B.push_back(0);
-			int j = graph.AdressePremierSuccesseur(i);
-			while (graph.FileSuivant(j) != 0) {
-				B[graph.FileSuivant(j++) - 1] = 1;
+			int j = graph.adressePremierSuccesseur(i);
+			while (graph.fileSuivant(j) != 0) {
+				B[graph.fileSuivant(j++) - 1] = 1;
 			}
 			d_matrice.push_back(B);
 		}
@@ -63,7 +63,7 @@ namespace Graphe {
 	MatriceAdjacence::MatriceAdjacence(std::string fichier)
 	{
 		std::ifstream is(fichier + ".txt");
-		recupererMatriceAdjacence(is);
+		MatriceAdjacence::recupererMatrice(is);
 	}
 
 	MatriceAdjacence::~MatriceAdjacence() {
@@ -82,11 +82,11 @@ namespace Graphe {
 		return d_nbArc;
 	}
 
-	const std::vector<int> MatriceAdjacence::Sommet(int Sommet) const {
+	const std::vector<int> MatriceAdjacence::sommet(int Sommet) const {
 		return d_matrice[Sommet];
 	}
 
-	const int MatriceAdjacence::ValeurMatrice(int i, int j)const {
+	const int MatriceAdjacence::valeurMatrice(int i, int j)const {
 		return d_matrice[i][j];
 	}
 
@@ -98,12 +98,45 @@ namespace Graphe {
 		}
 	}
 
+	void MatriceAdjacence::supprimerArc(int sommetDep, int sommetArr) {
+		setArc(sommetDep, sommetArr, 0);
+	}
+
+	void MatriceAdjacence::ajouterArc(int sommetDep, int sommetArr) {
+		setArc(sommetDep, sommetArr, 1);
+	}
+
 	void MatriceAdjacence::ajouteSommet() {
 		for (int i = 0; i < d_nbSommets; i++)  d_matrice[i].push_back(0);
 		d_nbSommets++;
 		std::vector<int> nouvelleligne = std::vector<int>{};
 		for (int i = 0; i < d_nbSommets; i++)  nouvelleligne.push_back(0);
 		d_matrice.push_back(nouvelleligne);
+	}
+
+	void MatriceAdjacence::supprimeSommet(int sommet) {
+		if(sommet<d_nbSommets){
+			for (int i = 0; i < d_nbSommets; i++) {
+				if (d_matrice[sommet][i] == 1) d_nbArc--;
+			}
+			for (int i = 0; i < sommet; i++) {
+				if (d_matrice[i][sommet] == 1) d_nbArc--;
+				for (int j = sommet; j < d_nbSommets - 1; j++) {
+					d_matrice[i][j] = d_matrice[i][j + 1];
+				}
+				d_matrice[i].pop_back();
+			}
+			for (int i = sommet; i < d_nbSommets-1; i++) {
+				d_matrice[i] = d_matrice[i + 1];
+				if (d_matrice[i][sommet] == 1) d_nbArc--;
+				for (int j = sommet; j < d_nbSommets - 1; j++) {
+					d_matrice[i][j] = d_matrice[i][j + 1];
+				}
+				d_matrice[i].pop_back();
+			}
+			d_matrice[d_nbSommets-1].pop_back();
+			d_nbSommets--;
+		}
 	}
 
 	void MatriceAdjacence::dimensionnerA0() {
@@ -113,7 +146,7 @@ namespace Graphe {
 		}
 	}
 
-	void MatriceAdjacence::inverseAdj() {
+	void MatriceAdjacence::inverse() {
 		std::vector<std::vector<int>> M{};
 		for (int i = 0; i < d_nbSommets; i++) {
 			M.push_back(std::vector<int>{});
@@ -124,7 +157,7 @@ namespace Graphe {
 		d_matrice = M;
 	}
 
-	void MatriceAdjacence::affiche() {
+	void MatriceAdjacence::affiche() const {
 		for (int i = 0; i < d_nbSommets; i++) {
 			for (int j = 0; j < d_nbSommets; j++) {
 				std::cout << d_matrice[i][j] << " ";
@@ -133,7 +166,7 @@ namespace Graphe {
 		}
 	}
 
-	void MatriceAdjacence::enregistrerMatriceAdjacence(std::ofstream& os)
+	void MatriceAdjacence::enregistrerMatrice(std::ofstream& os)const
 	{
 		os << d_nbSommets;
 		os << std::endl;
@@ -147,7 +180,7 @@ namespace Graphe {
 		}
 	}
 
-	void MatriceAdjacence::recupererMatriceAdjacence(std::ifstream& is)
+	void MatriceAdjacence::recupererMatrice(std::ifstream& is)
 	{
 		is >> d_nbSommets;
 		is >> d_nbArc;
@@ -252,7 +285,7 @@ namespace Graphe {
 		return MatriceAdjacence(matrice, nbSommets, nbArc);
 	}
 
-	void MatriceAdjacence::setMatrice(std::vector<std::vector<int>> matrice) {
+	void MatriceAdjacence::setMatrice(const std::vector<std::vector<int>>& matrice) {
 		d_matrice = matrice;
 		d_nbSommets = matrice.size();
 		d_nbArc = 0;

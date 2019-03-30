@@ -17,7 +17,7 @@ Distance::Distance(const MatriceAdjacence& graphe):
 Distance::Distance(const FsAps& graphe) :
 	d_matrice{}
 {
-	std::vector<int> avector = { graphe.nbSommets(), graphe.NbArc() };
+	std::vector<int> avector = { graphe.nbSommets(), graphe.nbArc() };
 	//d_matrice.push_back(std::vector<int>{graphe.NbNoeud(), graphe.NbArc() });
 	d_matrice.push_back(avector);
 	for (int i = 0; i < graphe.nbSommets(); i++) {
@@ -36,11 +36,11 @@ std::vector<int> Distance::distFsAps(const FsAps& graphe, int Sommet) {
 	while (t < q) {
 		d++;
 		for (int i = t ; i < q ; i++) {
-			int suiv = graphe.AdressePremierSuccesseur(fa[i]);
-			while (graphe.FileSuivant(suiv) != 0) {
-				if (tdist[graphe.FileSuivant(suiv)] == -1) {
-					tdist[graphe.FileSuivant(suiv)] = d;
-					fa[p++] = graphe.FileSuivant(suiv);
+			int suiv = graphe.adressePremierSuccesseur(fa[i]);
+			while (graphe.fileSuivant(suiv) != 0) {
+				if (tdist[graphe.fileSuivant(suiv)] == -1) {
+					tdist[graphe.fileSuivant(suiv)] = d;
+					fa[p++] = graphe.fileSuivant(suiv);
 				}
 				suiv++;
 			}
@@ -62,7 +62,7 @@ std::vector<int> Distance::distMat(const MatriceAdjacence& graphe, int Sommet) {
 	while (t < q) {
 		d++;
 		for (int i = t + 1; i < q + 1; i++) {
-			std::vector<int> suiv{graphe.Sommet(fa[i])};
+			std::vector<int> suiv{graphe.sommet(fa[i])};
 			for (int j = 0; j < nbSommet; j++) {
 				if (suiv[j] != 0) {
 					if (tdist[suiv[j]] == -1) {

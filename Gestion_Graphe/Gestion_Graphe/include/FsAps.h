@@ -21,13 +21,13 @@ namespace Graphe {
 
 		///Accesseur
 		const int nbSommets() const;
-		const int NbArc() const;
-		const int FileSuivant(int i) const;
-		const int AdressePremierSuccesseur(int i) const;
+		const int nbArc() const;
+		const int fileSuivant(int i) const;
+		const int adressePremierSuccesseur(int i) const;
 
 		/// Setteur
-		void AjouteArc(int noeudDep, int noeudArr);
-		void AjouteNoeud();
+		void ajouteArc(int noeudDep, int noeudArr);
+		void ajouteNoeud();
 
 		/// inverse le graphe
 		void inverse();
