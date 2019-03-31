@@ -35,13 +35,13 @@ namespace Graphe {
 		}
 	}
 
-	MatriceAdjacenceValuee::MatriceAdjacenceValuee(int nbSommets, int nbArcs, std::vector<std::vector<int>> Matrice) :
+	MatriceAdjacenceValuee::MatriceAdjacenceValuee(std::vector<std::vector<int>> Matrice,int nbSommets, int nbArcs) :
 		MatriceAdjacence(nbSommets),
 		d_MatriceAvecValeur{ Matrice } {
 		for (int i = 0; i < nbSommets; i++) {
 			for (int j = 0; j < nbSommets; j++) {
 				if (d_MatriceAvecValeur[i][j] != INFINI) {
-					setArc(i, j, 1);
+					MatriceAdjacence::setArc(i, j, 1);
 				}
 			}
 		}
@@ -50,12 +50,10 @@ namespace Graphe {
 	MatriceAdjacenceValuee::MatriceAdjacenceValuee(alea aleatoire, int valeurmax, int valeurmin) :
 		MatriceAdjacence(aleatoire) {
 		dimensionnerAInfini();
-		dimensionnerA0();
 		for (int i = 0; i < this->nbSommets(); i++) {
 			for (int j = 0; j < this->nbSommets(); j++) {
-				if (rand() % 2) {
-					d_MatriceAvecValeur[i][j] = alea(valeurmax, valeurmin).val_alea();
-					setArc(i, j, 1);
+				if (MatriceAdjacence::valeurMatrice(i,j)==1) {
+					d_MatriceAvecValeur[i][j] = alea(valeurmin, valeurmax).val_alea();
 				}
 			}
 		}
@@ -75,6 +73,16 @@ namespace Graphe {
 			j = 0;
 		}
 		return test;
+	}
+
+	const std::vector<int> MatriceAdjacenceValuee::sommet(int Sommet) const {
+		if(Sommet<nbSommets()){
+			return d_MatriceAvecValeur[Sommet];
+		}
+	}
+
+	const int MatriceAdjacenceValuee::valeurMatrice(int i, int j)const {
+		return d_MatriceAvecValeur[i][j];
 	}
 
 	void MatriceAdjacenceValuee::ajouteSommet() {

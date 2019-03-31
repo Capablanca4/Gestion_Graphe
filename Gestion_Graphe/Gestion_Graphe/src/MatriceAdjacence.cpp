@@ -99,11 +99,11 @@ namespace Graphe {
 	}
 
 	void MatriceAdjacence::supprimerArc(int sommetDep, int sommetArr) {
-		setArc(sommetDep, sommetArr, 0);
+		MatriceAdjacence::setArc(sommetDep, sommetArr, 0);
 	}
 
 	void MatriceAdjacence::ajouterArc(int sommetDep, int sommetArr) {
-		setArc(sommetDep, sommetArr, 1);
+		MatriceAdjacence::setArc(sommetDep, sommetArr, 1);
 	}
 
 	void MatriceAdjacence::ajouteSommet() {

@@ -22,8 +22,8 @@ namespace Graphe {
 		/// Getteur
 		const int nbSommets() const;
 		const int nbArc() const;
-		const std::vector<int> sommet(int Sommet) const;
-		const int valeurMatrice(int i, int j)const;
+		virtual const std::vector<int> sommet(int Sommet) const;
+		virtual const int valeurMatrice(int i, int j)const;
 
 		/// Setteur
 		virtual void ajouteSommet();
