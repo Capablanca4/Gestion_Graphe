@@ -5,6 +5,12 @@
 #include <iostream>
 namespace Graphe {
 
+	FsAps::FsAps() :
+		d_tailleAdressePremierSuccesseur{ 0 },
+		d_tailleFileSuivant{ 0},
+		d_FileSuivant{},
+		d_AdressePremierSuccesseur{} {}
+
 	FsAps::FsAps(int nbSommets) :
 		d_tailleAdressePremierSuccesseur{ nbSommets },
 		d_tailleFileSuivant{ nbSommets },
@@ -50,12 +56,13 @@ namespace Graphe {
 		d_FileSuivant{ FileSuivant },
 		d_AdressePremierSuccesseur{ AdressePremierSuccesseur } {}
 
-	FsAps::FsAps(std::string fichier)
+	FsAps::FsAps(const std::string& fichier)
 	{
-		recupererFsAps(fichier);
+		std::ifstream is(fichier + ".txt");
+		recupererFsAps(is);
 	}
 
-	FsAps::FsAps(MatriceAdjacence adj) :
+	FsAps::FsAps(const MatriceAdjacence& adj) :
 		d_tailleFileSuivant{ adj.nbArc() + adj.nbSommets() },
 		d_tailleAdressePremierSuccesseur{ adj.nbSommets() },
 		d_FileSuivant{},
@@ -108,30 +115,62 @@ namespace Graphe {
 	}
 
 	void FsAps::ajouteArc(int noeudDep, int noeudArr) {
-		if (noeudArr - 1 < d_tailleFileSuivant) {
-			int emplacementElt = d_AdressePremierSuccesseur[noeudDep - 1];
-			while (d_FileSuivant[emplacementElt] < noeudArr&&d_FileSuivant[emplacementElt] != 0) {
-				emplacementElt++;
-			}
+		if (noeudArr < d_tailleAdressePremierSuccesseur && noeudDep < d_tailleAdressePremierSuccesseur) {
+			int emplacementElt = d_AdressePremierSuccesseur[noeudDep-1];
+			while (d_FileSuivant[emplacementElt] < noeudArr&&d_FileSuivant[emplacementElt] != 0) emplacementElt++;
 			if (d_FileSuivant[emplacementElt] != noeudArr) {
 				d_FileSuivant.push_back(noeudArr);
-				for (int i = d_tailleAdressePremierSuccesseur; i > emplacementElt; i--) {
-					d_FileSuivant[i] = d_FileSuivant[i - 1];
-				}
+				for (int i = d_tailleAdressePremierSuccesseur; i > emplacementElt; i--) d_FileSuivant[i] = d_FileSuivant[i - 1];
 				d_FileSuivant[emplacementElt] = noeudArr;
 				d_tailleFileSuivant++;
 			}
 		}
-		else {
-			printf("Vous donnez un noeud d'arrivee trop grand !");
-		}
+		else printf("Vous donnez un noeud d'arrivee ou un noeud de depart trop grand !");
 	}
 
-	void FsAps::ajouteNoeud() {
+	void FsAps::supprimerArc(int noeudDep, int noeudArr) {
+		if (noeudArr < d_tailleAdressePremierSuccesseur && noeudDep < d_tailleAdressePremierSuccesseur) {
+			int emplacementElt = d_AdressePremierSuccesseur[noeudDep-1];
+			std::cout << emplacementElt << std::endl;
+			while (d_FileSuivant[emplacementElt] != 0 && d_FileSuivant[emplacementElt] != noeudArr) {
+				std::cout<< d_FileSuivant[emplacementElt]<<" "; 
+				emplacementElt++;
+			}
+			std::cout << std::endl;
+			if (d_FileSuivant[emplacementElt] == noeudArr) {
+				for (int i = emplacementElt; i < d_tailleFileSuivant - 1; i++) d_FileSuivant[i] = d_FileSuivant[i + 1];
+				d_FileSuivant.pop_back();
+				d_tailleFileSuivant--;
+				for (int i = noeudDep; i < d_tailleAdressePremierSuccesseur;i++) d_AdressePremierSuccesseur[i]--;
+			}
+		}
+		else printf("Vous donnez un noeud d'arrivee ou un noeud de depart trop grand !");
+	}
+
+	void FsAps::ajouteSommet() {
 		d_FileSuivant.push_back(0);
 		d_AdressePremierSuccesseur.push_back(d_tailleFileSuivant);
 		d_tailleFileSuivant++;
 		d_tailleAdressePremierSuccesseur++;
+	}
+
+	void FsAps::supprimeSommet(int noeud) {
+		int adresse = d_AdressePremierSuccesseur[noeud - 1];
+		while (d_FileSuivant[adresse] != 0) {
+			for (int i = adresse; i < d_tailleFileSuivant - 1; i++) d_FileSuivant[i] = d_FileSuivant[i + 1];
+			for (int i = noeud; i < d_tailleAdressePremierSuccesseur; i++) d_AdressePremierSuccesseur[i]--;
+			d_FileSuivant.pop_back();
+			d_tailleFileSuivant--;
+		}
+		// derniere itération pour supprimer le dernier 0
+		for (int i = adresse; i < d_tailleFileSuivant - 1; i++) d_FileSuivant[i] = d_FileSuivant[i + 1];
+		for (int i = noeud; i < d_tailleAdressePremierSuccesseur; i++) d_AdressePremierSuccesseur[i]--;
+		d_FileSuivant.pop_back();
+		d_tailleFileSuivant--;
+
+		for (int i = noeud - 1; i < d_tailleAdressePremierSuccesseur - 1; i++) d_AdressePremierSuccesseur[i] = d_AdressePremierSuccesseur[i + 1];
+		d_AdressePremierSuccesseur.pop_back();
+		d_tailleAdressePremierSuccesseur--;
 	}
 
 	void FsAps::inverse()
@@ -178,10 +217,8 @@ namespace Graphe {
 		afficheAdressePremierSuccesseur();
 	}
 
-	void FsAps::enregistrerFsAps(const std::string& fichier)
+	void FsAps::enregistrerFsAps(std::ofstream& os)
 	{
-		std::ofstream os(fichier + ".txt");
-
 		os << d_tailleFileSuivant;
 		os << std::endl;
 		os << d_tailleAdressePremierSuccesseur;
@@ -196,10 +233,8 @@ namespace Graphe {
 
 	}
 
-	void FsAps::recupererFsAps(const std::string & fichier)
+	void FsAps::recupererFsAps(std::ifstream& is)
 	{
-		std::ifstream is(fichier + ".txt");
-
 		is >> d_tailleFileSuivant;
 		is >> d_tailleAdressePremierSuccesseur;
 

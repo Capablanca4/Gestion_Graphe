@@ -9,7 +9,7 @@ namespace Graphe {
 		MatriceAdjacenceValuee();
 		MatriceAdjacenceValuee(int nbSommets);
 		MatriceAdjacenceValuee(const std::string & fichier);
-		MatriceAdjacenceValuee(std::vector<std::vector<int>> Matrice,int nbSommets, int nbArcs);
+		MatriceAdjacenceValuee(const std::vector<std::vector<int>>& Matrice,int nbSommets, int nbArcs);
 		MatriceAdjacenceValuee(alea aleatoire, int valeurmax, int valeurmin);
 
 		bool sansValeurNegative()const;

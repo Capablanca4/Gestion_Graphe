@@ -11,12 +11,13 @@ namespace Graphe {
 	{
 	public:
 		/// Constructeur
+		FsAps();
 		FsAps(int nbSommets);
 		FsAps(alea aleatoire);
 		FsAps(int nbSommets, const std::vector<int>& FileSuivant);
 		FsAps(int nbSommets, const std::vector<int>& FileSuivant, int nbArc, const std::vector<int>& AdressePremierSuccesseur);
-		FsAps(std::string fichier);
-		FsAps(MatriceAdjacence adj);
+		FsAps(const std::string& fichier);
+		FsAps(const MatriceAdjacence& adj);
 		~FsAps();
 
 		///Accesseur
@@ -27,7 +28,9 @@ namespace Graphe {
 
 		/// Setteur
 		void ajouteArc(int noeudDep, int noeudArr);
-		void ajouteNoeud();
+		void supprimerArc(int noeudDep, int noeudArr);
+		void ajouteSommet();
+		void supprimeSommet(int noeud);
 
 		/// inverse le graphe
 		void inverse();
@@ -37,8 +40,8 @@ namespace Graphe {
 		void afficheAdressePremierSuccesseur();
 		void affiche();
 
-		void enregistrerFsAps(const std::string & fichier);
-		void recupererFsAps(const std::string & fichier);
+		void enregistrerFsAps(std::ofstream& os);
+		void recupererFsAps(std::ifstream& is);
 
 	private:
 		int d_tailleFileSuivant;//nbArc+nbSommets

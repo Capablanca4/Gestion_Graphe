@@ -47,11 +47,22 @@ private:
 	std::vector<int> app{ 0,1,3,8,11,14,17 };
 public:
 
+	TEST_METHOD(TestFsApsSansArgument) {
+		Graphe::FsAps test{};
+		wchar_t message[512];
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(0, test.nbSommets(),message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(0, test.nbArc(),message);
+	}
+
 	TEST_METHOD(TestFsApsAvecUnArgumentInt) {
 		Graphe::FsAps test{ NbNoeud };
-		Assert::AreEqual(NbNoeud, test.nbSommets());
-		Assert::AreEqual(0, test.nbArc());
 		wchar_t message[512];
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud, test.nbSommets(),message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(0, test.nbArc(),message);	
 		for (int i = 0; i < NbNoeud; i++) {
 			swprintf(message, L"Aps est faux à cet endroit: %d", i);
 			Assert::AreEqual(i, test.adressePremierSuccesseur(i), message);
@@ -72,78 +83,129 @@ public:
 			if (test.fileSuivant(i) == 0) NbSommet++;
 			else TestNbArc++;
 		}
+		swprintf(message, L"Le nombre de sommet est faux");
 		Assert::AreEqual(NbSommet, test.nbSommets(), message);
+		swprintf(message, L"Le nombre d'arc est faux");
 		Assert::AreEqual(TestNbArc, test.nbArc(), message);
 
 	}
 
 	TEST_METHOD(TestFsApsAvecDeuxArguments) {
 		Graphe::FsAps test{ NbNoeud, fs };
-		Assert::AreEqual(NbNoeud, test.nbSommets());
-		Assert::AreEqual(NbArc, test.nbArc());
+		wchar_t message[512];
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud, test.nbSommets(),message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc, test.nbArc(),message);
 		for (int i = 0; i < NbArc; i++) {///Test si Fs est correct
-			wchar_t message2[512];
-			swprintf(message2, L"Fs est faux à l'iter: %d ", i);
-			Assert::AreEqual(fs[i], test.fileSuivant(i), message2);
+			swprintf(message, L"Fs est faux à l'iter: %d ", i);
+			Assert::AreEqual(fs[i], test.fileSuivant(i), message);
 		}
 		for (int i = 0; i < NbNoeud; i++) {///Test si Aps est correct
-			wchar_t message1[512];
-			swprintf(message1, L"Aps est faux à l'iter: %d ", i);
-			Assert::AreEqual(aps[i], test.adressePremierSuccesseur(i), message1);
+			swprintf(message, L"Aps est faux à l'iter: %d ", i);
+			Assert::AreEqual(aps[i], test.adressePremierSuccesseur(i), message);
 		}
 	}
 
 	TEST_METHOD(TestFsApsAvecQuatreArguments) {
 		Graphe::FsAps test{ NbNoeud, fs,NbArc,aps };
-		Assert::AreEqual(NbNoeud, test.nbSommets());
-		Assert::AreEqual(NbArc, test.nbArc());
+		wchar_t message[512];
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud, test.nbSommets(),message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc, test.nbArc(),message);
 		for (int i = 0; i < NbArc; i++) {///Test si Fs est correct
-			wchar_t message2[512];
-			swprintf(message2, L"Fs est faux à l'iter: %d ", i);
-			Assert::AreEqual(fs[i], test.fileSuivant(i), message2);
+			swprintf(message, L"Fs est faux à l'iter: %d ", i);
+			Assert::AreEqual(fs[i], test.fileSuivant(i), message);
 		}
 		for (int i = 0; i < NbNoeud; i++) {///Test si Aps est correct
-			wchar_t message1[512];
-			swprintf(message1, L"Aps est faux à l'iter: %d ", i);
-			Assert::AreEqual(aps[i], test.adressePremierSuccesseur(i), message1);
+			swprintf(message, L"Aps est faux à l'iter: %d ", i);
+			Assert::AreEqual(aps[i], test.adressePremierSuccesseur(i), message);
 		}
 	}
 
-	// Il reste le test avec un fichier
+	TEST_METHOD(TestMatriceAdjacenceAvecFichier) {
+		Graphe::FsAps test{ "ReponseFsAps" };
+		wchar_t message[512];
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud, test.nbSommets(), message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc, test.nbArc(), message);
+		for (int i = 0; i < test.nbSommets() + test.nbArc(); i++) {
+			swprintf(message, L"Fs est faux à l'iter: %d ", i);
+			Assert::AreEqual(fs[i], test.fileSuivant(i), message);
+		}
+		for (int i = 0; i < test.nbSommets(); i++) {
+			swprintf(message, L"Aps est faux à l'iter: %d ", i);
+			Assert::AreEqual(aps[i], test.adressePremierSuccesseur(i), message);
+		}
+	}
 
 	TEST_METHOD(TestFsApsAvecMatriceAdjacenceEnArgument) {
 		Graphe::FsAps testMat{ NbNoeud, fs, NbArc, aps };
 		Graphe::FsAps test{ testMat };
-		Assert::AreEqual(NbArc, test.nbArc());
-		Assert::AreEqual(NbNoeud, test.nbSommets());
+		wchar_t message[512];
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc, test.nbArc(), message);
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud, test.nbSommets(),message);
 		for (int i = 0; i < NbArc; i++) {///Test si Fs est correct
-			wchar_t message2[512];
-			swprintf(message2, L"Fs est faux à l'iter: %d ", i);
-			Assert::AreEqual(fs[i], test.fileSuivant(i), message2);
+			swprintf(message, L"Fs est faux à l'iter: %d ", i);
+			Assert::AreEqual(fs[i], test.fileSuivant(i), message);
 		}
 		for (int i = 0; i < NbNoeud; i++) {///Test si Aps est correct
-			wchar_t message1[512];
-			swprintf(message1, L"Aps est faux à l'iter: %d ", i);
-			Assert::AreEqual(aps[i], test.adressePremierSuccesseur(i), message1);
+			swprintf(message, L"Aps est faux à l'iter: %d ", i);
+			Assert::AreEqual(aps[i], test.adressePremierSuccesseur(i), message);
 		}
 	}
 
-	TEST_METHOD(TestAjouteArc) {
+	TEST_METHOD(TestajouteArc) {
 		Graphe::FsAps test{ NbNoeud, fs };
 		test.ajouteArc(1, 4);
-		Assert::AreEqual(4, test.fileSuivant(2));/// La fonction insère au bon endroit l'élément
-		Assert::AreEqual(NbArc + 1, test.nbArc());/// La fonction verifie que le nombre d'element de Fs reste correcte
+		wchar_t message[512];
+		swprintf(message, L"L'arc a bien ete supprime");
+		Assert::AreEqual(4, test.fileSuivant(2),message);/// La fonction insère au bon endroit l'élément
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc + 1, test.nbArc(),message);/// La fonction verifie que le nombre d'element de Fs reste correcte
 		test.ajouteArc(1, 4);
-		Assert::AreEqual(NbArc + 1, test.nbArc());/// La fonction verifie que l'on n'insere bien aucun element si l'element est deja present
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc + 1, test.nbArc(),message);/// La fonction verifie que l'on n'insere bien aucun element si l'element est deja present
 	}
 
-	TEST_METHOD(TestAjouterNoeud) {
+	TEST_METHOD(TessupprimeArc) {
 		Graphe::FsAps test{ NbNoeud, fs };
-		test.ajouteNoeud();
+		test.supprimerArc(1, 3);
+		wchar_t message[512];
+		for (int i = 1; i < test.nbSommets() + test.nbArc();i++) {
+			swprintf(message, L"Fs est faux à l'iter: %d ", i);
+			Assert::AreEqual(fs[i+1], test.fileSuivant(i),message);/// La fonction supprime le bon endroit élément
+		}
+		for (int i = 1; i < test.nbSommets() ; i++) {
+			swprintf(message, L"Aps est faux à l'iter: %d ", i);
+			Assert::AreEqual(aps[i]-1, test.adressePremierSuccesseur(i),message);/// La fonction supprime le bon endroit élément
+		}
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc - 1, test.nbArc(),message);/// La fonction verifie que le nombre d'element de Fs reste correcte
+		test.supprimerArc(1, 3);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc - 1, test.nbArc(),message);/// La fonction verifie que l'on n'insere bien aucun element si l'element est deja present
+		for (int i = 1; i < test.nbSommets() + test.nbArc(); i++) {
+			swprintf(message, L"Fs est faux à l'iter: %d ", i);
+			Assert::AreEqual(fs[i + 1], test.fileSuivant(i),message);/// La fonction supprime le bon endroit élément
+		}
+		for (int i = 1; i < test.nbSommets(); i++) {
+			swprintf(message, L"Aps est faux à l'iter: %d ", i);
+			Assert::AreEqual(aps[i] - 1, test.adressePremierSuccesseur(i),message);/// La fonction supprime le bon endroit élément
+		}
+	}
+
+	TEST_METHOD(TestajouteSommet) {
+		Graphe::FsAps test{ NbNoeud, fs };
+		test.ajouteSommet();
 		wchar_t message[512];
 		swprintf(message, L"NbArc de Aps est faux");
 		Assert::AreEqual(NbArc, test.nbArc(), message);
-		swprintf(message, L"NbNoeud de Aps est faux");
+		swprintf(message, L"Le nombre de sommet est faux");
 		Assert::AreEqual(NbNoeud + 1, test.nbSommets(), message);
 		swprintf(message, L"Le dernier element de FileSuivant est faux");
 		Assert::AreEqual(0, test.fileSuivant(test.nbArc() + test.nbSommets() - 1), message);
@@ -151,25 +213,70 @@ public:
 		Assert::AreEqual(NbArc + NbNoeud, test.adressePremierSuccesseur(test.nbSommets() - 1), message);
 	}
 
+	TEST_METHOD(TestsupprimeSommet) {
+		Graphe::FsAps test{ NbNoeud, fs };
+		test.supprimeSommet(1);
+		wchar_t message[512];
+		for (int i = 4; i < NbArc; i++) {
+			swprintf(message, L"Fs est faux à l'iter: %d ", i);
+			Assert::AreEqual(fs[i], test.fileSuivant(i - 4),message);
+		}
+		for (int i = 0; i < NbNoeud - 1;i++) {
+			swprintf(message, L"Aps est faux à l'iter: %d ", i);
+			Assert::AreEqual(aps[i+1]-4, test.adressePremierSuccesseur(i),message);
+		}
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud - 1, test.nbSommets(),message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc - 3, test.nbArc(),message);
+	}
+
 	TEST_METHOD(TestInverseFsAps) {
 		Graphe::FsAps test{ NbNoeud, fs,NbArc,aps };
 		test.inverse();
+		wchar_t message[512];
 		for (int i = 0; i < NbArc; i++) {/// Fp est cree correctement
-			wchar_t message2[512];
-			swprintf(message2, L"Fp est faux à l'iter: %d ", i);
-			Assert::AreEqual(fp[i], test.fileSuivant(i), message2);
+			swprintf(message, L"Fp est faux à l'iter: %d ", i);
+			Assert::AreEqual(fp[i], test.fileSuivant(i), message);
 		}
 		for (int i = 0; i < NbNoeud; i++) {/// App est cree correctement 
-			wchar_t message1[512];
-			swprintf(message1, L"App est faux à l'iter: %d ", i);
-			Assert::AreEqual(app[i], test.adressePremierSuccesseur(i), message1);
+			swprintf(message, L"App est faux à l'iter: %d ", i);
+			Assert::AreEqual(app[i], test.adressePremierSuccesseur(i), message);
 		}
 	}
+
+	TEST_METHOD(TestenregistrerFsAps) {
+		Graphe::FsAps test{ NbNoeud, fs,NbArc,aps };
+		std::ofstream os("fichier.txt");
+		test.enregistrerFsAps(os);
+		os.close();
+		std::ifstream fileRep("ReponseFsAps.txt");
+		std::ifstream fileAverifier("fichier.txt");
+		wchar_t message[512];
+		swprintf(message, L"Le fichier généré est incorrect");
+		Assert::IsTrue(compareFile(fileRep, fileAverifier), message);
+	}
+
+	TEST_METHOD(TestrecupererMatriceAdjacence) {
+		Graphe::FsAps test{ };
+		std::ifstream file("ReponseFsAps.txt");
+		test.recupererFsAps(file);
+		wchar_t message[512];
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud, test.nbSommets(), message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc, test.nbArc(), message);
+		for (int i = 0; i < test.nbSommets()+test.nbArc(); i++) {
+			swprintf(message, L"Fs est faux à l'iter: %d ", i);
+			Assert::AreEqual(fs[i],test.fileSuivant(i), message);
+		}
+		for (int i = 0; i < test.nbSommets(); i++) {
+		swprintf(message, L"Aps est faux à l'iter: %d ", i);
+		Assert::AreEqual(aps[i], test.adressePremierSuccesseur(i), message);
+		}
+	}
+
 	};
-
-	// Il reste enregistrerFsAps() à tester
-	// Il reste recupererFsAps() à tester
-
 
 	TEST_CLASS(TestMatriceAdjacence)
 	{
@@ -628,7 +735,7 @@ public:
 		}
 	}
 
-	TEST_METHOD(TestenregistrerMatriceAdjacence) {
+	TEST_METHOD(TestenregistrerMatrice) {
 		Graphe::MatriceAdjacenceValuee Mat{ MValuee,NbNoeud,NbArc };
 		std::ofstream os("fichier.txt");
 		Mat.enregistrerMatrice(os);
@@ -640,7 +747,7 @@ public:
 		Assert::IsTrue(compareFile(fileRep, fileAverifier), message);
 	}
 
-	TEST_METHOD(TestrecupererMatriceAdjacence) {
+	TEST_METHOD(TestrecupererMatrice) {
 		Graphe::MatriceAdjacence Mat{};
 		std::ifstream file("ReponseMatriceAdjacenceValuee.txt");
 		Mat.recupererMatrice(file);

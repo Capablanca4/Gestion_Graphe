@@ -35,7 +35,7 @@ namespace Graphe {
 		}
 	}
 
-	MatriceAdjacenceValuee::MatriceAdjacenceValuee(std::vector<std::vector<int>> Matrice,int nbSommets, int nbArcs) :
+	MatriceAdjacenceValuee::MatriceAdjacenceValuee(const std::vector<std::vector<int>>& Matrice,int nbSommets, int nbArcs) :
 		MatriceAdjacence(nbSommets),
 		d_MatriceAvecValeur{ Matrice } {
 		for (int i = 0; i < nbSommets; i++) {
