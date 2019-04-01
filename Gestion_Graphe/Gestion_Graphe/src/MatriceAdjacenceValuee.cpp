@@ -101,10 +101,10 @@ namespace Graphe {
 				d_MatriceAvecValeur[i] = d_MatriceAvecValeur[i + 1];
 				for (int j = sommet; j < nbSommets() - 1; j++) {
 					d_MatriceAvecValeur[i][j] = d_MatriceAvecValeur[i][j + 1];
-					d_MatriceAvecValeur[i].pop_back();
 				}
+				d_MatriceAvecValeur[i].pop_back();
 			}
-			d_MatriceAvecValeur[nbSommets()].pop_back();
+			d_MatriceAvecValeur[nbSommets()-1].pop_back();
 			MatriceAdjacence::supprimeSommet(sommet);
 		}
 	}
@@ -121,15 +121,17 @@ namespace Graphe {
 		std::vector<std::vector<int>> newMatrice{};
 		d_MatriceAvecValeur = matrice;
 		for (int i = 0; i < matrice.size(); i++) {
+			newMatrice.push_back({});
 			for (int j = 0; j < matrice.size(); j++) {
 				if (matrice[i][j] == INFINI) newMatrice[i].push_back(0);
 				else newMatrice[i].push_back(1);
-			}
+			}	
 		}
 		MatriceAdjacence::setMatrice(newMatrice);
 	}
 
 	void MatriceAdjacenceValuee::inverse() {
+		MatriceAdjacence::inverse();
 		std::vector<std::vector<int>> M{};
 		for (int i = 0; i < nbSommets(); i++) {
 			M.push_back(std::vector<int>{});

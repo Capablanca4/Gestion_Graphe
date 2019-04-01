@@ -410,6 +410,21 @@ private:
 										   {INFINI,INFINI,1,INFINI,INFINI,INFINI,INFINI},
 										   {INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI},
 										   {INFINI,INFINI,INFINI,1,INFINI,1,INFINI} };
+	std::vector<std::vector<int>> inv_M{ {0,0,0,0,0,0,0},
+										 {1,0,0,0,0,0,0},
+										 {1,1,1,0,1,0,0},
+										 {0,0,1,0,0,0,1},
+										 {1,0,0,1,0,0,0},
+										 {0,0,0,1,0,0,1},
+										 {0,0,0,0,0,0,0} };
+	std::vector<std::vector<int>> inv_MValuee{ {INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI},
+											   {1,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI},
+											   {1,1,1,INFINI,1,INFINI,INFINI},
+											   {INFINI,INFINI,1,INFINI,INFINI,INFINI,1},
+											   {1,INFINI,INFINI,1,INFINI,INFINI,INFINI},
+											   {INFINI,INFINI,INFINI,1,INFINI,INFINI,1},
+											   {INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI} };
+
 public:
 	TEST_METHOD(TestMatriceAdjacenceValueeSansArgument) {
 		Graphe::MatriceAdjacenceValuee Mat{};
@@ -482,7 +497,165 @@ public:
 		Assert::IsFalse(Mat.sansValeurNegative(), message);
 	}
 
+	TEST_METHOD(TestajouteSommet) {
+		Graphe::MatriceAdjacenceValuee Mat{ MValuee,NbNoeud,NbArc };
+		Mat.ajouteSommet();
+		wchar_t message[512];
+		for (int i = 0; i < NbNoeud; i++) {
+			for (int j = 0; j < NbNoeud; j++) {
+				swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", i, j);
+				Assert::AreEqual(M[i][j], ((MatriceAdjacence)Mat).valeurMatrice(i, j), message);
+				swprintf(message, L"La matrice d'adjacence valuee est fausse à la ligne %d, la colonne %d", i, j);
+				Assert::AreEqual(MValuee[i][j], Mat.valeurMatrice(i, j), message);
+			}
+			swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", i, NbNoeud);
+			Assert::AreEqual(0, ((MatriceAdjacence)Mat).valeurMatrice(i, NbNoeud), message);
+			swprintf(message, L"La matrice d'adjacence valuee est fausse à la ligne %d, la colonne %d", i, NbNoeud);
+			Assert::AreEqual(INFINI, Mat.valeurMatrice(i, NbNoeud), message);
+			swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", NbNoeud, i);
+			Assert::AreEqual(0, ((MatriceAdjacence)Mat).valeurMatrice(NbNoeud, i), message);
+			swprintf(message, L"La matrice d'adjacence valuee est fausse à la ligne %d, la colonne %d", NbNoeud, i);
+			Assert::AreEqual(INFINI, Mat.valeurMatrice(NbNoeud, i), message);
+		}
+		swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", NbNoeud, NbNoeud);
+		Assert::AreEqual(0, ((MatriceAdjacence)Mat).valeurMatrice(NbNoeud, NbNoeud),message);
+		swprintf(message, L"La matrice d'adjacence valuee est fausse à la ligne %d, la colonne %d", NbNoeud, NbNoeud);
+		Assert::AreEqual(INFINI, Mat.valeurMatrice(NbNoeud, NbNoeud), message);
+	}
 
+	TEST_METHOD(TestsupprimeSommet) {
+		Graphe::MatriceAdjacenceValuee Mat{ MValuee,NbNoeud,NbArc };
+		Mat.supprimeSommet(0);
+		wchar_t message[512];
+		int TestNbArc = 0;
+		for (int i = 0; i < NbNoeud - 1; i++) {
+			for (int j = 0; j < NbNoeud - 1; j++) {
+				swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", i, j);
+				Assert::AreEqual(M[i + 1][j + 1], ((MatriceAdjacence)Mat).valeurMatrice(i, j), message);
+				swprintf(message, L"La matrice d'adjacence valuee est fausse à la ligne %d, la colonne %d", i, j);
+				Assert::AreEqual(MValuee[i + 1][j + 1], Mat.valeurMatrice(i, j), message);
+				if (Mat.valeurMatrice(i, j) != INFINI) TestNbArc++;
+			}
+		}
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud - 1, Mat.nbSommets(), message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(TestNbArc, Mat.nbArc(), message);
+	}
+
+	TEST_METHOD(TestajouterArc) {
+		Graphe::MatriceAdjacenceValuee Mat{ MValuee,NbNoeud,NbArc };
+		int valeur = 24;
+		Mat.ajouterArc(1, 1,valeur);
+		wchar_t message[512];
+		swprintf(message, L"L'arc n'a pas ete ajoute à MatriceAdjacence");
+		Assert::AreEqual(1, ((MatriceAdjacence)Mat).valeurMatrice(1, 1), message);
+		swprintf(message, L"L'arc n'a pas la bonne valeur");
+		Assert::AreEqual(valeur, Mat.valeurMatrice(1, 1), message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc + 1, Mat.nbArc(), message);
+		int newvaleur = 89;
+		Mat.ajouterArc(1, 1,newvaleur);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc + 1, Mat.nbArc(), message);/// On test pour voir si on n'incrémente pas nbArc
+		swprintf(message, L"L'arc a ete modifie");
+		Assert::AreEqual(1, ((MatriceAdjacence)Mat).valeurMatrice(1, 1), message);
+		swprintf(message, L"L'arc n'a pas la bonne valeur");
+		Assert::AreEqual(newvaleur, Mat.valeurMatrice(1, 1), message);
+		Mat.ajouterArc(1, 1, newvaleur);/// On test pour voir si en rajoutant un arc avec la même valeur provoque des dysfonctionnements
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc + 1, Mat.nbArc(), message);/// On test pour voir si on n'incrémente pas nbArc
+		swprintf(message, L"L'arc a ete modifie");
+		Assert::AreEqual(1, ((MatriceAdjacence)Mat).valeurMatrice(1, 1), message);
+		swprintf(message, L"L'arc n'a pas la bonne valeur");
+		Assert::AreEqual(newvaleur, Mat.valeurMatrice(1, 1), message);
+	}
+
+	TEST_METHOD(TestsupprimerArc) {
+		Graphe::MatriceAdjacenceValuee Mat{ MValuee,NbNoeud,NbArc };
+		int valeur = 24;
+		Mat.ajouterArc(1, 1,valeur);/// On cree un arc pour etre sur de son existence puis on le supprime
+		Mat.supprimerArc(1, 1);
+		wchar_t message[512];
+		swprintf(message, L"L'arc n'a pas ete supprimer dans MatriceAdjacence");
+		Assert::AreEqual(0, ((MatriceAdjacence)Mat).valeurMatrice(1, 1));
+		swprintf(message, L"L'arc n'a pas ete supprimer dans MatriceAdjacenceValuee");
+		Assert::AreEqual(INFINI, Mat.valeurMatrice(1, 1), message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc, Mat.nbArc(), message);/// On test pour voir si tout est à nouveau normal	
+		Mat.supprimerArc(1, 1);
+		swprintf(message, L"L'arc a ete modifie");
+		Assert::AreEqual(0, ((MatriceAdjacence)Mat).valeurMatrice(1, 1));
+		swprintf(message, L"L'arc n'a pas ete supprimer dans MatriceAdjacenceValuee");
+		Assert::AreEqual(INFINI, Mat.valeurMatrice(1, 1), message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc, Mat.nbArc(), message);
+	}
+
+	TEST_METHOD(TestsetMatrice) {
+		Graphe::MatriceAdjacenceValuee Mat{ NbNoeud };
+		Mat.setMatrice(MValuee);
+		wchar_t message[512];
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud, Mat.nbSommets(), message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc, Mat.nbArc(), message);
+		for (int i = 0; i < Mat.nbSommets(); i++) {
+			for (int j = 0; j < Mat.nbSommets(); j++) {
+				swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", i, j);
+				Assert::AreEqual(M[i][j], ((MatriceAdjacence)Mat).valeurMatrice(i, j), message);
+				swprintf(message, L"La matrice d'adjacence valuee est fausse à la ligne %d, la colonne %d", i, j);
+				Assert::AreEqual(MValuee[i][j], Mat.valeurMatrice(i, j), message);
+			}
+		}
+	}
+
+	TEST_METHOD(Testinverse) {
+		Graphe::MatriceAdjacenceValuee Mat{ MValuee,NbNoeud,NbArc };
+		Mat.inverse();
+		wchar_t message[512];
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud, Mat.nbSommets(), message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc, Mat.nbArc(), message);
+		for (int i = 0; i < Mat.nbSommets(); i++) {
+			for (int j = 0; j < Mat.nbSommets(); j++) {
+				swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", i, j);
+				Assert::AreEqual(inv_M[i][j], ((MatriceAdjacence)Mat).valeurMatrice(i, j), message);
+				swprintf(message, L"La matrice d'adjacence valuee est fausse à la ligne %d, la colonne %d", i, j);
+				Assert::AreEqual(inv_MValuee[i][j], Mat.valeurMatrice(i, j), message);
+			}
+		}
+	}
+
+	TEST_METHOD(TestenregistrerMatriceAdjacence) {
+		Graphe::MatriceAdjacenceValuee Mat{ MValuee,NbNoeud,NbArc };
+		std::ofstream os("fichier.txt");
+		Mat.enregistrerMatrice(os);
+		os.close();
+		std::ifstream fileRep("ReponseMatriceAdjacenceValuee.txt");
+		std::ifstream fileAverifier("fichier.txt");
+		wchar_t message[512];
+		swprintf(message, L"Le fichier généré est incorrect");
+		Assert::IsTrue(compareFile(fileRep, fileAverifier), message);
+	}
+
+	TEST_METHOD(TestrecupererMatriceAdjacence) {
+		Graphe::MatriceAdjacence Mat{};
+		std::ifstream file("ReponseMatriceAdjacenceValuee.txt");
+		Mat.recupererMatrice(file);
+		wchar_t message[512];
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud, Mat.nbSommets(), message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc, Mat.nbArc(), message);
+		for (int i = 0; i < Mat.nbSommets(); i++) {
+			for (int j = 0; j < Mat.nbSommets(); j++) {
+				swprintf(message, L"La matrice d'adjacence est fausse à la ligne %d, la colonne %d", i, j);
+				Assert::AreEqual(M[i][j], Mat.valeurMatrice(i, j), message);
+			}
+		}
+	}
 
 };
 
