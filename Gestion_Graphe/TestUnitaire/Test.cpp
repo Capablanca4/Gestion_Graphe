@@ -6,6 +6,7 @@
 #include "../Gestion_Graphe/include/FsAps.h"
 #include "../Gestion_Graphe/include/Distance.h"
 #include "../Gestion_Graphe/include/alea.h"
+#include "../Gestion_Graphe/include/Rang.h"
 #include <iostream>
 #include <fstream>
 
@@ -332,7 +333,7 @@ public:
 			}
 		}
 
-		TEST_METHOD(TestMatriceAdjacenceAvecTroisArgument) {
+		TEST_METHOD(TestMatriceAdjacenceAvecTroisArgument){
 			Graphe::MatriceAdjacence Mat{ M,NbNoeud,NbArc };
 			wchar_t message[512];
 			swprintf(message, L"Le nombre de sommet est faux");
@@ -347,7 +348,7 @@ public:
 			}
 		}
 
-		TEST_METHOD(TestMatriceAdjacenceAvecFsApsEnArgument) { /// Ce test ne passe pas il y a eu une erreur lors de la recopie
+		TEST_METHOD(TestMatriceAdjacenceAvecFsApsEnArgument) { 
 			Graphe::FsAps testFsAps{ NbNoeud, fs, NbArc, aps };
 			Graphe::MatriceAdjacence Mat{ testFsAps };
 			wchar_t message[512];
