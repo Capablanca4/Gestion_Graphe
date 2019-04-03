@@ -1,6 +1,10 @@
 #include "include/FsAps.h"
 #include "include/MatriceAdjacence.h"
+#include "include/MatriceAdjacenceValuee.h"
 #include "include/Distance.h"
+#include "include/alea.h"
+#include <iostream>
+#include <fstream>
 
 int main() {
 	int NbNoeud = 7,NbArc = 18;
