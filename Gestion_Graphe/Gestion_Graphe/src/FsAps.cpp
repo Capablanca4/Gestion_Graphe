@@ -1,8 +1,8 @@
 #include "../../Gestion_Graphe/include/FsAps.h"
 #include"../../Gestion_Graphe/include/MatriceAdjacence.h"
 #include <fstream>
-
 #include <iostream>
+
 namespace Graphe {
 
 	FsAps::FsAps() :
@@ -153,7 +153,7 @@ namespace Graphe {
 		d_tailleFileSuivant++;
 		d_tailleAdressePremierSuccesseur++;
 	}
-
+	
 	void FsAps::supprimeSommet(int noeud) {
 		int adresse = d_AdressePremierSuccesseur[noeud - 1];
 		while (d_FileSuivant[adresse] != 0) {
@@ -230,19 +230,16 @@ namespace Graphe {
 		for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
 			os << d_AdressePremierSuccesseur[i] << " ";
 		}
-
 	}
-
+	
 	void FsAps::recupererFsAps(std::ifstream& is)
 	{
 		is >> d_tailleFileSuivant;
 		is >> d_tailleAdressePremierSuccesseur;
-
 		d_FileSuivant.resize(d_tailleFileSuivant);
 		for (int i = 0; i < d_tailleFileSuivant; i++) {
 			is >> d_FileSuivant[i];
 		}
-
 		d_AdressePremierSuccesseur.resize(d_tailleAdressePremierSuccesseur);
 		for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
 			is >> d_AdressePremierSuccesseur[i];

@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <utility>
-#include <fstream>
+
 namespace Graphe {
 
 	MatriceAdjacence::MatriceAdjacence() :

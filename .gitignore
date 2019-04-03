@@ -39,3 +39,6 @@ ipch/
 *.exe
 *.out
 *.app
+
+# Visual studio data
+.vs

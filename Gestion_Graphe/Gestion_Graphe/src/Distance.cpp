@@ -1,6 +1,7 @@
-#include "../include/Distance.h"
-#include "../include/FsAps.h"
-#include "../include/MatriceAdjacence.h"
+#include "Distance.h"
+#include "FsAps.h"
+#include "MatriceAdjacence.h"
+#include <iostream>
 
 namespace Graphe {
 
@@ -32,7 +33,7 @@ std::vector<int> Distance::distFsAps(const FsAps& graphe, int Sommet) {
 	int *fa = new int[nbSommet + 1];
 	fa[0] = Sommet;
 	for (int i = 1; i <= nbSommet; i++)  tdist.push_back(-1);
-	tdist[Sommet] = 0;
+	tdist[Sommet+1] = 0;
 	while (t < q) {
 		d++;
 		for (int i = t ; i < q ; i++) {
@@ -86,6 +87,12 @@ const std::vector<int> Distance::Sommet(int i) const
 
 void Distance::affiche()
 {
+	for (int i = 0; i < d_matrice.size(); i++) {
+		for (int j = 0; j < d_matrice[i].size(); j++) {
+			std::cout << d_matrice[i][j] << ",";
+		}
+		std::cout << std::endl;
+	}
 }
 
 }

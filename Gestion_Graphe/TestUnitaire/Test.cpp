@@ -347,7 +347,7 @@ public:
 			}
 		}
 
-		TEST_METHOD(TestMatriceAdjacenceAvecFsApsEnArgument) {
+		TEST_METHOD(TestMatriceAdjacenceAvecFsApsEnArgument) { /// Ce test ne passe pas il y a eu une erreur lors de la recopie
 			Graphe::FsAps testFsAps{ NbNoeud, fs, NbArc, aps };
 			Graphe::MatriceAdjacence Mat{ testFsAps };
 			wchar_t message[512];
@@ -767,34 +767,59 @@ public:
 };
 
 	TEST_CLASS(TestDistance) {
-private:
-	std::vector<std::vector<int>> rep{ {NbNoeud,NbArc},
-									  {NbNoeud, 0, 1, 1, 2, 1, 3,-1},
-									  {NbNoeud,-1, 0, 1, 2, 3, 3,-1},
-									  {NbNoeud,-1,-1, 0, 1, 2, 2,-1},
-									  {NbNoeud,-1,-1, 2, 0, 1, 1,-1},
-									  {NbNoeud,-1,-1, 1, 2, 0, 3,-1},
-									  {NbNoeud,-1,-1,-1,-1,-1, 0,-1},
-									  {NbNoeud,-1,-1, 3, 1, 2, 1, 0} };
-public:
-	TEST_METHOD(TestDistanceAvecFsAps) {
-		Graphe::FsAps testFsAps{ NbNoeud, fs,NbArc,aps };
-		Graphe::Distance testDist{ testFsAps };
-		for (int i = 0; i < NbNoeud; i++) {
-			wchar_t message[512];
-			swprintf(message, L"la matrice est fausse à l'iter: %d ", i);
-			Assert::AreEqual(rep[i], testDist.Sommet(i), message);
-		}
-	}
+	private:
+		std::vector<std::vector<int>> rep{ {NbNoeud,NbArc},
+										  {NbNoeud, 0, 1, 1, 2, 1, 3,-1},
+										  {NbNoeud,-1, 0, 1, 2, 3, 3,-1},
+										  {NbNoeud,-1,-1, 0, 1, 2, 2,-1},
+										  {NbNoeud,-1,-1, 2, 0, 1, 1,-1},
+										  {NbNoeud,-1,-1, 1, 2, 0, 3,-1},
+										  {NbNoeud,-1,-1,-1,-1,-1, 0,-1},
+										  {NbNoeud,-1,-1, 3, 1, 2, 1, 0} };
+	public:
+		TEST_METHOD(TestDistanceAvecFsAps) {
+			Graphe::FsAps testFsAps{ NbNoeud, fs,NbArc,aps };
+			Graphe::Distance testDist{ testFsAps };
+			for (int i = 0; i < NbNoeud; i++) {
+				wchar_t message[512];
+				swprintf(message, L"la matrice est fausse à l'iter: %d ", i);
+				Assert::AreEqual(rep[i], testDist.Sommet(i),message);
+			}
 
-	TEST_METHOD(TestDistanceAvecMatriceAdjacence) {
-		Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
-		Graphe::Distance testDist{ testMat };
-		for (int i = 0; i < NbNoeud; i++) {
-			wchar_t message[512];
-			swprintf(message, L"la matrice est fausse à l'iter: %d ", i);
-			Assert::AreEqual(rep[i], testDist.Sommet(i), message);
 		}
-	}
+		TEST_METHOD(TestDistanceAvecMatriceAdjacence) {
+			Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
+			Graphe::Distance testDist{ testMat };
+			for (int i = 0; i < NbNoeud; i++) {
+				wchar_t message[512];
+				swprintf(message, L"la matrice est fausse à l'iter: %d ", i);
+				Assert::AreEqual(rep[i], testDist.Sommet(i), message);
+			}
+
+		}
+	};
+
+	TEST_CLASS(TestRang) {
+	private:
+		std::vector<int> rep{0,0,1,-1,-1,-1,-1,0};
+	public:
+		TEST_METHOD(TestRangAvecFsAps) {
+			Graphe::FsAps testFsAps{ NbNoeud, fs,NbArc,aps };
+			Graphe::Rang TestRang{ testFsAps };
+			for (int i = 0; i < NbNoeud; i++) {
+				wchar_t message[512];
+				swprintf(message, L"le rang est faux à l'iter: %d ", i);
+				Assert::AreEqual(rep[i], TestRang.Sommet(i), message);
+			}
+		}
+		TEST_METHOD(TestRangAvecMatriceAdjacence) {
+			Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
+			Graphe::Rang TestRang{ testMat };
+			for (int i = 0; i < NbNoeud; i++) {
+				wchar_t message[512];
+				swprintf(message, L"le rang est faux à l'iter: %d ", i);
+				Assert::AreEqual(rep[i], TestRang.Sommet(i), message);
+			}
+		}
 	};
 }

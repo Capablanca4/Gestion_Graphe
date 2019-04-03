@@ -7,17 +7,12 @@
 #include <fstream>
 
 int main() {
-	int NbNoeud = 7, NbArc = 11;
+	int NbNoeud = 7,NbArc = 18;
 	std::vector<int> fs{ 2,3,5,0,3,0,3,4,0,5,6,0,3,0,0,4,6,0 };
 	std::vector<int> aps{ 0,4,6,9,12,14,15 };
-	/*Graphe::FsAps test{ NbNoeud, fs };
-	test.supprimerArc(1, 3);
-	test.afficheAdressePremierSuccesseur();
-	test.supprimerArc(1, 3);
-	test.afficheFileSuivant();
-	getchar();*/
-	Graphe::FsAps test{ NbNoeud, fs,NbArc,aps };
-	std::ofstream os("ReponseFsAps.txt");
-	test.enregistrerFsAps(os);
-	os.close();
+	Graphe::FsAps testFsAps{ NbNoeud, fs, NbArc, aps };
+	Graphe::Distance Mat{ testFsAps };
+	Mat.affiche();
+	getchar();
+	return 0;
 }
