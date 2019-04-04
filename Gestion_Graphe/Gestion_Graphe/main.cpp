@@ -2,6 +2,7 @@
 #include "include/MatriceAdjacence.h"
 #include "include/MatriceAdjacenceValuee.h"
 #include "include/Distance.h"
+#include "include/Rang.h"
 #include "include/alea.h"
 #include <iostream>
 #include <fstream>

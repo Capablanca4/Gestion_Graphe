@@ -6,7 +6,7 @@ namespace Graphe{
 Rang::Rang(const FsAps& Graph):
 	rang{}
 {
-	int n = Graph.nbSommets(),taillefs = Graph.NbArc(),iter = -1;
+	int n = Graph.nbSommets(),taillefs = Graph.nbArc(),iter = -1;
 	rang.resize(n+1, -1);
 	rang[0] = 0;
 	std::vector<int> DemiDegreInterne{};
@@ -28,9 +28,9 @@ Rang::Rang(const FsAps& Graph):
 		pilch[0] = 0;
 		while (sommet > 0) {
 			rang[sommet] = iter;
-			int h = Graph.AdressePremierSuccesseur(sommet-1);
+			int h = Graph.adressePremierSuccesseur(sommet-1);
 			int t;
-			while ((t = Graph.FileSuivant(h) )!=0)
+			while ((t = Graph.fileSuivant(h) )!=0)
 			{
 				DemiDegreInterne[t]--;
 				if (DemiDegreInterne[t] == 0) {
@@ -70,7 +70,7 @@ Rang::Rang(const MatriceAdjacence& Graph)
 		while (sommet > 0) {
 			rang[sommet] = iter;
 			for (int i = 0; i < Graph.nbSommets(); i++) {
-				if (Graph.Sommet(sommet-1)[i] == 1) {
+				if (Graph.sommet(sommet-1)[i] == 1) {
 					DemiDegreInterne[i]--;
 					if (DemiDegreInterne[i] == 0) {
 						empiler(i, pilch);
@@ -90,14 +90,14 @@ const int Rang::Sommet(int i) const
 }
 
 void Rang::det_ddi(const FsAps& fs, std::vector<int>& ddi) {
-	for (int i = 0; i < fs.NbArc(); i++) ddi[fs.FileSuivant(i)]++;
+	for (int i = 0; i < fs.nbArc(); i++) ddi[fs.fileSuivant(i)]++;
 }
 
 void Rang::det_ddi(const MatriceAdjacence& mat, std::vector<int>& ddi) {
 	ddi[0] = mat.nbArc();
 	for (int i = 0; i < mat.nbSommets(); i++) {
 		for (int j = 0; j < mat.nbSommets(); j++) {
-			if (mat.Sommet(i)[j] == 1) ddi[j + 1]++;
+			if (mat.sommet(i)[j] == 1) ddi[j + 1]++;
 		}
 	}
 }

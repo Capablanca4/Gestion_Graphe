@@ -63,7 +63,7 @@ std::vector<int> Distance::distMat(const MatriceAdjacence& graphe, int Sommet) {
 	while (t < q) {
 		d++;
 		for (int i = t ; i < q ; i++) {
-			std::vector<int> suiv= graphe.Sommet(fa[i]);
+			std::vector<int> suiv= graphe.sommet(fa[i]);
 			for (int j = 0; j < nbSommet; j++) {
 				if (suiv[j] != 0) { 
 					if (tdist[j+1] == -1) { 
