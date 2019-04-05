@@ -6,7 +6,7 @@ namespace Graphe{
 Rang::Rang(const FsAps& Graph):
 	rang{}
 {
-	int n = Graph.nbSommets(),taillefs = Graph.nbArc(),iter = -1;
+	int n = Graph.nbSommets(),iter = -1;
 	rang.resize(n+1, -1);
 	rang[0] = 0;
 	std::vector<int> DemiDegreInterne{};
@@ -47,7 +47,7 @@ Rang::Rang(const FsAps& Graph):
 
 Rang::Rang(const MatriceAdjacence& Graph)
 {
-	int n = Graph.nbSommets(), taillefs = Graph.nbArc(), iter = -1;
+	int n = Graph.nbSommets(), iter = -1;
 	rang.resize(n + 1, -1);
 	rang[0] = 0;
 	std::vector<int> DemiDegreInterne{};
@@ -90,7 +90,7 @@ const int Rang::Sommet(int i) const
 }
 
 void Rang::det_ddi(const FsAps& fs, std::vector<int>& ddi) {
-	for (int i = 0; i < fs.nbArc(); i++) ddi[fs.fileSuivant(i)]++;
+	for (int i = 0; i < fs.nbArc()+fs.nbSommets(); i++) ddi[fs.fileSuivant(i)]++;
 }
 
 void Rang::det_ddi(const MatriceAdjacence& mat, std::vector<int>& ddi) {

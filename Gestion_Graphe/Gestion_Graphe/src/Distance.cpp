@@ -54,20 +54,20 @@ std::vector<int> Distance::distFsAps(const FsAps& graphe, int Sommet) {
 }
 
 std::vector<int> Distance::distMat(const MatriceAdjacence& graphe, int Sommet) {
-	int t = 0, q = 1, p = 1, d = 0, nbSommet = graphe.nbSommets();
+	int t = 0, q = 1, p = 1, iter = 0, nbSommet = graphe.nbSommets();
 	std::vector<int> tdist{ nbSommet };
 	int *fa = new int[nbSommet + 1];
 	fa[0] = Sommet;
 	for (int i = 1; i <= nbSommet; i++)  tdist.push_back(-1);
 	tdist[Sommet+1] = 0;
 	while (t < q) {
-		d++;
+		iter++;
 		for (int i = t ; i < q ; i++) {
 			std::vector<int> suiv= graphe.sommet(fa[i]);
 			for (int j = 0; j < nbSommet; j++) {
 				if (suiv[j] != 0) { 
 					if (tdist[j+1] == -1) { 
-						tdist[j+1] = d;
+						tdist[j+1] = iter;
 						fa[p++] = j;
 					}
 				}

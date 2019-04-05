@@ -42,6 +42,69 @@ namespace Graphe
 			std::istreambuf_iterator<char>(fileAverifier.rdbuf()));
 	}
 
+	TEST_CLASS(TestDistance) {
+private:
+	std::vector<std::vector<int>> rep{ {NbNoeud,NbArc},
+									  {NbNoeud, 0, 1, 1, 2, 1, 3,-1},
+									  {NbNoeud,-1, 0, 1, 2, 3, 3,-1},
+									  {NbNoeud,-1,-1, 0, 1, 2, 2,-1},
+									  {NbNoeud,-1,-1, 2, 0, 1, 1,-1},
+									  {NbNoeud,-1,-1, 1, 2, 0, 3,-1},
+									  {NbNoeud,-1,-1,-1,-1,-1, 0,-1},
+									  {NbNoeud,-1,-1, 3, 1, 2, 1, 0} };
+public:
+	TEST_METHOD(TestDistanceAvecFsAps) {
+		Graphe::FsAps testFsAps{ NbNoeud, fs,NbArc,aps };
+		Graphe::Distance testDist{ testFsAps };
+		wchar_t message[512];
+		swprintf(message, L"Le nombre de sommet est faux");
+		Assert::AreEqual(NbNoeud, testDist.Sommet(0)[0], message);
+		swprintf(message, L"Le nombre d'arc est faux");
+		Assert::AreEqual(NbArc, testDist.Sommet(0)[1], message);
+		for (int i = 1; i < NbNoeud; i++) {
+			for (int j = 0; j < NbNoeud; j++) {
+				swprintf(message, L"La matrice des distances est fausse à la ligne %d, la colonne %d", i, j);
+				Assert::AreEqual(rep[i][j], testDist.Sommet(i)[j], message);
+			}
+		}
+	}
+
+	TEST_METHOD(TestDistanceAvecMatriceAdjacence) {
+		Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
+		Graphe::Distance testDist{ testMat };
+		for (int i = 0; i < NbNoeud; i++) {
+			wchar_t message[512];
+			swprintf(message, L"la matrice est fausse à l'iter: %d ", i);
+			Assert::AreEqual(rep[i], testDist.Sommet(i), message);
+		}
+
+	}
+	};
+
+	TEST_CLASS(TestRang) {
+private:
+	std::vector<int> rep{ 0,0,1,-1,-1,-1,-1,0 };
+public:
+	TEST_METHOD(TestRangAvecFsAps) {
+		Graphe::FsAps testFsAps{ NbNoeud, fs,NbArc,aps };
+		Graphe::Rang TestRang{ testFsAps };
+		for (int i = 0; i < NbNoeud; i++) {
+			wchar_t message[512];
+			swprintf(message, L"le rang est faux à l'iter: %d ", i);
+			Assert::AreEqual(rep[i], TestRang.Sommet(i), message);
+		}
+	}
+	TEST_METHOD(TestRangAvecMatriceAdjacence) {
+		Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
+		Graphe::Rang TestRang{ testMat };
+		for (int i = 0; i < NbNoeud; i++) {
+			wchar_t message[512];
+			swprintf(message, L"le rang est faux à l'iter: %d ", i);
+			Assert::AreEqual(rep[i], TestRang.Sommet(i), message);
+		}
+	}
+	};
+
 	TEST_CLASS(TestFsAps) {
 private:
 	std::vector<int> fp{ 0,1,0,1,2,3,5,0,3,7,0,1,4,0,4,7,0,0 };
@@ -767,60 +830,4 @@ public:
 
 };
 
-	TEST_CLASS(TestDistance) {
-	private:
-		std::vector<std::vector<int>> rep{ {NbNoeud,NbArc},
-										  {NbNoeud, 0, 1, 1, 2, 1, 3,-1},
-										  {NbNoeud,-1, 0, 1, 2, 3, 3,-1},
-										  {NbNoeud,-1,-1, 0, 1, 2, 2,-1},
-										  {NbNoeud,-1,-1, 2, 0, 1, 1,-1},
-										  {NbNoeud,-1,-1, 1, 2, 0, 3,-1},
-										  {NbNoeud,-1,-1,-1,-1,-1, 0,-1},
-										  {NbNoeud,-1,-1, 3, 1, 2, 1, 0} };
-	public:
-		TEST_METHOD(TestDistanceAvecFsAps) {
-			Graphe::FsAps testFsAps{ NbNoeud, fs,NbArc,aps };
-			Graphe::Distance testDist{ testFsAps };
-			for (int i = 0; i < NbNoeud; i++) {
-				wchar_t message[512];
-				swprintf(message, L"la matrice est fausse à l'iter: %d ", i);
-				Assert::AreEqual(rep[i], testDist.Sommet(i),message);
-			}
-
-		}
-		TEST_METHOD(TestDistanceAvecMatriceAdjacence) {
-			Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
-			Graphe::Distance testDist{ testMat };
-			for (int i = 0; i < NbNoeud; i++) {
-				wchar_t message[512];
-				swprintf(message, L"la matrice est fausse à l'iter: %d ", i);
-				Assert::AreEqual(rep[i], testDist.Sommet(i), message);
-			}
-
-		}
-	};
-
-	TEST_CLASS(TestRang) {
-	private:
-		std::vector<int> rep{0,0,1,-1,-1,-1,-1,0};
-	public:
-		TEST_METHOD(TestRangAvecFsAps) {
-			Graphe::FsAps testFsAps{ NbNoeud, fs,NbArc,aps };
-			Graphe::Rang TestRang{ testFsAps };
-			for (int i = 0; i < NbNoeud; i++) {
-				wchar_t message[512];
-				swprintf(message, L"le rang est faux à l'iter: %d ", i);
-				Assert::AreEqual(rep[i], TestRang.Sommet(i), message);
-			}
-		}
-		TEST_METHOD(TestRangAvecMatriceAdjacence) {
-			Graphe::MatriceAdjacence testMat{ M,NbNoeud,NbArc };
-			Graphe::Rang TestRang{ testMat };
-			for (int i = 0; i < NbNoeud; i++) {
-				wchar_t message[512];
-				swprintf(message, L"le rang est faux à l'iter: %d ", i);
-				Assert::AreEqual(rep[i], TestRang.Sommet(i), message);
-			}
-		}
-	};
 }
