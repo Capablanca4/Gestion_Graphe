@@ -1,4 +1,13 @@
-﻿  Test.cpp
+﻿  stdafx.cpp
+  alea.cpp
+  Distance.cpp
+  FsAps.cpp
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\gestion_graphe\src\fsaps.cpp(93): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
+  MatriceAdjacence.cpp
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\gestion_graphe\src\matriceadjacence.cpp(290): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
+  MatriceAdjacenceValuee.cpp
+  Rang.cpp
+  Test.cpp
 c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(60): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
 c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(62): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
@@ -299,4 +308,7 @@ c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testu
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
 c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\testunitaire\test.cpp(825): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_wstdio.h(1822): note: voir la déclaration de 'swprintf'
+  Génération de code en cours...
+c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\gestion_graphe\src\matriceadjacencevaluee.cpp(82): warning C4715: 'Graphe::MatriceAdjacenceValuee::sommet' : les chemins de contrôle ne retournent pas tous une valeur
+     Création de la bibliothèque C:\Users\Pierre VIX\source\repos\Capablanca4\Gestion_Graphe\Gestion_Graphe\x64\Debug\TestUnitaire.lib et de l'objet C:\Users\Pierre VIX\source\repos\Capablanca4\Gestion_Graphe\Gestion_Graphe\x64\Debug\TestUnitaire.exp
   TestUnitaire.vcxproj -> C:\Users\Pierre VIX\source\repos\Capablanca4\Gestion_Graphe\Gestion_Graphe\x64\Debug\TestUnitaire.dll
