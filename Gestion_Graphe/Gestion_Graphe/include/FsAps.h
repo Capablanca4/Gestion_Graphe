@@ -38,6 +38,9 @@ namespace Graphe {
 		/// Methode d'affichage
 		void afficheFileSuivant();
 		void afficheAdressePremierSuccesseur();
+		std::vector<int> demiDegreInterieur()const;
+		std::vector<int> AdressePremierPredecesseur() const;
+		std::vector<int> rang() const;
 		void affiche();
 
 		void enregistrerFsAps(std::ofstream& os);

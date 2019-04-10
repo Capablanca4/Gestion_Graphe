@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace Graphe {
-
+	int const ValNULL = -1;
 	FsAps::FsAps() :
 		d_tailleAdressePremierSuccesseur{ 0 },
 		d_tailleFileSuivant{ 0},
@@ -18,7 +18,7 @@ namespace Graphe {
 		d_AdressePremierSuccesseur{}
 	{
 		for (int i = 0; i < nbSommets; i++) {
-			d_FileSuivant.push_back(0);
+			d_FileSuivant.push_back(ValNULL);
 			d_AdressePremierSuccesseur.push_back(i);
 		}
 	}
@@ -35,7 +35,7 @@ namespace Graphe {
 					nbelement++;
 				}
 			}
-			d_FileSuivant.push_back(0);
+			d_FileSuivant.push_back(ValNULL);
 			nbelement++;
 		}
 		d_tailleFileSuivant = nbelement;
@@ -72,12 +72,12 @@ namespace Graphe {
 		for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
 			d_AdressePremierSuccesseur.push_back(k);
 			for (int j = 0; j < d_tailleAdressePremierSuccesseur; j++) {
-				if (adj.valeurMatrice(i, j) == 1) {
-					d_FileSuivant.push_back(j + 1);
+				if (adj.valeurMatrice(i, j) ==1) {
+					d_FileSuivant.push_back(j);
 					k++;
 				}
 			}
-			d_FileSuivant.push_back(0);
+			d_FileSuivant.push_back(ValNULL);
 			k++;
 		}
 
@@ -92,7 +92,7 @@ namespace Graphe {
 		d_AdressePremierSuccesseur.push_back(0);
 		d_tailleFileSuivant = d_FileSuivant.size();
 		for (unsigned int i = 1; i < d_FileSuivant.size() - 1; i++) {
-			if (d_FileSuivant[i] == 0) {
+			if (d_FileSuivant[i] == ValNULL) {
 				d_AdressePremierSuccesseur.push_back(i + 1);
 			}
 		}
@@ -117,7 +117,7 @@ namespace Graphe {
 	void FsAps::ajouteArc(int noeudDep, int noeudArr) {
 		if (noeudArr < d_tailleAdressePremierSuccesseur && noeudDep < d_tailleAdressePremierSuccesseur) {
 			int emplacementElt = d_AdressePremierSuccesseur[noeudDep-1];
-			while (d_FileSuivant[emplacementElt] < noeudArr&&d_FileSuivant[emplacementElt] != 0) emplacementElt++;
+			while (d_FileSuivant[emplacementElt] < noeudArr&&d_FileSuivant[emplacementElt] != ValNULL) emplacementElt++;
 			if (d_FileSuivant[emplacementElt] != noeudArr) {
 				d_FileSuivant.push_back(noeudArr);
 				for (int i = d_tailleAdressePremierSuccesseur; i > emplacementElt; i--) d_FileSuivant[i] = d_FileSuivant[i - 1];
@@ -132,7 +132,7 @@ namespace Graphe {
 		if (noeudArr < d_tailleAdressePremierSuccesseur && noeudDep < d_tailleAdressePremierSuccesseur) {
 			int emplacementElt = d_AdressePremierSuccesseur[noeudDep-1];
 			std::cout << emplacementElt << std::endl;
-			while (d_FileSuivant[emplacementElt] != 0 && d_FileSuivant[emplacementElt] != noeudArr) {
+			while (d_FileSuivant[emplacementElt] != ValNULL && d_FileSuivant[emplacementElt] != noeudArr) {
 				std::cout<< d_FileSuivant[emplacementElt]<<" "; 
 				emplacementElt++;
 			}
@@ -148,7 +148,7 @@ namespace Graphe {
 	}
 
 	void FsAps::ajouteSommet() {
-		d_FileSuivant.push_back(0);
+		d_FileSuivant.push_back(ValNULL);
 		d_AdressePremierSuccesseur.push_back(d_tailleFileSuivant);
 		d_tailleFileSuivant++;
 		d_tailleAdressePremierSuccesseur++;
@@ -156,7 +156,7 @@ namespace Graphe {
 	
 	void FsAps::supprimeSommet(int noeud) {
 		int adresse = d_AdressePremierSuccesseur[noeud - 1];
-		while (d_FileSuivant[adresse] != 0) {
+		while (d_FileSuivant[adresse] != ValNULL) {
 			for (int i = adresse; i < d_tailleFileSuivant - 1; i++) d_FileSuivant[i] = d_FileSuivant[i + 1];
 			for (int i = noeud; i < d_tailleAdressePremierSuccesseur; i++) d_AdressePremierSuccesseur[i]--;
 			d_FileSuivant.pop_back();
@@ -181,13 +181,13 @@ namespace Graphe {
 		}
 		int indicemat = 1, indice = 0;
 		while (indice < d_tailleFileSuivant) {
-			if (d_FileSuivant[indice] == 0)  indicemat++;
+			if (d_FileSuivant[indice] == ValNULL)  indicemat++;
 			else  mat[d_FileSuivant[indice] - 1].push_back(indicemat);
 			indice++;
 		}
 		indice = 0;
 		for (int i = 0; i < d_tailleAdressePremierSuccesseur; i++) {
-			mat[i].push_back(0);
+			mat[i].push_back(ValNULL);
 			d_AdressePremierSuccesseur[i] = indice;
 			for (int j = 0; j < mat[i].size(); j++) {
 				d_FileSuivant[indice++] = mat[i][j];
@@ -210,6 +210,61 @@ namespace Graphe {
 		}
 	}
 
+	std::vector<int> FsAps::demiDegreInterieur()const {
+		std::vector<int> ddi(d_tailleAdressePremierSuccesseur);
+		for (int i = 0;i < ddi.size();i++) {
+			ddi[i] = 0;
+		}
+		for (int i = 0;i <d_tailleFileSuivant;i++) {
+			if (d_FileSuivant[i] != ValNULL) {
+				ddi[d_FileSuivant[i]]++;
+			}
+		}
+		return ddi;
+	}
+
+	std::vector<int> FsAps::AdressePremierPredecesseur()const {
+		std::vector<int> ddi = demiDegreInterieur();
+		std::vector<int>app(ddi.size());
+		app[0] = 1;
+		for (int i = 1;i < app.size();i++) {
+			app[i] = app[i - 1] + ddi[i - 1] + 1;
+		}
+		return app;
+	}
+
+	std::vector<int> FsAps::rang()const {
+		int k = -1, t,sommet;
+		std::vector<int> rang(d_tailleAdressePremierSuccesseur);
+		std::vector<int> pilch(d_tailleAdressePremierSuccesseur);
+		std::vector<int> ddi = demiDegreInterieur();
+		pilch[0] = ValNULL;
+		for (int i = 0;i < ddi.size();i++) {
+			rang[i] = -1;
+			if (ddi[i] == 0) {
+				pilch[i] = pilch[0];//empillage
+				pilch[0] = i;
+			}
+		}
+		sommet = pilch[0];
+		while (pilch[0] > ValNULL) {
+			k++;
+			pilch[0] = ValNULL;
+			while (sommet > ValNULL) {
+				rang[sommet] = k;	
+				for (int h = adressePremierSuccesseur(sommet);(t = fileSuivant(h)) != ValNULL;h++) {
+					ddi[t]--;
+					if (ddi[t] == 0) {
+						pilch[t] = pilch[0];//empillage
+						pilch[0] = t;
+					}
+				}
+				sommet = pilch[sommet];
+			}
+			sommet = pilch[0];
+		}
+		return rang;
+	}
 	void FsAps::affiche()
 	{
 		afficheFileSuivant();
@@ -245,4 +300,5 @@ namespace Graphe {
 			is >> d_AdressePremierSuccesseur[i];
 		}
 	}
+
 }

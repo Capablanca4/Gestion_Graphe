@@ -40,14 +40,14 @@ namespace Graphe {
 		d_MatriceAvecValeur{ Matrice } {
 		for (int i = 0; i < nbSommets; i++) {
 			for (int j = 0; j < nbSommets; j++) {
-				if (d_MatriceAvecValeur[i][j] != INFINI) {
+				if (d_MatriceAvecValeur[i][j] != INFINI&&i!=j) {
 					MatriceAdjacence::setArc(i, j, 1);
 				}
 			}
 		}
 	}
 
-	MatriceAdjacenceValuee::MatriceAdjacenceValuee(alea aleatoire, int valeurmax, int valeurmin) :
+	MatriceAdjacenceValuee::MatriceAdjacenceValuee(alea aleatoire, int valeurmin, int valeurmax) :
 		MatriceAdjacence(aleatoire) {
 		dimensionnerAInfini();
 		for (int i = 0; i < this->nbSommets(); i++) {
@@ -141,6 +141,61 @@ namespace Graphe {
 		}
 		d_MatriceAvecValeur = M;
 	}
+	void MatriceAdjacenceValuee::Djikstra(std::vector<int> & distance, std::vector<int>& predecesseur, int s) {
+		//Distance d(*this);
+		FsAps fsETaps(*this);
+		std::cout << fsETaps.nbSommets() << " " << fsETaps.nbArc() << std::endl;
+		fsETaps.affiche();
+
+		int v, j, min, k;
+		int n = fsETaps.nbSommets();
+		distance.resize(n);
+		predecesseur.resize(n);
+		std::vector<bool> aFaire(n);
+		for (int i = 0; i < n; i++) {
+			distance[i] = d_MatriceAvecValeur[s][i];
+			if (distance[i] != INFINI) {
+				predecesseur[i] = s;
+			}
+			else {
+				predecesseur[i] = INFINI;
+			}
+			aFaire[i] = true;
+		}
+		for (int i = 0;i < distance.size();i++) {
+			std::cout << distance[i] << " ";
+		}
+		std::cout << std::endl;
+		aFaire[s] = false;
+		predecesseur[0] = 0;
+		distance[s] = 0;
+		for (int cpt = 0; cpt < n; cpt++) {
+			min = INFINI;
+			j = 0;
+			for (int i = 0; i < n; i++) {
+				if (!aFaire[i] && distance[i] < min) {
+					min = distance[i];
+					j = i;
+				}
+			}
+			if (min == INFINI) {
+				aFaire[j] = false;
+			}
+			else 
+			{	
+				for (int l = fsETaps.adressePremierSuccesseur(j); (k = fsETaps.fileSuivant(l)) != 0; l++) {
+					if (aFaire[k]) {
+						v = distance[j] + d_MatriceAvecValeur[j][k];
+						if (v < distance[k]) {
+							distance[k] = v;
+							predecesseur[k] = j;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 
 	void MatriceAdjacenceValuee::affiche() const {
 		for (int i = 0; i < nbSommets(); i++) {

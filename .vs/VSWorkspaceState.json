@@ -4,10 +4,7 @@
     "\\Gestion_Graphe",
     "\\Gestion_Graphe\\Gestion_Graphe",
     "\\Gestion_Graphe\\Gestion_Graphe\\include",
-    "\\Gestion_Graphe\\Gestion_Graphe\\src",
-    "\\Gestion_Graphe\\Gestion_Graphe\\x64\\Debug",
-    "\\Gestion_Graphe\\TestUnitaire"
+    "\\Gestion_Graphe\\Gestion_Graphe\\src"
   ],
-  "SelectedNode": "\\Gestion_Graphe\\Gestion_Graphe\\main.cpp",
   "PreviewInSolutionExplorer": false
 }

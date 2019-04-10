@@ -28,6 +28,7 @@ namespace Graphe {
 
 		//Fonction
 		virtual void inverse()override;
+		void Djikstra(std::vector<int>& distance, std::vector<int>& predecesseur, int s);
 		virtual void affiche()const override;
 		virtual void enregistrerMatrice(std::ofstream& os)const override;
 		virtual void recupererMatrice(std::ifstream& is) override;
