@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace Graphe {
-	int const ValNULL = -1;
+	int const ValNULL = 0;
 	FsAps::FsAps() :
 		d_tailleAdressePremierSuccesseur{ 0 },
 		d_tailleFileSuivant{ 0},
@@ -210,61 +210,7 @@ namespace Graphe {
 		}
 	}
 
-	std::vector<int> FsAps::demiDegreInterieur()const {
-		std::vector<int> ddi(d_tailleAdressePremierSuccesseur);
-		for (int i = 0;i < ddi.size();i++) {
-			ddi[i] = 0;
-		}
-		for (int i = 0;i <d_tailleFileSuivant;i++) {
-			if (d_FileSuivant[i] != ValNULL) {
-				ddi[d_FileSuivant[i]]++;
-			}
-		}
-		return ddi;
-	}
-
-	std::vector<int> FsAps::AdressePremierPredecesseur()const {
-		std::vector<int> ddi = demiDegreInterieur();
-		std::vector<int>app(ddi.size());
-		app[0] = 1;
-		for (int i = 1;i < app.size();i++) {
-			app[i] = app[i - 1] + ddi[i - 1] + 1;
-		}
-		return app;
-	}
-
-	std::vector<int> FsAps::rang()const {
-		int k = -1, t,sommet;
-		std::vector<int> rang(d_tailleAdressePremierSuccesseur);
-		std::vector<int> pilch(d_tailleAdressePremierSuccesseur);
-		std::vector<int> ddi = demiDegreInterieur();
-		pilch[0] = ValNULL;
-		for (int i = 0;i < ddi.size();i++) {
-			rang[i] = -1;
-			if (ddi[i] == 0) {
-				pilch[i] = pilch[0];//empillage
-				pilch[0] = i;
-			}
-		}
-		sommet = pilch[0];
-		while (pilch[0] > ValNULL) {
-			k++;
-			pilch[0] = ValNULL;
-			while (sommet > ValNULL) {
-				rang[sommet] = k;	
-				for (int h = adressePremierSuccesseur(sommet);(t = fileSuivant(h)) != ValNULL;h++) {
-					ddi[t]--;
-					if (ddi[t] == 0) {
-						pilch[t] = pilch[0];//empillage
-						pilch[0] = t;
-					}
-				}
-				sommet = pilch[sommet];
-			}
-			sommet = pilch[0];
-		}
-		return rang;
-	}
+	
 	void FsAps::affiche()
 	{
 		afficheFileSuivant();

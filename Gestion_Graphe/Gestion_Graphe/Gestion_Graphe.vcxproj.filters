@@ -8,10 +8,18 @@
     <ClCompile Include="src\Distance.cpp" />
     <ClCompile Include="src\MatriceAdjacenceValuee.cpp" />
     <ClCompile Include="src\Rang.cpp" />
+    <ClCompile Include="CoeficientConnexe.cpp" />
+    <ClCompile Include="GrapheReduit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\FsAps.h" />
     <ClInclude Include="include\MatriceAdjacence.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="include\alea.h" />
+    <ClInclude Include="include\Distance.h" />
+    <ClInclude Include="include\MatriceAdjacenceValuee.h" />
+    <ClInclude Include="include\Rang.h" />
+    <ClInclude Include="CoeficientConnexe.h" />
+    <ClInclude Include="GrapheReduit.h" />
   </ItemGroup>
 </Project>

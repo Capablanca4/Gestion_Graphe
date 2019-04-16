@@ -80,9 +80,14 @@ std::vector<int> Distance::distMat(const MatriceAdjacence& graphe, int Sommet) {
 	return tdist;
 }
 
-const std::vector<int> Distance::Sommet(int i) const
+ const std::vector<int> Distance::Sommet(int i) const
 {
 	return d_matrice[i];
+}
+
+int Distance::dist(int i,int j) const
+{
+	return d_matrice[i][j];
 }
 
 void Distance::affiche()
@@ -95,4 +100,7 @@ void Distance::affiche()
 	}
 }
 
+int Distance::nbSommets() {
+	return d_matrice.size();
+}
 }

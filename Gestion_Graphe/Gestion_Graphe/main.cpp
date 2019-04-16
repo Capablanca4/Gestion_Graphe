@@ -12,16 +12,14 @@ int main() {
 	using std::vector;
 	int INFINI = INT_MAX;
 	int NbNoeud = 12,NbArc = 19;
-	std::vector<int> aps{0, 3, 6, 10, 14, 17, 20, 22, 24, 25, 27, 30};
-	std::vector<int> fs{ 1, 2, -1, 3, 8, -1, 3, 5, 7, -1, 7, 8, 10, -1, 2, 5, -1, 6, 7, -1, 7, -1, 9, -1, -1, 10, -1, 9, 11, -1, -1 };
+	std::vector<int> aps{0, 3, 6, 10, 14, 17, 20, 22, 24, 25, 27, 30 };
+	std::vector<int> fs{2, 3, 0, 4, 9, 0, 4, 6, 8, 0, 8, 9, 11, 0, 3, 6, 0, 7, 8, 0, 8, 0, 10, 0, 0, 11, 0, 10, 12, 0, 0 };
 	std::cout << aps.size();
 	Graphe::FsAps testFsAps{ NbNoeud, fs,NbArc,aps };
 	testFsAps.affiche();
-	vector<int> rang = testFsAps.rang();
+	Graphe::Rang R(testFsAps);
 	std::cout<<std::endl;
-	for (int i = 0;i < rang.size();i++) {
-		std::cout << rang[i] << " ";
-	}
+	R.affiche();
 	/*Graphe::Distance testDist{ testFsAps };
 	testDist.affiche();
 	getchar();*/

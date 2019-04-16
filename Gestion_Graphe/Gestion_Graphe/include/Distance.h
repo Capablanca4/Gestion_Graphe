@@ -13,8 +13,11 @@ class Distance {
 		Distance(const MatriceAdjacence& graphe);
 
 		/// Accesseur
-		const std::vector<int> Sommet(int i)const;
+		const  std::vector<int> Sommet(int i)const;
+		int dist(int i, int j) const;
 		void affiche();
+
+		int nbSommets();
 		
 	private:
 		std::vector<std::vector<int>> d_matrice;
