@@ -4,6 +4,8 @@
 #include "include/Distance.h"
 #include "include/Rang.h"
 #include "include/alea.h"
+#include "CoeficientConnexe.h"
+#include "GrapheReduit.h"
 #include <iostream>
 #include <fstream>
 #include <ctime>
@@ -17,9 +19,11 @@ int main() {
 	std::cout << aps.size();
 	Graphe::FsAps testFsAps{ NbNoeud, fs,NbArc,aps };
 	testFsAps.affiche();
-	Graphe::Rang R(testFsAps);
-	std::cout<<std::endl;
-	R.affiche();
+	Graphe::Distance D(testFsAps);
+	D.affiche();
+	Graphe::CoeficientConnexe C(D);
+	//Graphe::GrapheReduit G(C, testFsAps);
+	//G.getFsAps().affiche();
 	/*Graphe::Distance testDist{ testFsAps };
 	testDist.affiche();
 	getchar();*/

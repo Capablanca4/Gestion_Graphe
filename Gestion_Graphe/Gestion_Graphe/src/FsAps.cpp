@@ -73,7 +73,7 @@ namespace Graphe {
 			d_AdressePremierSuccesseur.push_back(k);
 			for (int j = 0; j < d_tailleAdressePremierSuccesseur; j++) {
 				if (adj.valeurMatrice(i, j) ==1) {
-					d_FileSuivant.push_back(j);
+					d_FileSuivant.push_back(j+1);
 					k++;
 				}
 			}

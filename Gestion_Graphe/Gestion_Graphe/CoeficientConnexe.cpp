@@ -3,7 +3,7 @@
 
 namespace Graphe {
 	CoeficientConnexe::CoeficientConnexe(Distance D) {
-		int coef = 0, sommet;
+		int coef = -1, sommet;
 		int nbSommets = D.nbSommets();
 		d_premiers.resize(nbSommets);
 		d_pilchainer.resize(nbSommets);
@@ -16,7 +16,7 @@ namespace Graphe {
 				sommet = i;
 				for (int j = i + 1;j < nbSommets;j++) {
 					if (d_coeficientsConnexes[j] == 0) {
-						if (D.dist(i,j) == -1 && D.dist(i,j) != -1) {
+						if (D.dist(i,j) == -1 && D.dist(j,i) != -1) {
 							d_pilchainer[sommet] = j;
 							d_coeficientsConnexes[j] = coef;
 							sommet = j;
