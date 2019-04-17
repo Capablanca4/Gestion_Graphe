@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CoeficientConnexe.cpp" />
+    <ClCompile Include="Djikstra.cpp" />
     <ClCompile Include="GrapheReduit.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\alea.cpp" />
@@ -31,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoeficientConnexe.h" />
+    <ClInclude Include="Djikstra.h" />
     <ClInclude Include="GrapheReduit.h" />
     <ClInclude Include="include\alea.h" />
     <ClInclude Include="include\Distance.h" />

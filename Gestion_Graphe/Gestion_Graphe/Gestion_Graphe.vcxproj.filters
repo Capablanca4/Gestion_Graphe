@@ -10,6 +10,7 @@
     <ClCompile Include="src\Rang.cpp" />
     <ClCompile Include="CoeficientConnexe.cpp" />
     <ClCompile Include="GrapheReduit.cpp" />
+    <ClCompile Include="Djikstra.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\FsAps.h" />
@@ -21,5 +22,6 @@
     <ClInclude Include="include\Rang.h" />
     <ClInclude Include="CoeficientConnexe.h" />
     <ClInclude Include="GrapheReduit.h" />
+    <ClInclude Include="Djikstra.h" />
   </ItemGroup>
 </Project>
