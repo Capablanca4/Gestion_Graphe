@@ -7,6 +7,9 @@
 #include "../Gestion_Graphe/include/Distance.h"
 #include "../Gestion_Graphe/include/alea.h"
 #include "../Gestion_Graphe/include/Rang.h"
+#include "../Gestion_Graphe/include/Prufer.h"
+#include "../Gestion_Graphe/Djikstra.h"
+#include "../Gestion_Graphe/Kruskal.h"
 #include <iostream>
 #include <fstream>
 
@@ -45,13 +48,13 @@ namespace Graphe
 	TEST_CLASS(TestDistance) {
 private:
 	std::vector<std::vector<int>> rep{ {NbNoeud,NbArc},
-									  {NbNoeud, 0, 1, 1, 2, 1, 3,-1},
-									  {NbNoeud,-1, 0, 1, 2, 3, 3,-1},
-									  {NbNoeud,-1,-1, 0, 1, 2, 2,-1},
-									  {NbNoeud,-1,-1, 2, 0, 1, 1,-1},
-									  {NbNoeud,-1,-1, 1, 2, 0, 3,-1},
-									  {NbNoeud,-1,-1,-1,-1,-1, 0,-1},
-									  {NbNoeud,-1,-1, 3, 1, 2, 1, 0} };
+									  {NbNoeud, 0, 1, 1, 2, 1, 3,INT_MAX},
+									  {NbNoeud,INT_MAX, 0, 1, 2, 3, 3,INT_MAX},
+									  {NbNoeud,INT_MAX,INT_MAX, 0, 1, 2, 2,INT_MAX},
+									  {NbNoeud,INT_MAX,INT_MAX, 2, 0, 1, 1,INT_MAX},
+									  {NbNoeud,INT_MAX,INT_MAX, 1, 2, 0, 3,INT_MAX},
+									  {NbNoeud,INT_MAX,INT_MAX,INT_MAX,INT_MAX,INT_MAX, 0,INT_MAX},
+									  {NbNoeud,INT_MAX,INT_MAX, 3, 1, 2, 1, 0} };
 public:
 	TEST_METHOD(TestDistanceAvecFsAps) {
 		Graphe::FsAps testFsAps{ NbNoeud, fs,NbArc,aps };
@@ -224,16 +227,25 @@ public:
 	}
 
 	TEST_METHOD(TestajouteArc) {
+		std::vector<int> rep_aps{ 0,4,7,10,13,15,16 };
 		Graphe::FsAps test{ NbNoeud, fs };
 		test.ajouteArc(1, 4);
 		wchar_t message[512];
-		swprintf(message, L"L'arc a bien ete supprime");
-		Assert::AreEqual(4, test.fileSuivant(2),message);/// La fonction insère au bon endroit l'élément
-		swprintf(message, L"Le nombre d'arc est faux");
+		swprintf(message, L"L'arc n'a pas ete ajoute");
+		Assert::AreEqual(5, test.fileSuivant(5),message);/// La fonction insère au bon endroit l'élément
+		swprintf(message, L"Le nombre d'arc est faux au premier ajout");
+		for (int i = 0; i < NbNoeud; i++) {
+			swprintf(message, L"Aps est faux au premier ajout à l'iter: %d ", i);
+			Assert::AreEqual(rep_aps[i], test.adressePremierSuccesseur(i), message);
+		}
 		Assert::AreEqual(NbArc + 1, test.nbArc(),message);/// La fonction verifie que le nombre d'element de Fs reste correcte
 		test.ajouteArc(1, 4);
-		swprintf(message, L"Le nombre d'arc est faux");
+		swprintf(message, L"Le nombre d'arc est faux au second ajout");
 		Assert::AreEqual(NbArc + 1, test.nbArc(),message);/// La fonction verifie que l'on n'insere bien aucun element si l'element est deja present
+		for (int i = 0; i < NbNoeud; i++) {
+			swprintf(message, L"Aps est faux au second ajout à l'iter: %d ", i);
+			Assert::AreEqual(rep_aps[i], test.adressePremierSuccesseur(i), message);
+		}
 	}
 
 	TEST_METHOD(TessupprimeArc) {
@@ -830,4 +842,95 @@ public:
 
 };
 
+	TEST_CLASS(TestPrufer) {
+	private:
+		int nbNoeud = 7, nbArc = 12;
+		MatriceAdjacence Arbre{ {{0,1,0,1,1,0,0},
+							    {1,0,1,0,0,0,0},
+							    {0,1,0,0,0,1,1},
+							    {1,0,0,0,0,0,0},
+							    {1,0,0,0,0,0,0},
+							    {0,0,1,0,0,0,0},
+							    {0,0,1,0,0,0,0}},nbNoeud,nbArc };
+		std::vector<int> rep{nbNoeud-2,1,1,2,3,3};
+	public:
+		TEST_METHOD(TestPruferAvecMatriceAdjacence) {
+			Graphe::Prufer testPrufer{ Arbre };
+			wchar_t message[512];
+			for (int i = 0; i < nbNoeud - 1; i++) {
+				swprintf(message, L"Le codage est faux à l'iter %d",i);
+				Assert::AreEqual(rep[i], testPrufer.sommet(i), message);
+			}
+		}
+};
+
+	TEST_CLASS(TestDjikstra) {
+	private:
+		int nbNoeud = 10, nbArc = 11;
+		const int INFINI = INT_MAX;
+		std::vector<int> fs = { 2,3,5,0,6,0,7,8,0,8,0,10,0,9,0,0,10,0,10,0,0 };
+		std::vector<std::vector<int>> Poids{ {INFINI,85,217,INFINI,173,INFINI,INFINI,INFINI,INFINI,INFINI},
+											 {INFINI,INFINI,INFINI,INFINI,INFINI,80,INFINI,INFINI,INFINI,INFINI},
+											 {INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,186,103,INFINI,INFINI},
+											 {INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,183,INFINI,INFINI},
+											 {INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,502},
+											 {INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,250,INFINI},
+											 {INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI},
+											 {INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,167},
+											 {INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,84},
+											 {INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI,INFINI} };
+		std::vector<int> distanceRep{ nbNoeud ,0,85,217,INFINI,173,165,403,320,415,487 };
+		std::vector<int> predecesseurRep{ nbNoeud,0,1,1,-1,1,2,3,3,6,8 };
+	public:
+		TEST_METHOD(TestDjikstraAvecFsApsetPoids) {
+			FsAps TestFs{ nbNoeud,fs };
+			Djikstra testDjikstra{ TestFs ,Poids,0 };
+			wchar_t message[512];	
+			for (int i = 0; i <= nbNoeud; i++) {
+				swprintf(message, L"La distance est fausse à l'iter %d", i);
+				Assert::AreEqual(distanceRep[i], testDjikstra.distance(i), message);
+				swprintf(message, L"Le predecesseurRep est faux à l'iter %d", i);
+				Assert::AreEqual(predecesseurRep[i], testDjikstra.predecesseur(i), message);
+			}
+		}
+		TEST_METHOD(TestDjikstraMatriceAdjacenceValuee) {
+			MatriceAdjacenceValuee TestMat{ Poids ,nbNoeud,nbArc };
+			Djikstra testDjikstra{ TestMat,0 };
+			wchar_t message[512];
+			for (int i = 0; i <= nbNoeud; i++) {
+				swprintf(message, L"La distance est fausse à l'iter %d", i);
+				Assert::AreEqual(distanceRep[i], testDjikstra.distance(i), message);
+				swprintf(message, L"Le predecesseurRep est faux à l'iter %d", i);
+				Assert::AreEqual(predecesseurRep[i], testDjikstra.predecesseur(i), message);
+			}
+		}
+	};
+
+	TEST_CLASS(TestKruskal) {
+private:
+	int nbNoeud = 5, nbArc = 12;
+	const int INFINI = INT_MAX;
+	std::vector<std::vector<int>> Poids{ {INT_MAX,1,2,INT_MAX,INT_MAX},
+										 {1,INT_MAX,INT_MAX,2,INT_MAX},
+										 {2,INT_MAX,INT_MAX,2,3},
+										 {INT_MAX,2,2,INT_MAX,3},
+										 {INT_MAX,INT_MAX,3,3,INT_MAX} };
+	std::vector<std::vector<int>> rep{ {INT_MAX,1,2,INT_MAX,INT_MAX},
+									   {1,INT_MAX,INT_MAX,2,INT_MAX},
+									   {2,INT_MAX,INT_MAX,INT_MAX,3},
+									   {INT_MAX,2,INT_MAX,INT_MAX,INT_MAX},
+									   {INT_MAX,INT_MAX,3,INT_MAX,INT_MAX} };
+public:
+	TEST_METHOD(TestKruskalMatriceAdjacenceValuee) {
+		Graphe::MatriceAdjacenceValuee TestMat{ Poids ,nbNoeud,nbArc };
+		Graphe::Kruskal testKruskal{ TestMat };
+		wchar_t message[512];
+		for (int i = 0; i < nbNoeud; i++) {
+			for (int j = 0; j < nbNoeud; j++) {
+				swprintf(message, L"La matrice representant l'arbre est fausse à la ligne %d, la colonne %d", i, j);
+				Assert::AreEqual(rep[i][j], testKruskal.valeurMatrice(i, j), message);
+			}
+		}
+	}
+	};
 }

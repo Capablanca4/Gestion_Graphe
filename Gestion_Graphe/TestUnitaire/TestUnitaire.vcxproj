@@ -154,18 +154,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Gestion_Graphe\Djikstra.h" />
     <ClInclude Include="..\Gestion_Graphe\include\FsAps.h" />
     <ClInclude Include="..\Gestion_Graphe\include\MatriceAdjacence.h" />
+    <ClInclude Include="..\Gestion_Graphe\include\Prufer.h" />
+    <ClInclude Include="..\Gestion_Graphe\Kruskal.h" />
     <ClInclude Include="SpecialisationTest.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Gestion_Graphe\Djikstra.cpp" />
+    <ClCompile Include="..\Gestion_Graphe\Kruskal.cpp" />
     <ClCompile Include="..\Gestion_Graphe\src\alea.cpp" />
     <ClCompile Include="..\Gestion_Graphe\src\Distance.cpp" />
     <ClCompile Include="..\Gestion_Graphe\src\FsAps.cpp" />
     <ClCompile Include="..\Gestion_Graphe\src\MatriceAdjacence.cpp" />
     <ClCompile Include="..\Gestion_Graphe\src\MatriceAdjacenceValuee.cpp" />
+    <ClCompile Include="..\Gestion_Graphe\src\Prufer.cpp" />
     <ClCompile Include="..\Gestion_Graphe\src\Rang.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

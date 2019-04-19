@@ -116,32 +116,29 @@ namespace Graphe {
 
 	void FsAps::ajouteArc(int noeudDep, int noeudArr) {
 		if (noeudArr < d_tailleAdressePremierSuccesseur && noeudDep < d_tailleAdressePremierSuccesseur) {
-			int emplacementElt = d_AdressePremierSuccesseur[noeudDep-1];
-			while (d_FileSuivant[emplacementElt] < noeudArr&&d_FileSuivant[emplacementElt] != 0) emplacementElt++;
-			if (d_FileSuivant[emplacementElt] != noeudArr) {
-				d_FileSuivant.push_back(noeudArr);
-				for (int i = d_tailleAdressePremierSuccesseur; i > emplacementElt; i--) d_FileSuivant[i] = d_FileSuivant[i - 1];
-				d_FileSuivant[emplacementElt] = noeudArr;
+			int emplacementElt = d_AdressePremierSuccesseur[noeudDep];
+			while (d_FileSuivant[emplacementElt] < noeudArr+1 && d_FileSuivant[emplacementElt] != 0) emplacementElt++;
+			if (d_FileSuivant[emplacementElt] != noeudArr+1) {
 				d_tailleFileSuivant++;
+				d_FileSuivant.push_back(0);
+				for (int i = d_tailleFileSuivant - 1; i > emplacementElt; i--) d_FileSuivant[i] = d_FileSuivant[i-1];
+				for (int i = noeudDep + 1; i < d_tailleAdressePremierSuccesseur; i++) d_AdressePremierSuccesseur[i]++;
+				d_FileSuivant[emplacementElt] = noeudArr + 1;
 			}
 		}
 		else printf("Vous donnez un noeud d'arrivee ou un noeud de depart trop grand !");
 	}
 
+
 	void FsAps::supprimerArc(int noeudDep, int noeudArr) {
 		if (noeudArr < d_tailleAdressePremierSuccesseur && noeudDep < d_tailleAdressePremierSuccesseur) {
-			int emplacementElt = d_AdressePremierSuccesseur[noeudDep-1];
-			std::cout << emplacementElt << std::endl;
-			while (d_FileSuivant[emplacementElt] != 0 && d_FileSuivant[emplacementElt] != noeudArr) {
-				std::cout<< d_FileSuivant[emplacementElt]<<" "; 
-				emplacementElt++;
-			}
-			std::cout << std::endl;
+			int emplacementElt = d_AdressePremierSuccesseur[noeudDep];
+			while (d_FileSuivant[emplacementElt] != 0 && d_FileSuivant[emplacementElt] != noeudArr) emplacementElt++;
 			if (d_FileSuivant[emplacementElt] == noeudArr) {
 				for (int i = emplacementElt; i < d_tailleFileSuivant - 1; i++) d_FileSuivant[i] = d_FileSuivant[i + 1];
 				d_FileSuivant.pop_back();
 				d_tailleFileSuivant--;
-				for (int i = noeudDep; i < d_tailleAdressePremierSuccesseur;i++) d_AdressePremierSuccesseur[i]--;
+				for (int i = noeudDep+1; i < d_tailleAdressePremierSuccesseur;i++) d_AdressePremierSuccesseur[i]--;
 			}
 		}
 		else printf("Vous donnez un noeud d'arrivee ou un noeud de depart trop grand !");

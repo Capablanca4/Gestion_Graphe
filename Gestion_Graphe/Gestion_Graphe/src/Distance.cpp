@@ -1,6 +1,7 @@
 #include "../../Gestion_Graphe/include/MatriceAdjacence.h"
 #include "../../Gestion_Graphe/include/FsAps.h"
 #include "../../Gestion_Graphe/include/Distance.h"
+#include "limits.h"
 #include <iostream>
 
 namespace Graphe {
@@ -32,14 +33,14 @@ std::vector<int> Distance::distFsAps(const FsAps& graphe, int Sommet) {
 	std::vector<int> tdist{ nbSommet };
 	int *fa = new int[nbSommet + 1];
 	fa[0] = Sommet;
-	for (int i = 1; i <= nbSommet; i++)  tdist.push_back(-1);
+	for (int i = 1; i <= nbSommet; i++)  tdist.push_back(INT_MAX);
 	tdist[Sommet] = 0;
 	while (t < q) {
 		d++;
 		for (int i = t ; i < q ; i++) {
 			int suiv = graphe.adressePremierSuccesseur(fa[i]-1);
 			while (graphe.fileSuivant(suiv) != 0) {
-				if (tdist[graphe.fileSuivant(suiv)] == -1) {
+				if (tdist[graphe.fileSuivant(suiv)] == INT_MAX) {
 					tdist[graphe.fileSuivant(suiv)] = d;
 					fa[p++] = graphe.fileSuivant(suiv);
 				}
@@ -58,7 +59,7 @@ std::vector<int> Distance::distMat(const MatriceAdjacence& graphe, int Sommet) {
 	std::vector<int> tdist{ nbSommet };
 	int *fa = new int[nbSommet + 1];
 	fa[0] = Sommet;
-	for (int i = 1; i <= nbSommet; i++)  tdist.push_back(-1);
+	for (int i = 1; i <= nbSommet; i++)  tdist.push_back(INT_MAX);
 	tdist[Sommet+1] = 0;
 	while (t < q) {
 		iter++;
@@ -66,7 +67,7 @@ std::vector<int> Distance::distMat(const MatriceAdjacence& graphe, int Sommet) {
 			std::vector<int> suiv = graphe.sommet(fa[i]);
 			for (int j = 0; j < nbSommet; j++) {
 				if (suiv[j] != 0) { 
-					if (tdist[j+1] == -1) { 
+					if (tdist[j+1] == INT_MAX) {
 						tdist[j+1] = iter;
 						fa[p++] = j;
 					}
@@ -83,6 +84,10 @@ std::vector<int> Distance::distMat(const MatriceAdjacence& graphe, int Sommet) {
 const std::vector<int> Distance::Sommet(int i) const
 {
 	return d_matrice[i];
+}
+
+int Distance::valeurMatrice(int i, int j)const {
+	return d_matrice[i][j];
 }
 
 void Distance::affiche()

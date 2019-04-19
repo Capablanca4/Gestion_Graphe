@@ -19,21 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Djikstra.cpp" />
+    <ClCompile Include="Kruskal.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\alea.cpp" />
     <ClCompile Include="src\Distance.cpp" />
     <ClCompile Include="src\FsAps.cpp" />
     <ClCompile Include="src\MatriceAdjacence.cpp" />
     <ClCompile Include="src\MatriceAdjacenceValuee.cpp" />
+    <ClCompile Include="src\Prufer.cpp" />
     <ClCompile Include="src\Rang.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Djikstra.h" />
     <ClInclude Include="include\alea.h" />
     <ClInclude Include="include\Distance.h" />
     <ClInclude Include="include\FsAps.h" />
     <ClInclude Include="include\MatriceAdjacence.h" />
     <ClInclude Include="include\MatriceAdjacenceValuee.h" />
+    <ClInclude Include="include\Prufer.h" />
     <ClInclude Include="include\Rang.h" />
+    <ClInclude Include="Kruskal.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

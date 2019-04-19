@@ -1,12 +1,4 @@
-﻿  main.cpp
-  alea.cpp
-  Distance.cpp
-  FsAps.cpp
-c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\gestion_graphe\src\fsaps.cpp(93): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
-  MatriceAdjacence.cpp
-c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\gestion_graphe\src\matriceadjacence.cpp(290): warning C4267: '=' : conversion de 'size_t' en 'int', perte possible de données
-  MatriceAdjacenceValuee.cpp
-  Rang.cpp
+﻿  Kruskal.cpp
+  main.cpp
   Génération de code en cours...
-c:\users\pierre vix\source\repos\capablanca4\gestion_graphe\gestion_graphe\gestion_graphe\src\matriceadjacencevaluee.cpp(82): warning C4715: 'Graphe::MatriceAdjacenceValuee::sommet' : les chemins de contrôle ne retournent pas tous une valeur
   Gestion_Graphe.vcxproj -> C:\Users\Pierre VIX\source\repos\Capablanca4\Gestion_Graphe\Gestion_Graphe\x64\Debug\Gestion_Graphe.exe

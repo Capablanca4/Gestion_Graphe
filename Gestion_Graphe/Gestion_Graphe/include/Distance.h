@@ -14,6 +14,7 @@ class Distance {
 
 		/// Accesseur
 		const std::vector<int> Sommet(int i)const;
+		int valeurMatrice(int i, int j)const;
 		void affiche();
 		
 	private:
